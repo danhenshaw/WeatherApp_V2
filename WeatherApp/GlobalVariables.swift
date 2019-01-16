@@ -12,7 +12,7 @@ struct GlobalVariables {
     
     static var sharedInstance = GlobalVariables()
 
-    var darkSkyAPIKey = "d308423b74ce6cab0328feaa8a9d7a31"
+    var darkSkyAPIKey = "" // Register at https://darksky.net/dev/register
     var baseURL = "https://api.darksky.net/forecast/"
     
     var language = ""

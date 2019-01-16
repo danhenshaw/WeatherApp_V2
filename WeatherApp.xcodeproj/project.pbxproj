@@ -55,7 +55,6 @@
 		90797D3C21CEDF720071A845 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3B21CEDF720071A845 /* SettingsHeaderView.swift */; };
 		90797D3E21CEF8500071A845 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3D21CEF8500071A845 /* LabelView.swift */; };
 		90797D4021CEF8700071A845 /* PrecipChartBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3F21CEF8700071A845 /* PrecipChartBackgroundView.swift */; };
-		90797D4221D1602C0071A845 /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D4121D1602C0071A845 /* ToDoList.swift */; };
 		90797D4421D7E2DA0071A845 /* MinutelyForecastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D4321D7E2DA0071A845 /* MinutelyForecastDataModel.swift */; };
 		90797D4621D7E2FC0071A845 /* HourlyForecastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D4521D7E2FC0071A845 /* HourlyForecastDataModel.swift */; };
 		90797D4821D7E3190071A845 /* DailyForecastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D4721D7E3190071A845 /* DailyForecastDataModel.swift */; };
@@ -147,7 +146,6 @@
 		90797D3B21CEDF720071A845 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
 		90797D3D21CEF8500071A845 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		90797D3F21CEF8700071A845 /* PrecipChartBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipChartBackgroundView.swift; sourceTree = "<group>"; };
-		90797D4121D1602C0071A845 /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
 		90797D4321D7E2DA0071A845 /* MinutelyForecastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinutelyForecastDataModel.swift; sourceTree = "<group>"; };
 		90797D4521D7E2FC0071A845 /* HourlyForecastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastDataModel.swift; sourceTree = "<group>"; };
 		90797D4721D7E3190071A845 /* DailyForecastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastDataModel.swift; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 			children = (
 				90797C8621C7E9FF0071A845 /* AppDelegate.swift */,
 				90797D2A21CBC03A0071A845 /* GlobalVariables.swift */,
-				90797D4121D1602C0071A845 /* ToDoList.swift */,
 				90797CDF21C9028B0071A845 /* FlowController */,
 				90797CE021C902970071A845 /* NavigayionController */,
 				90797CC321C800210071A845 /* InitialView */,
@@ -564,7 +561,6 @@
 				90797CEC21C913930071A845 /* PickerViewModel.swift in Sources */,
 				90797CF021C913BC0071A845 /* PickerViewController.swift in Sources */,
 				90797CEE21C913A80071A845 /* PickerModel.swift in Sources */,
-				90797D4221D1602C0071A845 /* ToDoList.swift in Sources */,
 				90797CE821C904970071A845 /* LocationListViewModel.swift in Sources */,
 				90797CFB21C932B10071A845 /* MinutelyForecastCell.swift in Sources */,
 				90797D3221CBF1300071A845 /* DarkSkyAPIManager.swift in Sources */,
