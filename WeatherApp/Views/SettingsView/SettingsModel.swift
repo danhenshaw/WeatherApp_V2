@@ -18,10 +18,8 @@ struct SettingsGroup {
 
 struct SettingItem {
     let title: String
-    let subTitle: String
-    let hideSubTitleLabel: Bool
+    let subTitle: String?
     let value: String?
-    let icon: String
     let type: SettingItemType
     let action: SettingItemAction
 }
@@ -34,6 +32,7 @@ enum SettingItemType {
 enum SettingItemAction {
     case changeUnits
     case changeLanguage
+    case changeForecastData
     case openPhoneSettings
     case rateApp
     case feedbackAndSupport
@@ -52,7 +51,7 @@ struct SettingsModel {
         SettingsGroup(
             name: "Privacy",
             items: [
-                SettingItem(title: "Settings", subTitle: "Open in Settings app", hideSubTitleLabel: false, value: nil, icon: "⚙︎", type: .externalLink, action: .openPhoneSettings),
+                SettingItem(title: "Settings", subTitle: "Open in Settings app", value: nil, type: .externalLink, action: .openPhoneSettings),
             ]
         ),
         
@@ -60,8 +59,9 @@ struct SettingsModel {
         SettingsGroup(
             name: "Options",
             items: [
-                SettingItem(title: "Language", subTitle: "", hideSubTitleLabel: true, value: "language", icon: "L", type: .internalSegue, action: .changeLanguage),
-                SettingItem(title: "Units", subTitle: "", hideSubTitleLabel: true, value: "units", icon: "U", type: .internalSegue, action: .changeUnits)
+                SettingItem(title: "Language", subTitle: nil, value: "language", type: .internalSegue, action: .changeLanguage),
+                SettingItem(title: "Units", subTitle: nil, value: "units", type: .internalSegue, action: .changeUnits),
+                SettingItem(title: "Customise Data", subTitle: "Choose what you want to see", value: nil, type: .internalSegue, action: .changeForecastData)
             ]
         ),
         
@@ -70,9 +70,9 @@ struct SettingsModel {
         SettingsGroup(
             name: "General",
             items: [
-                SettingItem(title: "Share", subTitle: "", hideSubTitleLabel: true, value: nil, icon: "S", type: .internalSegue, action: .share),
-                SettingItem(title: "Feedback and Support", subTitle: "", hideSubTitleLabel: true, value: nil, icon: "S", type: .externalLink, action: .feedbackAndSupport),
-                SettingItem(title: "Rate App", subTitle: "Review on the App Store", hideSubTitleLabel: false, value: nil, icon: "R", type: .externalLink, action: .rateApp)
+                SettingItem(title: "Share", subTitle: nil, value: nil, type: .internalSegue, action: .share),
+                SettingItem(title: "Feedback and Support", subTitle: nil, value: nil, type: .externalLink, action: .feedbackAndSupport),
+                SettingItem(title: "Rate App", subTitle: "Review on the App Store", value: nil, type: .externalLink, action: .rateApp)
             ]
         ),
         
@@ -80,10 +80,10 @@ struct SettingsModel {
         SettingsGroup(
             name: "About",
             items: [
-                SettingItem(title: "Website", subTitle: "", hideSubTitleLabel: true, value: nil, icon: "W", type: .externalLink, action: .linkToWebsite),
-                SettingItem(title: "Facebook", subTitle: "", hideSubTitleLabel: true, value: nil, icon: "F", type: .externalLink, action: .linkToFacebook),
-                SettingItem(title: "Instagram", subTitle: "", hideSubTitleLabel: true, value: nil, icon: "I", type: .externalLink, action: .linkToInstagram),
-                SettingItem(title: "Twitter", subTitle: "", hideSubTitleLabel: true, value: nil, icon: "T", type: .externalLink, action: .linkToTwitter)
+                SettingItem(title: "Website", subTitle: nil, value: nil, type: .externalLink, action: .linkToWebsite),
+                SettingItem(title: "Facebook", subTitle: nil, value: nil, type: .externalLink, action: .linkToFacebook),
+                SettingItem(title: "Instagram", subTitle: nil, value: nil, type: .externalLink, action: .linkToInstagram),
+                SettingItem(title: "Twitter", subTitle: nil, value: nil, type: .externalLink, action: .linkToTwitter)
             ]
         )
         

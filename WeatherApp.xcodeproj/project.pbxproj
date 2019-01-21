@@ -52,7 +52,7 @@
 		90797D3521CC1C1D0071A845 /* ForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3421CC1C1D0071A845 /* ForecastViewController.swift */; };
 		90797D3721CC1D200071A845 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3621CC1D200071A845 /* ForecastViewModel.swift */; };
 		90797D3A21CC1D750071A845 /* ForecastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3921CC1D750071A845 /* ForecastDataModel.swift */; };
-		90797D3C21CEDF720071A845 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3B21CEDF720071A845 /* SettingsHeaderView.swift */; };
+		90797D3C21CEDF720071A845 /* CustomiseableForecastDataHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3B21CEDF720071A845 /* CustomiseableForecastDataHeaderView.swift */; };
 		90797D3E21CEF8500071A845 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3D21CEF8500071A845 /* LabelView.swift */; };
 		90797D4021CEF8700071A845 /* PrecipChartBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D3F21CEF8700071A845 /* PrecipChartBackgroundView.swift */; };
 		90797D4421D7E2DA0071A845 /* MinutelyForecastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D4321D7E2DA0071A845 /* MinutelyForecastDataModel.swift */; };
@@ -72,6 +72,11 @@
 		90797D6821EF4C4D0071A845 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6721EF4C4C0071A845 /* Labels.swift */; };
 		90797D6A21EF628C0071A845 /* HourlyOrDailyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6921EF628C0071A845 /* HourlyOrDailyForecastView.swift */; };
 		90797D6E21EF71150071A845 /* PrecipIntensityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6D21EF71150071A845 /* PrecipIntensityModel.swift */; };
+		907D81B521F5F8DC000F6B46 /* CustomiseableForecastDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81B421F5F8DC000F6B46 /* CustomiseableForecastDataViewController.swift */; };
+		907D81B721F5F8E9000F6B46 /* CustomiseableForecastDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81B621F5F8E9000F6B46 /* CustomiseableForecastDataViewModel.swift */; };
+		907D81B921F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81B821F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift */; };
+		907D81BB21F5F908000F6B46 /* CustomiseableForecastDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81BA21F5F908000F6B46 /* CustomiseableForecastDataCell.swift */; };
+		907D81BD21F5FD05000F6B46 /* ForecastDataTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81BC21F5FD05000F6B46 /* ForecastDataTypeModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,7 +148,7 @@
 		90797D3421CC1C1D0071A845 /* ForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewController.swift; sourceTree = "<group>"; };
 		90797D3621CC1D200071A845 /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
 		90797D3921CC1D750071A845 /* ForecastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDataModel.swift; sourceTree = "<group>"; };
-		90797D3B21CEDF720071A845 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
+		90797D3B21CEDF720071A845 /* CustomiseableForecastDataHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomiseableForecastDataHeaderView.swift; sourceTree = "<group>"; };
 		90797D3D21CEF8500071A845 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		90797D3F21CEF8700071A845 /* PrecipChartBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipChartBackgroundView.swift; sourceTree = "<group>"; };
 		90797D4321D7E2DA0071A845 /* MinutelyForecastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinutelyForecastDataModel.swift; sourceTree = "<group>"; };
@@ -163,6 +168,11 @@
 		90797D6721EF4C4C0071A845 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		90797D6921EF628C0071A845 /* HourlyOrDailyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyOrDailyForecastView.swift; sourceTree = "<group>"; };
 		90797D6D21EF71150071A845 /* PrecipIntensityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipIntensityModel.swift; sourceTree = "<group>"; };
+		907D81B421F5F8DC000F6B46 /* CustomiseableForecastDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomiseableForecastDataViewController.swift; sourceTree = "<group>"; };
+		907D81B621F5F8E9000F6B46 /* CustomiseableForecastDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomiseableForecastDataViewModel.swift; sourceTree = "<group>"; };
+		907D81B821F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomiseableForecastDataModel.swift; sourceTree = "<group>"; };
+		907D81BA21F5F908000F6B46 /* CustomiseableForecastDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomiseableForecastDataCell.swift; sourceTree = "<group>"; };
+		907D81BC21F5FD05000F6B46 /* ForecastDataTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDataTypeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,7 +290,6 @@
 				90797CD921C902160071A845 /* SettingsViewModel.swift */,
 				90797CDA21C902160071A845 /* SettingsModel.swift */,
 				90797CD721C902160071A845 /* SettingsCell.swift */,
-				90797D3B21CEDF720071A845 /* SettingsHeaderView.swift */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -371,6 +380,7 @@
 				90797D5521DD32780071A845 /* FontIconModel.swift */,
 				90797D5B21DE09EA0071A845 /* UnitsModel.swift */,
 				90797D6D21EF71150071A845 /* PrecipIntensityModel.swift */,
+				907D81BC21F5FD05000F6B46 /* ForecastDataTypeModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -410,11 +420,24 @@
 				90797CC321C800210071A845 /* InitialView */,
 				90797CCD21C80F560071A845 /* MainForecastView */,
 				90797CD621C901F50071A845 /* SettingsView */,
+				907D81B321F5F8A2000F6B46 /* CustomiseableForecastDataView */,
 				90797CE121C904710071A845 /* LocationListView */,
 				90797CEA21C913660071A845 /* PickerView */,
 				90797D1921CAA2C60071A845 /* AddLocationView */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		907D81B321F5F8A2000F6B46 /* CustomiseableForecastDataView */ = {
+			isa = PBXGroup;
+			children = (
+				907D81B421F5F8DC000F6B46 /* CustomiseableForecastDataViewController.swift */,
+				907D81B621F5F8E9000F6B46 /* CustomiseableForecastDataViewModel.swift */,
+				907D81B821F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift */,
+				907D81BA21F5F908000F6B46 /* CustomiseableForecastDataCell.swift */,
+				90797D3B21CEDF720071A845 /* CustomiseableForecastDataHeaderView.swift */,
+			);
+			path = CustomiseableForecastDataView;
 			sourceTree = "<group>";
 		};
 		90B3B50921EFB35E001785F9 /* Managers */ = {
@@ -572,6 +595,7 @@
 				90797CE821C904970071A845 /* LocationListViewModel.swift in Sources */,
 				90797CFB21C932B10071A845 /* MinutelyForecastCell.swift in Sources */,
 				90797D3221CBF1300071A845 /* DarkSkyAPIManager.swift in Sources */,
+				907D81B721F5F8E9000F6B46 /* CustomiseableForecastDataViewModel.swift in Sources */,
 				90797D5421DD2EA00071A845 /* Date.swift in Sources */,
 				90797CFD21C932FD0071A845 /* HourlyOrDailyForecastCell.swift in Sources */,
 				90797CDB21C902170071A845 /* SettingsCell.swift in Sources */,
@@ -588,7 +612,7 @@
 				90797D5621DD32780071A845 /* FontIconModel.swift in Sources */,
 				90797CC221C7F1300071A845 /* NavigationController.swift in Sources */,
 				90797D1B21CAA2F10071A845 /* AddLocationViewController.swift in Sources */,
-				90797D3C21CEDF720071A845 /* SettingsHeaderView.swift in Sources */,
+				90797D3C21CEDF720071A845 /* CustomiseableForecastDataHeaderView.swift in Sources */,
 				90797C8921C7E9FF0071A845 /* InitialViewController.swift in Sources */,
 				90797CE721C904970071A845 /* LocationListViewController.swift in Sources */,
 				90797D4421D7E2DA0071A845 /* MinutelyForecastDataModel.swift in Sources */,
@@ -597,15 +621,18 @@
 				90797D3521CC1C1D0071A845 /* ForecastViewController.swift in Sources */,
 				90797C8721C7E9FF0071A845 /* AppDelegate.swift in Sources */,
 				90797D3E21CEF8500071A845 /* LabelView.swift in Sources */,
+				907D81B521F5F8DC000F6B46 /* CustomiseableForecastDataViewController.swift in Sources */,
 				90797D3A21CC1D750071A845 /* ForecastDataModel.swift in Sources */,
 				90797D6021E78AC20071A845 /* Colors.swift in Sources */,
 				90797CF721C9320D0071A845 /* TitleCell.swift in Sources */,
 				90797CDE21C902170071A845 /* SettingsModel.swift in Sources */,
 				90797D6A21EF628C0071A845 /* HourlyOrDailyForecastView.swift in Sources */,
 				90797D4E21DAA6910071A845 /* Translator.swift in Sources */,
+				907D81BB21F5F908000F6B46 /* CustomiseableForecastDataCell.swift in Sources */,
 				90797D0E21CA7ABC0071A845 /* MainViewController.swift in Sources */,
 				90797D1421CA7B750071A845 /* MainView.swift in Sources */,
 				90797D2421CBB27C0071A845 /* CoreDataManager.swift in Sources */,
+				907D81B921F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift in Sources */,
 				90797CD321C8100A0071A845 /* MainForecastViewModel.swift in Sources */,
 				90797D6621EE02410071A845 /* LocationListFooterView.swift in Sources */,
 				90797D2D21CBDD230071A845 /* ForecastModel.swift in Sources */,
@@ -615,6 +642,7 @@
 				90797D4A21D7E33A0071A845 /* CurrentlyForecastDataMode.swift in Sources */,
 				90797D6221E79E7E0071A845 /* LocationListView.swift in Sources */,
 				90797D4621D7E2FC0071A845 /* HourlyForecastDataModel.swift in Sources */,
+				907D81BD21F5FD05000F6B46 /* ForecastDataTypeModel.swift in Sources */,
 				90797D4021CEF8700071A845 /* PrecipChartBackgroundView.swift in Sources */,
 				90797D6821EF4C4D0071A845 /* Labels.swift in Sources */,
 				90797D1F21CAA7280071A845 /* LocationManager.swift in Sources */,

@@ -23,12 +23,11 @@ struct GlobalVariables {
     var precipBlue = 0x00abff
     
     
-    var currentlyData : [CurrentlyForecastDataType] = [.temp, .feelsLike, .precipProbability, .humidity, .pressure]
-    var hourlyData : [HourlyForecastDataType] = [.feelsLike, .precipProbability, .humidity, .pressure, .dewPoint, .wind, .uvIndex, .ozone]
-    var dailyData : [DailyForecastDataType] = [.feelsLike, .precipProbability, .humidity, .pressure, .dewPoint, .wind, .sunriseTime, .sunsetTime]
+    var currentlyData : [ForecastDataType] = [.temp, .feelsLike, .precipProbability, .humidity, .pressure]
+    var hourlyData : [ForecastDataType] = [.feelsLike, .precipProbability, .humidity, .pressure, .dewPoint, .wind, .uvIndex, .ozone]
+    var dailyData : [ForecastDataType] = [.feelsLike, .precipProbability, .humidity, .pressure, .dewPoint, .wind, .sunriseTime, .sunsetTime]
 
 
-    
     mutating func setFontSizeMultipler(screenHeight: Double) {
         fontSizemultiplier = screenHeight / 568
     }

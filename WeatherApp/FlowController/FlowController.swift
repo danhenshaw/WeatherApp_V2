@@ -93,6 +93,15 @@ extension FlowController: MainViewControllerFlowDelegate {
 
 extension FlowController: SettingsViewControllerFlowDelegate {
     
+    
+    func showForecastDataTableView() {
+        let model = CustomiseableForecastDataModel()
+        let viewModel = CustomiseableForecastDataViewModel(withModel: model)
+        let customiseableForecastDataViewController = CustomiseableForecastDataViewController(withViewModel: viewModel)
+        navigationController!.pushViewController(customiseableForecastDataViewController, animated: true)
+    }
+    
+    
     func showPickerView(_ senderViewController: SettingsViewController, pickerType: PickerType) {
         let model = PickerModel()
         let viewModel = PickerViewModel(withModel: model)

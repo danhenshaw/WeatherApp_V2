@@ -17,6 +17,7 @@ enum SettingsViewControllerAction {
 
 protocol SettingsViewControllerFlowDelegate: class {
     func showPickerView(_ senderViewController: SettingsViewController, pickerType: PickerType)
+    func showForecastDataTableView()
 }
 
 
@@ -24,8 +25,6 @@ class SettingsViewController : UITableViewController {
 
     weak var flowDelegate: SettingsViewControllerFlowDelegate?
     fileprivate let viewModel: SettingsViewModel
-    
-    
     
     struct Constants {
         static let settingsCellReuseIdentifier = "SettingsCellReuseIdentifier"
@@ -48,7 +47,6 @@ class SettingsViewController : UITableViewController {
         tableView.separatorColor = .darkGray
         
         tableView.register(SettingsCell.self, forCellReuseIdentifier: Constants.settingsCellReuseIdentifier)
-        tableView.register(SettingsHeaderView.self, forHeaderFooterViewReuseIdentifier: Constants.settingsHeaderViewReuseIdentifier)
         title = "Settings"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
@@ -73,13 +71,14 @@ class SettingsViewController : UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.settingsCellReuseIdentifier, for: indexPath) as! SettingsCell
         cell.bindWithSettingItem(settingsItem)
         cell.configureCellForSettingItem(settingsItem)
-        cell.accessoryType = .disclosureIndicator
+        
         if settingsItem.value == "language" {
             cell.valueLabel.text = GlobalVariables.sharedInstance.languageLong
         } else if settingsItem.value == "units" {
             cell.valueLabel.text = GlobalVariables.sharedInstance.unitsLong
         }
 
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
@@ -98,13 +97,15 @@ class SettingsViewController : UITableViewController {
         return 45
     }
 
-
+    
+    
     fileprivate func handleCellAction(_ action: SettingItemAction?, value: Bool?) {
         guard let action = action else { return }
         
         switch action {
         case .changeUnits : flowDelegate?.showPickerView(self, pickerType: .units)
         case .changeLanguage : flowDelegate?.showPickerView(self, pickerType: .language)
+        case .changeForecastData : flowDelegate?.showForecastDataTableView()
         case .openPhoneSettings : UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         case .rateApp : UIApplication.shared.open(URL(string: "https://www.apple.com/lae/ios/app-store/")! as URL, options: [:], completionHandler: nil)
             
@@ -115,7 +116,6 @@ class SettingsViewController : UITableViewController {
         case .linkToInstagram : UIApplication.shared.open(URL(string: "https://www.instagram.com")! as URL, options: [:], completionHandler: nil)
         case .linkToFacebook : UIApplication.shared.open(URL(string: "https://www.facebook.com")! as URL, options: [:], completionHandler: nil)
         case .linkToTwitter : UIApplication.shared.open(URL(string: "https://www.twitter.com")! as URL, options: [:], completionHandler: nil)
-            
         }
     }
     

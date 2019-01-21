@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum HourlyForecastDataType {
-    case time, precipIntensity, precipProbability, temp, feelsLike, dewPoint, humidity, pressure, wind, cloudCover, uvIndex, visibility, ozone
-}
+//enum HourlyForecastDataType {
+//    case time, precipIntensity, precipProbability, temp, feelsLike, dewPoint, humidity, pressure, wind, cloudCover, uvIndex, visibility, ozone
+//}
 
 struct HourlyData: Codable {
     var time: Int?
@@ -38,17 +38,15 @@ struct Hourly: Codable {
     var icon: String?
     var data: [HourlyData]
     
-    func getValueString(dataType: HourlyForecastDataType, index: Int, timeZone: String) -> LabelFormat {
+    func getValueString(dataType: ForecastDataType, index: Int, timeZone: String) -> LabelFormat {
         
-        var titleLabelText = ""
-        var valueLabelText = ""
-        
-        let formatdate = FormatDate()
+        var titleLabelText = "--"
+        var valueLabelText = "--"
         
         switch dataType {
         case .time :
             titleLabelText = "time"
-            valueLabelText = formatdate.date(unixtimeInterval: data[index].time ?? 0, timeZone: timeZone, format: .mediumWithTime)
+            valueLabelText = FormatDate().date(unixtimeInterval: data[index].time ?? 0, timeZone: timeZone, format: .mediumWithTime)
         case .precipIntensity :
             titleLabelText = "\((data[index].precipType) ?? "precip")"
             let value = "\(data[index].precipIntensity ?? 0)"
@@ -94,6 +92,7 @@ struct Hourly: Codable {
         case .ozone :
             titleLabelText = "ozone"
             valueLabelText = "\(data[index].ozone ?? 0.0)"
+        default : break
         }
         
         return LabelFormat(title: titleLabelText, value: valueLabelText)

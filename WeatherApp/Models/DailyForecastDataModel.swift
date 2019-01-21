@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum DailyForecastDataType {
-    case time, sunriseTime, sunsetTime, moonPhase, precipIntensity, precipProbability, dewPoint, humidity, pressure, wind, cloudCover, uvIndex, visibility, ozone, temp, feelsLike 
-}
+//enum DailyForecastDataType {
+//    case time, sunriseTime, sunsetTime, moonPhase, precipIntensity, precipProbability, dewPoint, humidity, pressure, wind, cloudCover, uvIndex, visibility, ozone, temp, feelsLike 
+//}
 
 struct DailyData: Codable {
     var time: Int?
@@ -52,27 +52,24 @@ struct Daily: Codable {
     var data: [DailyData]
     
     
-    func getValueString(dataType: DailyForecastDataType, index: Int, timeZone: String) -> LabelFormat {
+    func getValueString(dataType: ForecastDataType, index: Int, timeZone: String) -> LabelFormat {
         
-        var titleLabelText = ""
-        var valueLabelText = ""
-        
-        let formatdate = FormatDate()
-        let moonPhase = FontIconModel()
+        var titleLabelText = "--"
+        var valueLabelText = "--"
         
         switch dataType {
         case .time :
             titleLabelText = "time"
-            valueLabelText = formatdate.date(unixtimeInterval: data[index].time ?? 0, timeZone: timeZone, format: .medium)
+            valueLabelText = FormatDate().date(unixtimeInterval: data[index].time ?? 0, timeZone: timeZone, format: .medium)
         case .sunriseTime :
             titleLabelText = "sunrise"
-            valueLabelText = formatdate.date(unixtimeInterval: data[index].sunriseTime ?? 0, timeZone: timeZone, format: .timeLong)
+            valueLabelText = FormatDate().date(unixtimeInterval: data[index].sunriseTime ?? 0, timeZone: timeZone, format: .timeLong)
         case .sunsetTime :
             titleLabelText = "sunset"
-            valueLabelText = formatdate.date(unixtimeInterval: data[index].sunsetTime ?? 0, timeZone: timeZone, format: .timeLong)
+            valueLabelText = FormatDate().date(unixtimeInterval: data[index].sunsetTime ?? 0, timeZone: timeZone, format: .timeLong)
         case .moonPhase :
             titleLabelText = "moon"
-            valueLabelText = moonPhase.updateMoonIcon(condition: data[index].moonPhase ?? 0.0)
+            valueLabelText = FontIconModel().updateMoonIcon(condition: data[index].moonPhase ?? 0.0)
         case .precipIntensity :
             titleLabelText = "\((data[index].precipType) ?? "precip")"
             let value = "\(data[index].precipIntensity ?? 0)" 
@@ -122,6 +119,7 @@ struct Daily: Codable {
         case .ozone :
             titleLabelText = "ozone"
             valueLabelText = "\(data[index].ozone ?? 0.0)"
+        default : break
         }
         
         return LabelFormat(title: titleLabelText, value: valueLabelText)

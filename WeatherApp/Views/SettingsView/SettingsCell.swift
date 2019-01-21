@@ -93,12 +93,7 @@ class SettingsCell: UITableViewCell {
             selectionStyle = .gray
         }
         
-        switch settingItem.hideSubTitleLabel {
-        case true:
-            detailLabel.isHidden = true
-        case false:
-            detailLabel.isHidden = false
-        }
+        detailLabel.isHidden = (settingItem.subTitle == nil)
         
     }
     

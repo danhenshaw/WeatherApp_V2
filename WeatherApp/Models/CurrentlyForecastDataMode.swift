@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum CurrentlyForecastDataType {
-    case time, nearestStorm, precipIntensity, precipProbability, temp, feelsLike, dewPoint, humidity, pressure, wind, cloudCover, uvIndex, visibility, ozone
-}
+//enum CurrentlyForecastDataType {
+//    case time, nearestStorm, precipIntensity, precipProbability, temp, feelsLike, dewPoint, humidity, pressure, wind, cloudCover, uvIndex, visibility, ozone
+//}
 
 struct Currently: Codable {
     
@@ -35,11 +35,10 @@ struct Currently: Codable {
     var ozone: Double?
     
     
-    func getValueString(dataType: CurrentlyForecastDataType, timeZone: String) -> LabelFormat {
+    func getValueString(dataType: ForecastDataType, timeZone: String) -> LabelFormat {
     
-        var titleLabelText = ""
-        var valueLabelText = ""
-        let language = GlobalVariables.sharedInstance.language
+        var titleLabelText = "--"
+        var valueLabelText = "--"
 
         switch dataType {
         case .time :
@@ -96,6 +95,7 @@ struct Currently: Codable {
         case .ozone :
             titleLabelText = "ozone"
             valueLabelText = "\(ozone ?? 0.0)"
+        default : break
         }
 
         return LabelFormat(title: titleLabelText, value: valueLabelText)
