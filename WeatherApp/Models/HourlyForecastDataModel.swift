@@ -47,61 +47,59 @@ struct Hourly: Codable {
         
         switch dataType {
         case .time :
-            titleLabelText = "TIME: "
+            titleLabelText = "time"
             valueLabelText = formatdate.date(unixtimeInterval: data[index].time ?? 0, timeZone: timeZone, format: .mediumWithTime)
         case .precipIntensity :
-            titleLabelText = "\((data[index].precipType)?.uppercased() ?? "PRECIP"): "
+            titleLabelText = "\((data[index].precipType) ?? "precip")"
             let value = "\(data[index].precipIntensity ?? 0)"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .rainfall)
             valueLabelText = value + " " + units
         case .precipProbability :
-            titleLabelText = "\((data[index].precipType)?.uppercased() ?? "PRECIP"): "
+            titleLabelText = "\((data[index].precipType) ?? "precip")"
             valueLabelText = "\(Int(round((data[index].precipProbability ?? 0.0) * 100)))%"
         case .temp :
-            titleLabelText = "TEMP: "
+            titleLabelText = "temp"
             valueLabelText = "\(Int(round(data[index].temperature ?? 0.0)))°"
         case .feelsLike :
-            titleLabelText = "FEELS LIKE: "
+            titleLabelText = "feelsLike"
             valueLabelText = "\(Int(round(data[index].apparentTemperature ?? 0.0)))°"
         case .dewPoint :
-            titleLabelText = "DEW POINT: "
+            titleLabelText = "dewPoint"
             valueLabelText = "\(Int(round(data[index].dewPoint ?? 0.0)))°"
         case .humidity :
-            titleLabelText = "HUMIDITY: "
+            titleLabelText = "humidity"
             valueLabelText = "\(Int(round((data[index].humidity ?? 0.0) * 100)))%"
         case .pressure :
-            titleLabelText = "PRESSURE: "
+            titleLabelText = "pressure"
             let value = "\(Int(round(data[index].pressure ?? 0.0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .pressure)
             valueLabelText = value + " " + units
         case .wind :
-            titleLabelText = "WIND: "
+            titleLabelText = "wind"
             let direction = getDirection(value: Int(round(data[index].windBearing ?? 0.0)))
             let speed = "\(Int(round(data[index].windSpeed ?? 0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .wind)
             valueLabelText = direction + " " + speed + " " + units
         case .cloudCover :
-            titleLabelText = "CLOUDS: "
+            titleLabelText = "clouds"
             valueLabelText = "\(Int(round((data[index].cloudCover ?? 0) * 100)))%"
         case .uvIndex :
-            titleLabelText = "UV INDEX: "
+            titleLabelText = "uvIndex"
             valueLabelText = "\(data[index].uvIndex ?? 0)"
         case .visibility :
-            titleLabelText = "VISIBILITY: "
+            titleLabelText = "visibility"
             let value = "\(Int(round(data[index].visibility ?? 0.0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .distance)
             valueLabelText = value + " " + units
         case .ozone :
-            titleLabelText = "OZONE: "
+            titleLabelText = "ozone"
             valueLabelText = "\(data[index].ozone ?? 0.0)"
         }
         
         return LabelFormat(title: titleLabelText, value: valueLabelText)
     }
     
-    
-    
-    
+
     func getDirection(value: Int) -> String {
         switch value {
         case 0 ... 22 : return "N"

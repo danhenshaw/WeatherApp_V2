@@ -19,15 +19,17 @@ class InitialViewModel {
     
     weak var delegate: InitialViewModelDelegate?
     fileprivate var coreDataManager: CoreDataManager
-    var cityData = [CityDataModel]()
+    var cityData: [CityDataModel]!
     
     struct DefaultSettings {
-        static let language = "en"
+        static let language = NSLocale.current.languageCode
         static let units = "us"
     }
 
+    
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
+        cityData = [CityDataModel]()
         restoreUserSettingsFromStorage()
         getLocationsFromCoreData()
     }
@@ -36,7 +38,7 @@ class InitialViewModel {
     func restoreUserSettingsFromStorage() {
         let language = UserDefaults.standard.string(forKey: "LanguageKey") ?? DefaultSettings.language
         let units = UserDefaults.standard.string(forKey: "UnitsKey") ?? DefaultSettings.units
-        GlobalVariables.sharedInstance.update(value: .language, toNewValue: language)
+        GlobalVariables.sharedInstance.update(value: .language, toNewValue: language ?? "en")
         GlobalVariables.sharedInstance.update(value: .units, toNewValue: units)
     }
     

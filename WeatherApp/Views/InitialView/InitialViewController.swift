@@ -23,17 +23,12 @@ class InitialViewController: UIViewController {
 
     weak var flowDelegate: InitialViewControllerFlowDelegate?
     fileprivate let viewModel: InitialViewModel
-    
-    fileprivate let locationManager: LocationManager! 
-    fileprivate let coreDataManager: CoreDataManager!
+    fileprivate let locationManager: LocationManager!
 
-    fileprivate var haveRequestedLocationServices = false
-    fileprivate var haveSeguedToMainViewController = false
     
-    init(viewModel: InitialViewModel) {
+    init(viewModel: InitialViewModel, locationManager: LocationManager) {
         self.viewModel = viewModel
-        locationManager = LocationManager()
-        coreDataManager = CoreDataManager()
+        self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self as? InitialViewModelDelegate
     }
@@ -50,6 +45,7 @@ class InitialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Language: ", NSLocale.current.languageCode)
         initialView.locationServicesButton.addTarget(self, action: #selector(InitialViewController.locationServicesButtonTapped(_:)), for: .touchUpInside)
         initialView.skipButton.addTarget(self, action: #selector(InitialViewController.skipButtonTapped(_:)), for: .touchUpInside)
         viewModel.getLocationsFromCoreData()
@@ -86,7 +82,6 @@ class InitialViewController: UIViewController {
         case .notDetermined :
             updateScreen(type: .welcome)
         case .restricted, .denied :
-            print("Location services restricted or denied - navigate to main view controller without retrieveing the current location")
             self.flowDelegate?.showMainViewController(self, cityDataArray: self.viewModel.cityData)
         }
     }

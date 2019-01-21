@@ -119,6 +119,7 @@ class SettingsViewController : UITableViewController {
         }
     }
     
+    
     func openEmail() {
         let subject = "weatherAPP - User Feedback"
         let body = ""
@@ -126,8 +127,9 @@ class SettingsViewController : UITableViewController {
         UIApplication.shared.open(NSURL(string: coded!)! as URL, options: [:], completionHandler: nil)
     }
     
+    
     func share() {
-        let firstActivityItem = "Text you want"
+        let firstActivityItem = "WeatherAPP"
         let secondActivityItem = NSURL(string: "https://www.google.com")!
 
         let activityViewController = UIActivityViewController(activityItems: [firstActivityItem, secondActivityItem], applicationActivities: nil)

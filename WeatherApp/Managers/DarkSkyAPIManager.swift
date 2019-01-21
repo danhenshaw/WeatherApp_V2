@@ -11,11 +11,11 @@ import Foundation
 
 class DarkSkyAPI {
     
-    static let sharedInstance = DarkSkyAPI()
+    fileprivate let darkSkyAPIKey = "d308423b74ce6cab0328feaa8a9d7a31" // Register at https://darksky.net/dev/register to receive your Dark Sky API key
     
     func fetchWeather(latitude: Double, longitude: Double, completionHandler: @escaping (_ forecastArray: ForecastModel?, _ error: Error?) -> Void ) {
         
-        let urlString = GlobalVariables.sharedInstance.baseURL + GlobalVariables.sharedInstance.darkSkyAPIKey + "/\(latitude),\(longitude)"
+        let urlString = "https://api.darksky.net/forecast/" + darkSkyAPIKey + "/\(latitude),\(longitude)"
         
         var urlBuilder = URLComponents(string: urlString)!
         var queryItems: [URLQueryItem] = []

@@ -77,9 +77,7 @@ class ForecastViewController : UITableViewController {
         let latitude = viewModel.getCityData().latitude
         let longitude = viewModel.getCityData().longitude
         
-        DarkSkyAPI.sharedInstance.fetchWeather(latitude: latitude, longitude: longitude) { (retrievedForecast, error) in
-           
-            self.viewModel.forecastLastUpdatedAt = Date().timeIntervalSince1970
+        DarkSkyAPI().fetchWeather(latitude: latitude, longitude: longitude) { (retrievedForecast, error) in
             
             if let error = error {
                 print("There was an error retrieving the forecast: ", error)
@@ -206,6 +204,7 @@ class ForecastViewController : UITableViewController {
 }
 
 extension ForecastViewController: HourlyOrDailyForecastCellActionDelegate {
+    
     func showSelectedForecastDetails(forecastSection: ForecastSection, index: Int) {
         
         if forecastOverviewSection != forecastSection || forecastOverviewIndex != index {

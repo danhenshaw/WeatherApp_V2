@@ -101,9 +101,14 @@ class ForecastOverviewCell: UITableViewCell {
     
     
     func bindWith(_ cellData: ForecastOverviewCellItem) {
+        
+        let language = GlobalVariables.sharedInstance.language
+        
         tempLabel.text = cellData.currentTemp
         for index in 0 ..< cellData.values.count {
-            labelArray[index].titleLabel.text = cellData.values[index].title
+            let titleString = cellData.values[index].title
+            let translatedTitle = Translator().getString(forLanguage: language, string: titleString)
+            labelArray[index].titleLabel.text = "\(translatedTitle.uppercased())" + ": "
             labelArray[index].valueLabel.text = cellData.values[index].value
         }
     }

@@ -32,6 +32,7 @@ final class PickerViewModel {
         }
     }
 
+    
     func setScrollPosition(_ pickerType: PickerType) -> Int {
         
         var scrollPosition = 0

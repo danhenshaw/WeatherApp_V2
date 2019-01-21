@@ -71,7 +71,7 @@
 		90797D6621EE02410071A845 /* LocationListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6521EE02410071A845 /* LocationListFooterView.swift */; };
 		90797D6821EF4C4D0071A845 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6721EF4C4C0071A845 /* Labels.swift */; };
 		90797D6A21EF628C0071A845 /* HourlyOrDailyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6921EF628C0071A845 /* HourlyOrDailyForecastView.swift */; };
-		90797D6E21EF71150071A845 /* RainIntensityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6D21EF71150071A845 /* RainIntensityModel.swift */; };
+		90797D6E21EF71150071A845 /* PrecipIntensityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6D21EF71150071A845 /* PrecipIntensityModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,7 +162,7 @@
 		90797D6521EE02410071A845 /* LocationListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListFooterView.swift; sourceTree = "<group>"; };
 		90797D6721EF4C4C0071A845 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		90797D6921EF628C0071A845 /* HourlyOrDailyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyOrDailyForecastView.swift; sourceTree = "<group>"; };
-		90797D6D21EF71150071A845 /* RainIntensityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainIntensityModel.swift; sourceTree = "<group>"; };
+		90797D6D21EF71150071A845 /* PrecipIntensityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipIntensityModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,15 +216,10 @@
 				90797C8621C7E9FF0071A845 /* AppDelegate.swift */,
 				90797D2A21CBC03A0071A845 /* GlobalVariables.swift */,
 				90797CDF21C9028B0071A845 /* FlowController */,
-				90797CE021C902970071A845 /* NavigayionController */,
-				90797CC321C800210071A845 /* InitialView */,
-				90797CCD21C80F560071A845 /* MainForecastView */,
-				90797CD621C901F50071A845 /* SettingsView */,
-				90797CE121C904710071A845 /* LocationListView */,
-				90797CEA21C913660071A845 /* PickerView */,
-				90797D1921CAA2C60071A845 /* AddLocationView */,
-				90797D2221CBB2620071A845 /* CoreData */,
+				90797CE021C902970071A845 /* NavigationController */,
+				907D81B221F26EEE000F6B46 /* Views */,
 				90797D2721CBB53E0071A845 /* Models */,
+				90797D2221CBB2620071A845 /* CoreData */,
 				90B3B50921EFB35E001785F9 /* Managers */,
 				90797D5221DD2E930071A845 /* Helpers */,
 				90797D4F21DD11F60071A845 /* Extensions */,
@@ -298,12 +293,12 @@
 			path = FlowController;
 			sourceTree = "<group>";
 		};
-		90797CE021C902970071A845 /* NavigayionController */ = {
+		90797CE021C902970071A845 /* NavigationController */ = {
 			isa = PBXGroup;
 			children = (
 				90797CC121C7F1300071A845 /* NavigationController.swift */,
 			);
-			path = NavigayionController;
+			path = NavigationController;
 			sourceTree = "<group>";
 		};
 		90797CE121C904710071A845 /* LocationListView */ = {
@@ -375,7 +370,7 @@
 				90797D4921D7E33A0071A845 /* CurrentlyForecastDataMode.swift */,
 				90797D5521DD32780071A845 /* FontIconModel.swift */,
 				90797D5B21DE09EA0071A845 /* UnitsModel.swift */,
-				90797D6D21EF71150071A845 /* RainIntensityModel.swift */,
+				90797D6D21EF71150071A845 /* PrecipIntensityModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -407,6 +402,19 @@
 				90797D5321DD2EA00071A845 /* Date.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		907D81B221F26EEE000F6B46 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				90797CC321C800210071A845 /* InitialView */,
+				90797CCD21C80F560071A845 /* MainForecastView */,
+				90797CD621C901F50071A845 /* SettingsView */,
+				90797CE121C904710071A845 /* LocationListView */,
+				90797CEA21C913660071A845 /* PickerView */,
+				90797D1921CAA2C60071A845 /* AddLocationView */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		90B3B50921EFB35E001785F9 /* Managers */ = {
@@ -557,7 +565,7 @@
 				90797CD521C810300071A845 /* MainForecastModel.swift in Sources */,
 				90797D6421EE01E10071A845 /* LocationListHeaderView.swift in Sources */,
 				90797D3721CC1D200071A845 /* ForecastViewModel.swift in Sources */,
-				90797D6E21EF71150071A845 /* RainIntensityModel.swift in Sources */,
+				90797D6E21EF71150071A845 /* PrecipIntensityModel.swift in Sources */,
 				90797CEC21C913930071A845 /* PickerViewModel.swift in Sources */,
 				90797CF021C913BC0071A845 /* PickerViewController.swift in Sources */,
 				90797CEE21C913A80071A845 /* PickerModel.swift in Sources */,

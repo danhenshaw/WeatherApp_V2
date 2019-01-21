@@ -120,7 +120,6 @@ class LocationListViewController : UIViewController {
     
     
     @objc func headerTapped(_ sender: UIButton) {
-        print("HEADER TAPPED")
         if viewModel.isUsingCurrentLocation() {
             self.navigationController?.popViewController(animated: true)
             actionDelegate?.scrollToPage(atIndex: 0)

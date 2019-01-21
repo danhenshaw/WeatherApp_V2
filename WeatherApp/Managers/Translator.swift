@@ -9,7 +9,7 @@
 import Foundation
 
 enum Strings {
-    case wind, humidity, dewPoint, uvIndex, visibility, pressure, feelsLike, low, high, language, units, celcius, farenheit, kilometersPerHour, milesPerHour, metersPerSecond, milimetersPerHour, inchesPerHour, kilometers, miles, pascals, mb
+    case wind, humidity, dewPoint, uvIndex, visibility, pressure, feelsLike, low, high, language, units, celcius, farenheit, kilometersPerHour, milesPerHour, metersPerSecond, milimetersPerHour, inchesPerHour, kilometers, miles, pascals, mb, time, precip, storms, temp, clouds, ozone, sunrise, sunset, moon, rain, snow, sleet
 }
 
 
@@ -39,8 +39,6 @@ class Translator {
     
     let units = ["ca": "°C, km/h", "si": "°C, m/s", "uk2": "°C, mph", "us": "°F, mph"]
     
-    
-    
     let celcius = ["en" : "°C"]
     
     let farenheit = ["en": "°F"]
@@ -62,32 +60,77 @@ class Translator {
     let pascals = ["en": "hPa"]
     
     let mb = ["en": "mb"]
-
     
-    func getString(forLanguage: String, string: Strings) -> String {
+    let time = ["en": "time"]
+
+    let precip = ["en": "precip"]
+    
+    let storms = ["en": "storms"]
+    
+    let temp = ["en": "temp"]
+    
+    let clouds = ["en": "clouds"]
+    
+    let ozone = ["en": "ozone"]
+    
+    let sunrise = ["en": "sunrise"]
+    
+    let sunset = ["en": "sunset"]
+    
+    let moon = ["en": "moon"]
+    
+    let rain = ["en": "rain"]
+    
+    let snow = ["en": "snow"]
+    
+    let sleet = ["en": "sleet"]
+    
+    let daily = ["en": "daily"]
+    
+    let hourly = ["en": "hourly"]
+    
+    
+    func getString(forLanguage: String, string: String) -> String {
         switch string {
-        case .wind : return wind[forLanguage, default: "Wind"]
-        case .humidity : return humidity[forLanguage, default: "Humidity"]
-        case .dewPoint : return dewPoint[forLanguage, default: "Dew point"]
-        case .uvIndex : return uvIndex[forLanguage, default: "UV Index"]
-        case .visibility : return visibility[forLanguage, default: "Visibility"]
-        case .pressure : return pressure[forLanguage, default: "Pressure"]
-        case .feelsLike : return feelsLike[forLanguage, default: "Feels like"]
-        case .low : return low[forLanguage, default: "Low"]
-        case .high : return high[forLanguage, default: "High"]
-        case .language : return language[forLanguage, default: ""]
-        case .units : return units[forLanguage, default: "°F, mph"]
-        case .celcius : return celcius[forLanguage, default: "°C"]
-        case .farenheit : return farenheit[forLanguage, default: "°F"]
-        case .kilometersPerHour : return kilometersPerHour[forLanguage, default: "km.h"]
-        case .milesPerHour : return milesPerHour[forLanguage, default: "mph"]
-        case .metersPerSecond : return metersPerSecond[forLanguage, default: "m/s"]
-        case .milimetersPerHour : return milimetersPerHour[forLanguage, default: "mm/h"]
-        case .inchesPerHour : return inchesPerHour[forLanguage, default: "in/h"]
-        case .kilometers : return kilometers[forLanguage, default: "km"]
-        case .miles : return miles[forLanguage, default: "mi"]
-        case .pascals : return pascals[forLanguage, default: "hPa"]
-        case .mb : return mb[forLanguage, default: "mb"]
+        case "wind" : return wind[forLanguage, default: "Wind"]
+        case "humidity" : return humidity[forLanguage, default: "Humidity"]
+        case "dewPoint" : return dewPoint[forLanguage, default: "Dew point"]
+        case "uvIndex" : return uvIndex[forLanguage, default: "UV Index"]
+        case "visibility" : return visibility[forLanguage, default: "Visibility"]
+        case "pressure" : return pressure[forLanguage, default: "Pressure"]
+        case "feelsLike" : return feelsLike[forLanguage, default: "Feels like"]
+        case "low" : return low[forLanguage, default: "Low"]
+        case "high" : return high[forLanguage, default: "High"]
+        case "language" : return language[forLanguage, default: ""]
+        case "units" : return units[forLanguage, default: "°F, mph"]
+        case "celcius" : return celcius[forLanguage, default: "°C"]
+        case "farenheit" : return farenheit[forLanguage, default: "°F"]
+        case "kilometersPerHour" : return kilometersPerHour[forLanguage, default: "km.h"]
+        case "milesPerHour" : return milesPerHour[forLanguage, default: "mph"]
+        case "metersPerSecond" : return metersPerSecond[forLanguage, default: "m/s"]
+        case "milimetersPerHour" : return milimetersPerHour[forLanguage, default: "mm/h"]
+        case "inchesPerHour" : return inchesPerHour[forLanguage, default: "in/h"]
+        case "kilometers" : return kilometers[forLanguage, default: "km"]
+        case "miles" : return miles[forLanguage, default: "mi"]
+        case "pascals" : return pascals[forLanguage, default: "hPa"]
+        case "mb" : return mb[forLanguage, default: "mb"]
+        case "time" : return time[forLanguage, default: "Time"]
+        case "precip" : return precip[forLanguage, default: "Precip"]
+        case "storms" : return storms[forLanguage, default: "Storm"]
+        case "temp" : return temp[forLanguage, default: "Temp"]
+        case "clouds" : return clouds[forLanguage, default: "Clouds"]
+        case "ozone" : return ozone[forLanguage, default: "Ozone"]
+        case "sunrise" : return sunrise[forLanguage, default: "sunrise"]
+        case "sunset" : return sunset[forLanguage, default: "sunset"]
+        case "moon" : return moon[forLanguage, default: "moon"]
+        case "rain" : return rain[forLanguage, default: "rain"]
+        case "snow" : return snow[forLanguage, default: "snow"]
+        case "sleet" : return sleet[forLanguage, default: "sleet"]
+        case "daily" : return daily[forLanguage, default: "daily"]
+        case "hourly" : return hourly[forLanguage, default: "hourly"]
+        default :
+            print("There was an error getting the translation for \(string) in \(forLanguage)")
+            return "--"
         }
     }
     

@@ -22,17 +22,13 @@ class AddLocationViewController: UIViewController {
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
+    init() { super.init(nibName: nil, bundle: nil) }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        view = AddLocationView()
-    }
+    override func loadView() { view = AddLocationView() }
     
     var addLocationView: AddLocationView { return self.view as! AddLocationView }
     
@@ -61,6 +57,8 @@ class AddLocationViewController: UIViewController {
     }
 
 }
+
+
 
 extension AddLocationViewController: UITableViewDataSource, UITableViewDelegate {
     

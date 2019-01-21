@@ -39,63 +39,62 @@ struct Currently: Codable {
     
         var titleLabelText = ""
         var valueLabelText = ""
-        
-        let formatdate = FormatDate()
+        let language = GlobalVariables.sharedInstance.language
 
         switch dataType {
         case .time :
-            titleLabelText = "TIME: "
-            valueLabelText = formatdate.date(unixtimeInterval: time ?? 0, timeZone: timeZone, format: .mediumWithTime)
+            titleLabelText = "time"
+            valueLabelText = FormatDate().date(unixtimeInterval: time ?? 0, timeZone: timeZone, format: .mediumWithTime)
         case .nearestStorm :
-            titleLabelText = "STORMS: "
+            titleLabelText = "storm"
             let direction = getDirection(value: nearestStormBearing ?? 0)
             let distance = "\(nearestStormDistance ?? 0)"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .distance)
             valueLabelText = direction + " " + distance + " " + units
         case .precipIntensity :
-            titleLabelText = "PRECIP: "
+            titleLabelText = "precip"
             let value = "\(precipIntensity ?? 0)"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .rainfall)
             valueLabelText = value + " " + units
         case .precipProbability :
-            titleLabelText = "PRECIP: "
+            titleLabelText = "precip"
             valueLabelText = "\(Int(round((precipProbability ?? 0.0) * 100)))%"
         case .temp :
-            titleLabelText = "TEMP: "
+            titleLabelText = "temp"
             valueLabelText = "\(Int(round(temperature ?? 0.0)))°"
         case .feelsLike :
-            titleLabelText = "FEELS LIKE: "
+            titleLabelText = "feelsLike"
             valueLabelText = "\(Int(round(apparentTemperature ?? 0.0)))°"
         case .dewPoint :
-            titleLabelText = "DEW POINT: "
+            titleLabelText = "dewPoint"
             valueLabelText = "\(Int(round(dewPoint ?? 0.0)))°"
         case .humidity :
-            titleLabelText = "HUMIDITY: "
+            titleLabelText = "humidity"
             valueLabelText = "\(Int(round((humidity ?? 0.0) * 100)))%"
         case .pressure :
-            titleLabelText = "PRESSURE: "
+            titleLabelText = "pressure"
             let value = "\(Int(round(pressure ?? 0.0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .pressure)
             valueLabelText = value + " " + units
         case .wind :
-            titleLabelText = "WIND: "
+            titleLabelText = "wind"
             let direction = getDirection(value: Int(round(windBearing ?? 0.0)))
             let speed = "\(Int(round(windSpeed ?? 0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .wind)
             valueLabelText = direction + " " + speed + " " + units
         case .cloudCover :
-            titleLabelText = "CLOUDS: "
+            titleLabelText = "clouds"
             valueLabelText = "\(Int(round((cloudCover ?? 0) * 100)))%"
         case .uvIndex :
-            titleLabelText = "UV INDEX: "
+            titleLabelText = "uvIndex"
             valueLabelText = "\(uvIndex ?? 0)"
         case .visibility :
-            titleLabelText = "VISIBILITY: "
+            titleLabelText = "visibility"
             let value = "\(Int(round(visibility ?? 0.0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .distance)
             valueLabelText = value + " " + units
         case .ozone :
-            titleLabelText = "OZONE: "
+            titleLabelText = "ozone"
             valueLabelText = "\(ozone ?? 0.0)"
         }
 

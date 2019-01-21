@@ -23,7 +23,8 @@ class FlowController {
         
         let coreDataManager = CoreDataManager()
         let viewModel = InitialViewModel(coreDataManager: coreDataManager)
-        let viewController = InitialViewController(viewModel: viewModel)
+        let locationManager = LocationManager()
+        let viewController = InitialViewController(viewModel: viewModel, locationManager: locationManager)
         
         viewController.flowDelegate = self
         

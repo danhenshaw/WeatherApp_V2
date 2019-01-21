@@ -81,9 +81,7 @@ class InitialView: UIView {
         skipButton.anchor(top: locationServicesButton.bottomAnchor, leading: self.leadingAnchor, bottom: self.safeAreaLayoutGuide.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 16, left: 64, bottom: -16, right: -64), size: .init(width: 0, height: self.frame.size.height * 0.025))
         
         locationServicesButton.anchor(top: nil, leading: self.leadingAnchor, bottom: skipButton.topAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 64, bottom: -16, right: -64), size: .init(width: 0, height: self.frame.size.height * 0.025))
-        
-
-        
+           
     }
 }
 

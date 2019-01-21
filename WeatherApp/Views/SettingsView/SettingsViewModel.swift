@@ -33,8 +33,6 @@ final class SettingsViewModel {
     
     func settingItemForIndexPath(_ indexPath: IndexPath) -> SettingItem {
         let section = model.settings[indexPath.section]
-        
-        
         return section.items[indexPath.item]
     }
     

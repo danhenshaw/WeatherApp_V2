@@ -16,7 +16,7 @@ protocol MainViewControllerFlowDelegate: class {
 class MainViewController: UIPageViewController {
     
     weak var flowDelegate: MainViewControllerFlowDelegate?
-    let viewModel: MainForecastViewModel
+    fileprivate let viewModel: MainForecastViewModel
     var orderedViewControllers: [ForecastViewController]
     
     init(withViewModel viewModel: MainForecastViewModel) {
@@ -246,6 +246,8 @@ extension MainViewController: UIPageViewControllerDataSource, UIPageViewControll
     }
  
 }
+
+
 
 extension MainViewController: ForecastViewControllerActionDelegate {
     
