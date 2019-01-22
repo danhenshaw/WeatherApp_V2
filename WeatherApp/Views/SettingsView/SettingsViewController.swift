@@ -45,7 +45,8 @@ class SettingsViewController : UITableViewController {
         
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .darkGray
-        
+        tableView.estimatedRowHeight = 44.0
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(SettingsCell.self, forCellReuseIdentifier: Constants.settingsCellReuseIdentifier)
         title = "Settings"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -67,26 +68,26 @@ class SettingsViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let settingsItem = viewModel.settingItemForIndexPath(indexPath)
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.settingsCellReuseIdentifier, for: indexPath) as! SettingsCell
         cell.bindWithSettingItem(settingsItem)
         cell.configureCellForSettingItem(settingsItem)
         
         if settingsItem.value == "language" {
-            cell.valueLabel.text = GlobalVariables.sharedInstance.languageLong
+            let savedLanguage = GlobalVariables.sharedInstance.language
+            cell.valueLabel.text = Translator().getString(forLanguage: savedLanguage, string: "language")
         } else if settingsItem.value == "units" {
-            cell.valueLabel.text = GlobalVariables.sharedInstance.unitsLong
+            let savedUnits = GlobalVariables.sharedInstance.units
+            cell.valueLabel.text = Translator().getString(forLanguage: savedUnits, string: "units")
         }
-
+        
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
         let action = viewModel.settingItemForIndexPath(indexPath).action
         handleCellAction(action, value: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -94,7 +95,7 @@ class SettingsViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 45
+        return UITableView.automaticDimension
     }
 
     

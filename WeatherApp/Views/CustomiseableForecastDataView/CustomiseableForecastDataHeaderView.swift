@@ -27,8 +27,16 @@ class CustomiseableForecastDataHeaderView : UITableViewHeaderFooterView {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
+        return label
+    }()
+    
+    lazy var arrowLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.bold)
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = ">"
         return label
     }()
     
@@ -48,21 +56,24 @@ class CustomiseableForecastDataHeaderView : UITableViewHeaderFooterView {
     
     func setupView() {
         addSubview(titleLabel)
+        addSubview(arrowLabel)
         addSubview(button)
     }
     
     func setupConstraints() {
         button.fillSuperview()
-        titleLabel.anchor(top: nil, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 8, bottom: -8, right: 0), size: .init(width: 0, height: 0))
+        titleLabel.anchor(top: nil, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: arrowLabel.leadingAnchor, padding: .init(top: 0, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 0))
+        
+        arrowLabel.anchor(top: nil, leading: titleLabel.trailingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 8, bottom: -8, right: -8), size: .init(width: titleLabel.frame.size.height, height: titleLabel.frame.size.height))
     }
     
     @objc func headerTapGesture() {
         actionDelegate?.headerTapped(section)
     }
     
-    func setCollapsed(collapsed: Bool) {
-        // Animate the arrow rotation (see Extensions.swf)
-//        arrowLabel.rotate(collapsed ? 0.0 : .pi / 2)
+    func setCollapsed(isCollapsed: Bool) {
+        let rotationAngel = isCollapsed ? 0.0 : CGFloat.pi / 2
+        arrowLabel.transform = CGAffineTransform(rotationAngle: rotationAngel)
     }
     
     

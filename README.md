@@ -22,6 +22,7 @@ I chose the Dark Sky weather API due to the accuracy of the weather report as we
     - background gradient colours change based on weather conditions currently being shown
 - Users can save multiple cities to core data
 - Users can set preferred language and units
+- Customiseable forecast display for currently, hourly and daily sections
 
 
 ## Requirements
@@ -33,7 +34,6 @@ Sign up to Dark Sky at https://darksky.net/dev/register to obtain an API Key.
 
 Current improvements being worked on:
   - internationalise and localise App 
-  - forecast overview section to show customiseable weather data
   - error alerts
   - code documentation
   - customise refresher

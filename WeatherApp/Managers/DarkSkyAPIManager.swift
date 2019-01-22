@@ -11,7 +11,7 @@ import Foundation
 
 class DarkSkyAPI {
     
-    fileprivate let darkSkyAPIKey = "d308423b74ce6cab0328feaa8a9d7a31" // Register at https://darksky.net/dev/register to receive your Dark Sky API key
+    fileprivate let darkSkyAPIKey = "" // Register at https://darksky.net/dev/register to receive your Dark Sky API key
     
     func fetchWeather(latitude: Double, longitude: Double, completionHandler: @escaping (_ forecastArray: ForecastModel?, _ error: Error?) -> Void ) {
         
@@ -21,7 +21,7 @@ class DarkSkyAPI {
         var queryItems: [URLQueryItem] = []
 
         queryItems.append(URLQueryItem(name: "units", value: GlobalVariables.sharedInstance.units))
-        queryItems.append(URLQueryItem(name: "lang", value: GlobalVariables.sharedInstance.language))
+        queryItems.append(URLQueryItem(name: "lang", value: "en")) //GlobalVariables.sharedInstance.language))
         
         urlBuilder.queryItems = queryItems
         

@@ -89,9 +89,9 @@ final class ForecastViewModel {
         locationListData.cityName = model.cityData.cityName
         locationListData.longitude = model.cityData.longitude
         locationListData.latitude = model.cityData.latitude
-        locationListData.temp = forecast?.currently?.getValueString(dataType: .temp, timeZone: timeZone).value
+        locationListData.temp = forecast?.currently?.getValueString(dataType: "temp", timeZone: timeZone).value
         locationListData.summary = forecast?.currently?.summary
-        locationListData.time = forecast?.currently?.getValueString(dataType: .time, timeZone: timeZone).value
+        locationListData.time = forecast?.currently?.getValueString(dataType: "time", timeZone: timeZone).value
         locationListData.isCurrentLocation = model.cityData.isCurrentLocation
         
         let currentTime = forecast?.currently?.time ?? 0
@@ -117,15 +117,15 @@ final class ForecastViewModel {
         
         switch forecastSection {
         case .hourly :
-            let timeString = forecast?.hourly?.getValueString(dataType: .time, index: index, timeZone: timeZone).value ?? "Forecast currently unavailable."
+            let timeString = forecast?.hourly?.getValueString(dataType: "time", index: index, timeZone: timeZone).value ?? "Forecast currently unavailable."
             if timeString != "Forecast currently unavailable." { time = "Forecast for " + timeString }
             
         case .daily :
-            let timeString = forecast?.daily?.getValueString(dataType: .time, index: index, timeZone: timeZone).value ?? "Forecast currently unavailable."
+            let timeString = forecast?.daily?.getValueString(dataType: "time", index: index, timeZone: timeZone).value ?? "Forecast currently unavailable."
             if timeString != "Forecast currently unavailable." { time = "Forecast for " + timeString }
             
         default :
-            let timeString = forecast?.currently?.getValueString(dataType: .time, timeZone: timeZone).value ?? "Forecast currently unavailable."
+            let timeString = forecast?.currently?.getValueString(dataType: "time", timeZone: timeZone).value ?? "Forecast currently unavailable."
             if timeString != "Forecast currently unavailable." { time = "Last updated: " + timeString }
         }
 

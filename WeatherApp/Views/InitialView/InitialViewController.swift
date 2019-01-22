@@ -45,7 +45,6 @@ class InitialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Language: ", NSLocale.current.languageCode)
         initialView.locationServicesButton.addTarget(self, action: #selector(InitialViewController.locationServicesButtonTapped(_:)), for: .touchUpInside)
         initialView.skipButton.addTarget(self, action: #selector(InitialViewController.skipButtonTapped(_:)), for: .touchUpInside)
         viewModel.getLocationsFromCoreData()
@@ -145,8 +144,6 @@ class InitialViewController: UIViewController {
             initialView.skipButton.isEnabled = true
         }
     }
-    
-    
     
 }
 

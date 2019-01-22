@@ -9,7 +9,7 @@
 import Foundation
 
 enum Strings {
-    case wind, humidity, dewPoint, uvIndex, visibility, pressure, feelsLike, low, high, language, units, celcius, farenheit, kilometersPerHour, milesPerHour, metersPerSecond, milimetersPerHour, inchesPerHour, kilometers, miles, pascals, mb, time, precip, storms, temp, clouds, ozone, sunrise, sunset, moon, rain, snow, sleet
+    case wind, humidity, dewPoint, uvIndex, visibility, pressure, feelsLike, low, high, language, units, celcius, farenheit, kilometersPerHour, milesPerHour, metersPerSecond, milimetersPerHour, inchesPerHour, kilometers, miles, pascals, mb, time, precip, storms, temp, clouds, ozone, sunrise, sunset, moon, rain, snow, sleet, precipProbability, precipIntensity, cloudCover, sunriseTime, sunsetTime
 }
 
 
@@ -89,7 +89,14 @@ class Translator {
     
     let hourly = ["en": "hourly"]
     
-    
+    let precipProbability = ["en": "Precip Probability"]
+    let precipIntensity = ["en": "Precip Intensity"]
+    let moonPhase = ["en": "Moon Phase"]
+    let cloudCover = ["en": "Cloud Cover"]
+    let sunriseTime = ["en": "Sunrise Time"]
+    let sunsetTime = ["en": "Sunset Time"]
+    let nearestStorm = ["en": "Nearest Storm"]
+
     func getString(forLanguage: String, string: String) -> String {
         switch string {
         case "wind" : return wind[forLanguage, default: "Wind"]
@@ -128,6 +135,13 @@ class Translator {
         case "sleet" : return sleet[forLanguage, default: "sleet"]
         case "daily" : return daily[forLanguage, default: "daily"]
         case "hourly" : return hourly[forLanguage, default: "hourly"]
+        case "precipProbability" : return precipProbability[forLanguage, default: "Precip Probability"]
+        case "precipIntensity" : return precipIntensity[forLanguage, default: "Precip Intensity"]
+        case "cloudCover" : return cloudCover[forLanguage, default: "Cloud Cover"]
+        case "sunriseTime" : return sunriseTime[forLanguage, default: "Sunrise Time"]
+        case "sunsetTime" : return sunsetTime[forLanguage, default: "Sunset Time"]
+        case "moonPhase" : return moonPhase[forLanguage, default: "Moon Phase"]
+        case "nearestStorm": return nearestStorm[forLanguage, default: "Nearest Storm"]
         default :
             print("There was an error getting the translation for \(string) in \(forLanguage)")
             return "--"

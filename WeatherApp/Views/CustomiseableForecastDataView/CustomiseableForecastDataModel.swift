@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 struct ForecastDataGroup {
-    let name: String
+    let name: ForecastSection
     let items: [ForecastDataItem]
     var isCollapsed: Bool
 }
@@ -25,13 +25,13 @@ struct CustomiseableForecastDataModel {
     var forecastDataTypes = [
         
         ForecastDataGroup(
-            name: "Current Data",
+            name: .currently,
             items: [
-                ForecastDataItem(title: "Temperature", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .currently, index: 0) ?? "--"),
-                ForecastDataItem(title: "Slot 0", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .currently, index: 1) ?? "--"),
-                ForecastDataItem(title: "Slot 1", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .currently, index: 2) ?? "--"),
-                ForecastDataItem(title: "Slot 2", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .currently, index: 3) ?? "--"),
-                ForecastDataItem(title: "Slot 3", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .currently, index: 4) ?? "--")
+                ForecastDataItem(title: "Temperature", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.currentlyData[0])),
+                ForecastDataItem(title: "Slot 0", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.currentlyData[1])),
+                ForecastDataItem(title: "Slot 1", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.currentlyData[2])),
+                ForecastDataItem(title: "Slot 2", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.currentlyData[3])),
+                ForecastDataItem(title: "Slot 3", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.currentlyData[4]))
                 ],
             isCollapsed: true
         ),
@@ -39,16 +39,16 @@ struct CustomiseableForecastDataModel {
         
         
         ForecastDataGroup(
-            name: "Hourly Data",
+            name: .hourly,
             items: [
-                ForecastDataItem(title: "Slot 0", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 0) ?? "--"),
-                ForecastDataItem(title: "Slot 1", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 1) ?? "--"),
-                ForecastDataItem(title: "Slot 2", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 2) ?? "--"),
-                ForecastDataItem(title: "Slot 3", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 3) ?? "--"),
-                ForecastDataItem(title: "Slot 4", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 4) ?? "--"),
-                ForecastDataItem(title: "Slot 5", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 5) ?? "--"),
-                ForecastDataItem(title: "Slot 6", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 6) ?? "--"),
-                ForecastDataItem(title: "Slot 7", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .hourly, index: 7) ?? "--")
+                ForecastDataItem(title: "Slot 0", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[0])),
+                ForecastDataItem(title: "Slot 1", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[1])),
+                ForecastDataItem(title: "Slot 2", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[2])),
+                ForecastDataItem(title: "Slot 3", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[3])),
+                ForecastDataItem(title: "Slot 4", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[4])),
+                ForecastDataItem(title: "Slot 5", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[5])),
+                ForecastDataItem(title: "Slot 6", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[6])),
+                ForecastDataItem(title: "Slot 7", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.hourlyData[7]))
             ],
             isCollapsed: true
         ),
@@ -56,16 +56,16 @@ struct CustomiseableForecastDataModel {
         
         
         ForecastDataGroup(
-            name: "Daily Data",
+            name: .daily,
             items: [
-                ForecastDataItem(title: "Slot 0", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 0) ?? "--"),
-                ForecastDataItem(title: "Slot 1", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 1) ?? "--"),
-                ForecastDataItem(title: "Slot 2", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 2) ?? "--"),
-                ForecastDataItem(title: "Slot 3", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 3) ?? "--"),
-                ForecastDataItem(title: "Slot 4", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 4) ?? "--"),
-                ForecastDataItem(title: "Slot 5", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 5) ?? "--"),
-                ForecastDataItem(title: "Slot 6", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 6) ?? "--"),
-                ForecastDataItem(title: "Slot 7", value: ForecastDataTypeModel().getForecastDataTypeString(forecastSection: .daily, index: 7) ?? "--")
+                ForecastDataItem(title: "Slot 0", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[0])),
+                ForecastDataItem(title: "Slot 1", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[1])),
+                ForecastDataItem(title: "Slot 2", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[2])),
+                ForecastDataItem(title: "Slot 3", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[3])),
+                ForecastDataItem(title: "Slot 4", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[4])),
+                ForecastDataItem(title: "Slot 5", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[5])),
+                ForecastDataItem(title: "Slot 6", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[6])),
+                ForecastDataItem(title: "Slot 7", value: Translator().getString(forLanguage: GlobalVariables.sharedInstance.language, string: GlobalVariables.sharedInstance.dailyData[7]))
             ],
             isCollapsed: true
         )

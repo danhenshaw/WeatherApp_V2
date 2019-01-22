@@ -262,19 +262,19 @@ extension MainViewController: LocationListviewControllerActionDelegate {
         mainView.pageViewController.setViewControllers([orderedViewControllers[atIndex]], direction: .forward, animated: false, completion: nil)
         mainView.pageControl.currentPage = atIndex
     }
-    
+
     func removePage(atIndex: Int) {
         orderedViewControllers.remove(at: atIndex + 1)
         mainView.pageControl.numberOfPages = orderedViewControllers.count
     }
-    
+
     func addPage(forCity: CityDataModel) {
-        
+
         let model = ForecastDataModel(forCity: forCity)
         let forecastViewModel = ForecastViewModel(withModel: model)
         let forecastViewController = ForecastViewController(withViewModel: forecastViewModel)
         forecastViewController.actionDelegate = self
-        
+
         if forCity.isCurrentLocation ?? false {
             orderedViewControllers.insert(forecastViewController, at: 0)
             mainView.pageViewController.setViewControllers([orderedViewControllers[0]], direction: .forward, animated: false, completion: nil)

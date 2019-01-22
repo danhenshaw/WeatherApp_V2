@@ -98,6 +98,7 @@ extension FlowController: SettingsViewControllerFlowDelegate {
         let model = CustomiseableForecastDataModel()
         let viewModel = CustomiseableForecastDataViewModel(withModel: model)
         let customiseableForecastDataViewController = CustomiseableForecastDataViewController(withViewModel: viewModel)
+        customiseableForecastDataViewController.flowDelegate = self
         navigationController!.pushViewController(customiseableForecastDataViewController, animated: true)
     }
     
@@ -105,7 +106,7 @@ extension FlowController: SettingsViewControllerFlowDelegate {
     func showPickerView(_ senderViewController: SettingsViewController, pickerType: PickerType) {
         let model = PickerModel()
         let viewModel = PickerViewModel(withModel: model)
-        let pickerViewController = PickerViewController(withViewModel: viewModel, pickerType: pickerType)
+        let pickerViewController = PickerViewController(withViewModel: viewModel, pickerType: pickerType, forecastSection: nil, slot: nil)
         navigationController!.pushViewController(pickerViewController, animated: true)
     }
 }
@@ -135,6 +136,16 @@ extension FlowController: LocationListViewControllerFlowDelegate {
         
         alertController.addAction(okAction)
         navigationController?.present(alertController, animated: true, completion: nil)
+    }
+}
+
+
+extension FlowController: CustomiseableForecastDataViewControllerFlowDelegate {
+    func showPickerView(_ senderViewController: CustomiseableForecastDataViewController, pickerType: PickerType, forecastSection: ForecastSection, slot: Int) {
+        let model = PickerModel()
+        let viewModel = PickerViewModel(withModel: model)
+        let pickerViewController = PickerViewController(withViewModel: viewModel, pickerType: pickerType, forecastSection: forecastSection, slot: slot)
+        navigationController!.pushViewController(pickerViewController, animated: true)
     }
 }
 

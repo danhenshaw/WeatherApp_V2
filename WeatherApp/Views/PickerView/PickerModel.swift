@@ -1,10 +1,10 @@
-//
-//  PickerModel.swift
-//  PageViewTest
-//
-//  Created by Daniel Henshaw on 18/12/18.
-//  Copyright © 2018 Dan Henshaw. All rights reserved.
-//
+////
+////  PickerModel.swift
+////  PageViewTest
+////
+////  Created by Daniel Henshaw on 18/12/18.
+////  Copyright © 2018 Dan Henshaw. All rights reserved.
+////
 
 import Foundation
 
@@ -19,16 +19,22 @@ struct PickerItem {
     let longName: String
 }
 
+struct PickerItemForForecastDataType {
+    let forecastSection: [ForecastSection]
+    let forecastDataType: ForecastDataType
+}
+
 
 struct PickerModel {
     
-    let units = [PickerItem(shortName: "us", longName: "°F, mph"),
-                 PickerItem(shortName: "uk2", longName: "°C, mph"),
-                 PickerItem(shortName: "ca", longName: "°C, km/h"),
-                 PickerItem(shortName: "si", longName: "°C, m/s")]
+    let units = ["us", "uk2", "ca", "si"]
+//        PickerItem(shortName: "us", longName: "°F, mph"),
+//                 PickerItem(shortName: "uk2", longName: "°C, mph"),
+//                 PickerItem(shortName: "ca", longName: "°C, km/h"),
+//                 PickerItem(shortName: "si", longName: "°C, m/s")]
     
     
-    let language = [
+    let language = ["en", "es", "fr", "it", "ja", "tr", "x-pig-latin", "zh", "zh-tw"]
 //                    PickerItem(shortName: "ar", longName: "Arabic"),
 //                    PickerItem(shortName: "az", longName: "Azerbaijani"),
 //                    PickerItem(shortName: "be", longName: "Belarusian"),
@@ -39,18 +45,18 @@ struct PickerModel {
 //                    PickerItem(shortName: "da", longName: "Danish"),
 //                    PickerItem(shortName: "de", longName: "Deutsch"),
 //                    PickerItem(shortName: "el", longName: "Greek"),
-                    PickerItem(shortName: "en", longName: "English"),
-                    PickerItem(shortName: "es", longName: "Español"),
+//                    PickerItem(shortName: "en", longName: "English"),
+//                    PickerItem(shortName: "es", longName: "Español"),
 //                    PickerItem(shortName: "et", longName: "Estonian"),
 //                    PickerItem(shortName: "fi", longName: "Finnish"),
-                    PickerItem(shortName: "fr", longName: "Fançais"),
+//                    PickerItem(shortName: "fr", longName: "Fançais"),
 //                    PickerItem(shortName: "he", longName: "Hebrew"),
 //                    PickerItem(shortName: "hr", longName: "Croatian"),
 //                    PickerItem(shortName: "hu", longName: "Hungarian"),
 //                    PickerItem(shortName: "id", longName: "Indonesian"),
 //                    PickerItem(shortName: "is", longName: "Icelandic"),
-                    PickerItem(shortName: "it", longName: "Italiano"),
-                    PickerItem(shortName: "ja", longName: "日本人"),
+//                    PickerItem(shortName: "it", longName: "Italiano"),
+//                    PickerItem(shortName: "ja", longName: "日本人"),
 //                    PickerItem(shortName: "ka", longName: "Georgian"),
 //                    PickerItem(shortName: "ko", longName: "Korean"),
 //                    PickerItem(shortName: "kw", longName: "Cornish"),
@@ -66,17 +72,20 @@ struct PickerModel {
 //                    PickerItem(shortName: "sr", longName: "Serbian"),
 //                    PickerItem(shortName: "sv", longName: "Swedish"),
 //                    PickerItem(shortName: "tet", longName: "Tetum"),
-                    PickerItem(shortName: "tr", longName: "Türk"),
+//                    PickerItem(shortName: "tr", longName: "Türk"),
 //                    PickerItem(shortName: "uk", longName: "Ukrainian"),
-                    PickerItem(shortName: "x-pig-latin", longName: "Igpay Atinlay"),
-                    PickerItem(shortName: "zh", longName: "汉字简化方案"),
-                    PickerItem(shortName: "zh-tw", longName: "漢字傳統方案")]
+//                    PickerItem(shortName: "x-pig-latin", longName: "Igpay Atinlay"),
+//                    PickerItem(shortName: "zh", longName: "汉字简化方案"),
+//                    PickerItem(shortName: "zh-tw", longName: "漢字傳統方案")]
     
-    let forecast = [PickerItem(shortName: "us", longName: "US"),
-                    PickerItem(shortName: "uk2", longName: "UK2"),
-                    PickerItem(shortName: "ca", longName: "CA"),
-                    PickerItem(shortName: "si", longName: "SI")]
     
+    let forecastDaily = ["precipIntensity", "precipProbability", "temp", "feelsLike", "dewPoint", "humidity", "pressure", "wind", "cloudCover", "uvIndex", "visibility", "ozone", "sunriseTime", "sunsetTime", "moonPhase"]
+    
+    let forecastHourly = ["precipIntensity", "precipProbability", "temp", "feelsLike", "dewPoint", "humidity", "pressure", "wind", "cloudCover", "uvIndex", "visibility", "ozone"]
+    
+    let forecastCurrently = [ "nearestStorm", "precipIntensity", "precipProbability", "temp", "feelsLike", "dewPoint", "humidity", "pressure", "wind", "cloudCover", "uvIndex", "visibility", "ozone"]
+    
+    let forecastCurrentTemp = ["temp", "feelsLike"]
 
-        
+    
 }

@@ -13,11 +13,16 @@ class PickerViewController : UIViewController {
     fileprivate let viewModel: PickerViewModel
     fileprivate let pickerType: PickerType
     fileprivate var pendingValueToSave = String()
+    fileprivate let forecastSection: ForecastSection?
+    fileprivate let slot: Int?
+    fileprivate var scrollPosition = 0
     
     
-    init(withViewModel viewModel: PickerViewModel, pickerType: PickerType) {
+    init(withViewModel viewModel: PickerViewModel, pickerType: PickerType, forecastSection: ForecastSection?, slot: Int?) {
         self.viewModel = viewModel
         self.pickerType = pickerType
+        self.forecastSection = forecastSection
+        self.slot = slot
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,7 +40,7 @@ class PickerViewController : UIViewController {
         pickerView.pickerView.delegate = self
         
         switch pickerType {
-        case .forecast : title = "Forecast"
+        case .forecast : title = "Forecast Data"
         case .language : title = "Choose your language"
         case .units : title = "Choose your units"
         }
@@ -45,7 +50,7 @@ class PickerViewController : UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         addNavigationItems()
-        let scrollPosition = viewModel.setScrollPosition(pickerType)
+        scrollPosition = viewModel.setScrollPosition(pickerType, forecastSection: forecastSection, slot: slot)
         pickerView.pickerView.selectRow(scrollPosition, inComponent: 0, animated: false)
     }
     
@@ -61,7 +66,7 @@ class PickerViewController : UIViewController {
     }
 
     @objc func saveButtonTapped() {
-        GlobalVariables.sharedInstance.update(value: pickerType, toNewValue: pendingValueToSave)
+        GlobalVariables.sharedInstance.update(value: pickerType, forecastSection: forecastSection, slot: slot, toNewValue: pendingValueToSave)
         GlobalVariables.sharedInstance.haveSettingsChanged(true)
         self.navigationController?.popViewController(animated: true)
     }
@@ -77,21 +82,33 @@ extension PickerViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel.numberOfItemsInSection(pickerType)
+        return viewModel.numberOfItemsInSection(pickerType, forecastSection: forecastSection, slot: slot)
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let pickerItem = viewModel.valueItemForIndexPath(pickerType, index: row)
-        let titleText = pickerItem.longName
+        let pickerItem = viewModel.valueItemForIndexPath(pickerType, forecastSection: forecastSection, slot: slot, index: row)
+        var titleText = ""
+        
+        if pickerType == .language {
+            titleText = Translator.sharedInstance.getString(forLanguage: pickerItem, string: "language")
+        } else if pickerType == .units {
+            titleText = Translator.sharedInstance.getString(forLanguage: pickerItem, string: "units")
+        } else {
+            titleText = Translator.sharedInstance.getString(forLanguage: GlobalVariables.sharedInstance.language, string: pickerItem)
+        }
+        
         let myTitle = NSAttributedString(string: titleText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         return myTitle
     }
     
+    
+    
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let pickerItem = viewModel.valueItemForIndexPath(pickerType, index: row)
-        pendingValueToSave = pickerItem.shortName
+        let pickerItem = viewModel.valueItemForIndexPath(pickerType, forecastSection: forecastSection, slot: slot, index: row)
+        pendingValueToSave = pickerItem
         
-        if (pendingValueToSave != GlobalVariables.sharedInstance.language) || (pendingValueToSave != GlobalVariables.sharedInstance.units) {
+        if row != scrollPosition {
             self.navigationItem.rightBarButtonItem?.isEnabled = true
         } else {
             self.navigationItem.rightBarButtonItem?.isEnabled = false

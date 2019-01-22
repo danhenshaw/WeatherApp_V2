@@ -52,71 +52,71 @@ struct Daily: Codable {
     var data: [DailyData]
     
     
-    func getValueString(dataType: ForecastDataType, index: Int, timeZone: String) -> LabelFormat {
+    func getValueString(dataType: String, index: Int, timeZone: String) -> LabelFormat {
         
         var titleLabelText = "--"
         var valueLabelText = "--"
         
         switch dataType {
-        case .time :
+        case "time" :
             titleLabelText = "time"
             valueLabelText = FormatDate().date(unixtimeInterval: data[index].time ?? 0, timeZone: timeZone, format: .medium)
-        case .sunriseTime :
+        case "sunriseTime" :
             titleLabelText = "sunrise"
             valueLabelText = FormatDate().date(unixtimeInterval: data[index].sunriseTime ?? 0, timeZone: timeZone, format: .timeLong)
-        case .sunsetTime :
+        case "sunsetTime" :
             titleLabelText = "sunset"
             valueLabelText = FormatDate().date(unixtimeInterval: data[index].sunsetTime ?? 0, timeZone: timeZone, format: .timeLong)
-        case .moonPhase :
+        case "moonPhase" :
             titleLabelText = "moon"
             valueLabelText = FontIconModel().updateMoonIcon(condition: data[index].moonPhase ?? 0.0)
-        case .precipIntensity :
+        case "precipIntensity" :
             titleLabelText = "\((data[index].precipType) ?? "precip")"
             let value = "\(data[index].precipIntensity ?? 0)" 
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .rainfall)
             valueLabelText = value + " " + units
-        case .precipProbability :
+        case "precipProbability" :
             titleLabelText = "\((data[index].precipType) ?? "precip")"
             valueLabelText = "\(Int(round((data[index].precipProbability ?? 0.0) * 100)))%"
-        case .temp :
+        case "temp" :
             titleLabelText = "temp"
             let tempHigh = "↑ " + "\(Int(round(data[index].temperatureHigh ?? 0.0)))°"
             let tempLow = "↓ " + "\(Int(round(data[index].temperatureLow ?? 0.0)))°"
             valueLabelText = tempHigh + " " + tempLow
-        case . feelsLike :
+        case "feelsLike" :
             titleLabelText = "feelsLike"
             let tempHigh = "↑ " + "\(Int(round(data[index].apparentTemperatureHigh ?? 0.0)))°"
             let tempLow = "↓ " + "\(Int(round(data[index].apparentTemperatureLow ?? 0.0)))°"
             valueLabelText = tempHigh + " " + tempLow
-        case .dewPoint :
+        case "dewPoint" :
             titleLabelText = "dewPoint"
             valueLabelText = "\(Int(round(data[index].dewPoint ?? 0.0)))°"
-        case .humidity :
+        case "humidity" :
             titleLabelText = "humidity"
             valueLabelText = "\(Int(round((data[index].humidity ?? 0.0) * 100)))%"
-        case .pressure :
+        case "pressure" :
             titleLabelText = "pressure"
             let value = "\(Int(round(data[index].pressure ?? 0.0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .pressure)
             valueLabelText = value + " " + units
-        case .wind :
+        case "wind" :
             titleLabelText = "wind"
             let direction = getDirection(value: Int(round(data[index].windBearing ?? 0.0)))
             let speed = "\(Int(round(data[index].windSpeed ?? 0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .wind)
             valueLabelText = direction + " " + speed + " " + units
-        case .cloudCover :
+        case "cloudCover" :
             titleLabelText = "clouds"
             valueLabelText = "\(Int(round((data[index].cloudCover ?? 0) * 100)))%"
-        case .uvIndex :
+        case "uvIndex" :
             titleLabelText = "uvIndex"
             valueLabelText = "\(data[index].uvIndex ?? 0)"
-        case .visibility :
+        case "visibility" :
             titleLabelText = "visibility"
             let value = "\(Int(round(data[index].visibility ?? 0.0)))"
             let units = UnitsModel.sharedInstance.getUnits(requestedUnits: .distance)
             valueLabelText = value + " " + units
-        case .ozone :
+        case "ozone" :
             titleLabelText = "ozone"
             valueLabelText = "\(data[index].ozone ?? 0.0)"
         default : break

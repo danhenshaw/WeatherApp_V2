@@ -18,7 +18,7 @@ class UnitsModel {
     
     func getUnits(requestedUnits: UnitTypes) -> String {
         
-        let language = GlobalVariables.sharedInstance.language
+        let language = "en" //GlobalVariables.sharedInstance.language
         let units = GlobalVariables.sharedInstance.units
         
         switch units {

@@ -13,14 +13,14 @@ final class SettingsViewModel {
     fileprivate let model: SettingsModel
     
     fileprivate let constants = GlobalVariables.sharedInstance
-    fileprivate var savedLanguage = ""
-    fileprivate var savedUnits = ""
+//    fileprivate var savedLanguage = ""
+//    fileprivate var savedUnits = ""
     
     
     init(withModel model: SettingsModel) {
         self.model = model
-        savedLanguage = constants.getDefaultLongName(value: .language)
-        savedUnits = constants.getDefaultLongName(value: .units)
+//        savedLanguage = constants.getDefaultLongName(value: .language)
+//        savedUnits = constants.getDefaultLongName(value: .units)
     }
     
     func numberOfSections() -> Int {

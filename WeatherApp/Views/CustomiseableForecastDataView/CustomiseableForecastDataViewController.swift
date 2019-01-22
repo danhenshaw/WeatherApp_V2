@@ -8,21 +8,14 @@
 
 import UIKit
 
-//enum SettingsViewControllerAction {
-//    case showPickerViewUnits
-//    case showPickerViewLanguage
-//    case showPickerViewForecast
-//}
-//
-//
-//protocol SettingsViewControllerFlowDelegate: class {
-//    func showPickerView(_ senderViewController: SettingsViewController, pickerType: PickerType)
-//}
+protocol CustomiseableForecastDataViewControllerFlowDelegate: class {
+    func showPickerView(_ senderViewController: CustomiseableForecastDataViewController, pickerType: PickerType, forecastSection: ForecastSection, slot: Int)
+}
 
 
 class CustomiseableForecastDataViewController : UITableViewController {
     
-//    weak var flowDelegate: SettingsViewControllerFlowDelegate?
+    weak var flowDelegate: CustomiseableForecastDataViewControllerFlowDelegate?
     fileprivate let viewModel: CustomiseableForecastDataViewModel
     
     struct Constants {
@@ -44,6 +37,8 @@ class CustomiseableForecastDataViewController : UITableViewController {
         
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .darkGray
+        tableView.estimatedRowHeight = 44.0
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(CustomiseableForecastDataCell.self, forCellReuseIdentifier: Constants.customiseableForecastDataCellReuseIdentifier)
         tableView.register(CustomiseableForecastDataHeaderView.self, forHeaderFooterViewReuseIdentifier: Constants.customiseableForecastDataHeaderViewReuseIdentifier)
         title = "Forecast Data"
@@ -68,7 +63,9 @@ class CustomiseableForecastDataViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.customiseableForecastDataHeaderViewReuseIdentifier) as! CustomiseableForecastDataHeaderView
+        let isCollapsed = viewModel.sectionIsCollapsed(section: section)
         view.titleLabel.text = viewModel.headerTitle(section)
+        view.setCollapsed(isCollapsed: isCollapsed)
         view.section = section
         view.actionDelegate = self
         return view
@@ -92,8 +89,9 @@ class CustomiseableForecastDataViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let pickerType = viewModel.forecastTypeForSection(indexPath.section)
+        flowDelegate?.showPickerView(self, pickerType: .forecast, forecastSection: pickerType, slot: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
-        print("Segue to picker view")
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -101,8 +99,9 @@ class CustomiseableForecastDataViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 45
+        return viewModel.sectionIsCollapsed(section: indexPath.section) ? 0 : UITableView.automaticDimension
     }
+
     
 
     
@@ -111,10 +110,12 @@ class CustomiseableForecastDataViewController : UITableViewController {
 extension CustomiseableForecastDataViewController: CustomiseableForecastDataHeaderViewActionDelegate {
     
     func headerTapped(_ section: Int) {
-        print("CustomiseableForecastDataViewController - buttonTapped ")
         viewModel.updatedCollapsedFor(section: section)
-//        tableView.scrollToRow(at: [section, 0], at: .top, animated: true)
         tableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)
+        
+        if !viewModel.sectionIsCollapsed(section: section) {
+            tableView.scrollToRow(at: [section,0], at: .top, animated: true)
+        }
     }
     
     

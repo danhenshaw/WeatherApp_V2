@@ -23,11 +23,7 @@ final class CustomiseableForecastDataViewModel {
     }
     
     func numberOfItemsInSection(_ section: Int) -> Int {
-        
         return model.forecastDataTypes[section].isCollapsed ? 0 : model.forecastDataTypes[section].items.count
-        
-//        if model.forecastDataTypes[section].isCollapsed { return 0 }
-//        else { return model.forecastDataTypes[section].items.count }
     }
     
     func itemForIndexPath(_ indexPath: IndexPath) -> ForecastDataItem {
@@ -36,11 +32,25 @@ final class CustomiseableForecastDataViewModel {
     }
     
     func headerTitle(_ section: Int) -> String {
+        let title = model.forecastDataTypes[section].name
+        switch title {
+        case .daily : return "Daily Data"
+        case .currently : return "Current Data"
+        case .hourly : return "Hourly Data"
+        default : return "--"
+        }
+    }
+    
+    func forecastTypeForSection(_ section: Int) -> ForecastSection {
         return model.forecastDataTypes[section].name
     }
     
     func updatedCollapsedFor(section: Int) {
         model.forecastDataTypes[section].isCollapsed = !model.forecastDataTypes[section].isCollapsed
+    }
+    
+    func sectionIsCollapsed(section: Int) -> Bool {
+        return model.forecastDataTypes[section].isCollapsed
     }
     
     
