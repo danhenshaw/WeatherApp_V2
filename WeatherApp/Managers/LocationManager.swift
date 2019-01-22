@@ -12,7 +12,6 @@ enum locationAuthorisationStatus {
     case authorizedAlways, authorizedWhenInUse, denied, notDetermined, restricted
 }
 
-
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
     var locationManager = CLLocationManager()
@@ -35,24 +34,11 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 
                 let latitude = (locationManager.location?.coordinate.latitude)!
                 let longitude = (locationManager.location?.coordinate.longitude)!
-                
-                requestCityName(latitude: latitude, longitude: longitude) { (cityName, error) in
-                    
-                    if let error = error {
-                        completion(nil, error)
-                        return
-                    }
-                    
-                    if let city = cityName {
-                        let cityData = CityDataModel()
-                        cityData.latitude = latitude
-                        cityData.longitude = longitude
-                        cityData.cityName = city
-                        
-                        completion(cityData, nil)
-                        return
-                    }
-                }
+                let cityData = CityDataModel()
+                cityData.latitude = latitude
+                cityData.longitude = longitude
+                cityData.cityName = ""
+                completion(cityData, nil)
             }
         }
 
@@ -68,23 +54,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    
     func requestCityName(latitude: Double, longitude: Double, completion: @escaping (_ cityName: String?, _ error: Error?) -> Void ) {
-
         let location = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-        let geocoder = CLGeocoder()
-
-        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
-
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-
-            if let placemark = placemarks?[0]  {
-                let cityName = placemark.locality ?? "City name unavailable"
-                completion(cityName, nil)
-                return
-            }
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+            if let error = error { return completion(nil, error) }
+            if let placemark = placemarks?[0] { return completion(placemark.locality ?? "City name unavailable", nil) }
         })
     }
 }

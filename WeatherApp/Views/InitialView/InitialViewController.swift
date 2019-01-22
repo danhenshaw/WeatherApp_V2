@@ -96,7 +96,6 @@ class InitialViewController: UIViewController {
             }
 
             if let currentLocation = currentLocation {
-                print("SUCCESS! We have your current location as ", currentLocation.cityName)
                 let cityData = CityDataModel()
                 cityData.latitude = currentLocation.latitude
                 cityData.longitude = currentLocation.longitude

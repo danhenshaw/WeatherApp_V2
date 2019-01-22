@@ -21,7 +21,7 @@ class DarkSkyAPI {
         var queryItems: [URLQueryItem] = []
 
         queryItems.append(URLQueryItem(name: "units", value: GlobalVariables.sharedInstance.units))
-        queryItems.append(URLQueryItem(name: "lang", value: "en")) //GlobalVariables.sharedInstance.language))
+        queryItems.append(URLQueryItem(name: "lang", value: GlobalVariables.sharedInstance.language))
         
         urlBuilder.queryItems = queryItems
         

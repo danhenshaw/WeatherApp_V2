@@ -49,6 +49,7 @@ class ForecastViewController : UITableViewController {
         tableView.register(ForecastOverviewCell.self, forCellReuseIdentifier: Constants.forecastOverviewCellReuseIdentifier)
         tableView.register(MinutelyForecastCell.self, forCellReuseIdentifier: Constants.minutelyForecastCellReuseIdentifier)
         tableView.register(HourlyOrDailyForecastCell.self, forCellReuseIdentifier: Constants.hourlyOrDailyForecastCellReuseIdentifier)
+        getCityName()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,9 +57,7 @@ class ForecastViewController : UITableViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
         
-        if viewModel.shouldUpdateForecast() {
-            fetchForecast()
-        }
+        if viewModel.shouldUpdateForecast() { fetchForecast() }
     }
     
     
@@ -67,6 +66,15 @@ class ForecastViewController : UITableViewController {
             fetchForecast()
         } else {
             endRefreshing()
+        }
+    }
+    
+    
+    func getCityName() {
+        LocationManager().requestCityName(latitude: viewModel.getCityData().latitude, longitude: viewModel.getCityData().longitude) { (cityName, error) in
+            if let error = error { print("Error getting city name:", error) }
+            if let cityName = cityName { self.viewModel.updateCityName(cityName: cityName) }
+            self.tableView.reloadData()
         }
     }
     
@@ -80,14 +88,12 @@ class ForecastViewController : UITableViewController {
         DarkSkyAPI().fetchWeather(latitude: latitude, longitude: longitude) { (retrievedForecast, error) in
             
             if let error = error {
-                print("There was an error retrieving the forecast: ", error)
                 self.viewModel.isDownloadingForecast = false
                 self.viewModel.failedToDownloadForecast = true
                 self.endRefreshing()
             }
             
             if retrievedForecast != nil {
-                print("Success! We retrieved the forecast for ", self.viewModel.getCityData().cityName)
                 self.viewModel.updateForecast(with: retrievedForecast!)
                 self.viewModel.isDownloadingForecast = false
                 self.viewModel.failedToDownloadForecast = false

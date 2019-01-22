@@ -27,6 +27,10 @@ final class ForecastViewModel {
         return (city.cityName, city.latitude, city.longitude)
     }
     
+    func updateCityName(cityName: String) {
+        model.cityData.cityName = cityName
+    }
+    
     func updateForecast(with newForecast: ForecastModel) {
         forecast = newForecast
         forecastLastUpdatedAt = Date().timeIntervalSince1970
@@ -128,7 +132,7 @@ final class ForecastViewModel {
             let timeString = forecast?.currently?.getValueString(dataType: "time", timeZone: timeZone).value ?? "Forecast currently unavailable."
             if timeString != "Forecast currently unavailable." { time = "Last updated: " + timeString }
         }
-
+        
         return TitleCellItem(cityName: model.cityData.cityName, time: time)
     }
     
