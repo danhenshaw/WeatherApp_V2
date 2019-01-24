@@ -12,22 +12,15 @@ import CoreData
 class CoreDataManager {
     
     func getCities() -> [City] {
-        
         var cities = [City]()
-        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
         fetchRequest.sortDescriptors = []
-        
         do {
             if let results = try CoreDataStack.shared.context.fetch(fetchRequest) as? [City] {
                 cities = results
             }
         }
-            
-        catch {
-            print("Error while trying to fetch photos from core data.")
-        }
-        
+        catch { print("Error while trying to fetch photos from core data.") }
         return cities
     }
     

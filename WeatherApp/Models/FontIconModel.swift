@@ -80,6 +80,8 @@ class FontIconModel {
         case "snow" : return "9"
         case "wind" : return "B"
         case "fog" : return "<"
+        case "sunset" : return "J"
+        case "sunrise" : return "K"
             
             //            case "unknown" : return "~"
             //            case "cloud" : return  "!"

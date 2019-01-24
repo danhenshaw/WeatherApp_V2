@@ -57,7 +57,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     func requestCityName(latitude: Double, longitude: Double, completion: @escaping (_ cityName: String?, _ error: Error?) -> Void ) {
         let location = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
             if let error = error { return completion(nil, error) }
             if let placemark = placemarks?[0] { return completion(placemark.locality ?? "City name unavailable", nil) }
         })

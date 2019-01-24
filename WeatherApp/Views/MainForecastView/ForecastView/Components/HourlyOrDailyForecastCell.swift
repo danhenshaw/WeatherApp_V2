@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum CollectionViewCellType {
+    case hourly, daily, newDay, sunrise, sunset
+}
+
 struct HourlyOrDailyForecastCellItem {
     var precip: Double
     var maxTemp: Double
@@ -15,13 +19,25 @@ struct HourlyOrDailyForecastCellItem {
     var icon: String
     var day: String
     var rangeMax: Double
-    var rangeMaxLow: Double
+    var rangeMaxLow: Double?
     var rangeMin: Double
-    var rangeMinLow: Double
+    var rangeMinLow: Double?
+    var cellType: CollectionViewCellType
+    var index: Int?
+}
+
+protocol CollectionViewCellActionDelegate: class {
+    func showSelectedForecastDetails(forecastSection: ForecastSection, index: Int)
 }
 
 
 class CollectionViewCell: UICollectionViewCell {
+    
+    lazy var button: UIButton = {
+        let b = UIButton()
+        b.addTarget(self, action: #selector(viewTapped), for: .touchUpInside)
+        return b
+    }()
     
     lazy var precipLabel: UILabel = {
         let label = UILabel()
@@ -43,8 +59,8 @@ class CollectionViewCell: UICollectionViewCell {
     
     lazy var iconLabel: UILabel = {
         let label = UILabel()
-    label.layer.masksToBounds = true
-    label.layer.cornerRadius = 8
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 8
         return label
     }()
     
@@ -61,8 +77,11 @@ class CollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    var topSpacer: UIView!
-    var bottomSpacer: UIView!
+    fileprivate var topSpacer: UIView!
+    fileprivate var bottomSpacer: UIView!
+    var index = 0
+    var forecastSection: ForecastSection = .daily
+    weak var actionDelegate: CollectionViewCellActionDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -90,6 +109,7 @@ class CollectionViewCell: UICollectionViewCell {
         addSubview(precipLabel)
         addSubview(precipBar)
         addSubview(dayLabel)
+        addSubview(button)
 
     }
     
@@ -110,7 +130,13 @@ class CollectionViewCell: UICollectionViewCell {
         maxTempLabel.anchor(top: nil, leading: self.leadingAnchor, bottom: iconLabel.topAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
 
         topSpacer.anchor(top: nil, leading: self.leadingAnchor, bottom: maxTempLabel.topAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
+        
+        button.fillSuperview()
 
+    }
+    
+    @objc func viewTapped() {
+        actionDelegate?.showSelectedForecastDetails(forecastSection: forecastSection, index: index)
     }
     
     
@@ -118,8 +144,15 @@ class CollectionViewCell: UICollectionViewCell {
         precipLabel.text = "\(Int(cellData.precip * 100))%"
         maxTempLabel.text = "\(Int(cellData.maxTemp))°"
         iconLabel.text = cellData.icon
-        dayLabel.text = cellData.day
-
+        dayLabel.text = cellData.day.uppercased()
+        index = cellData.index ?? 0
+        
+        if cellData.cellType == .daily {
+            forecastSection = .daily
+        } else {
+            forecastSection = .hourly
+        }
+        
         if let minTemp = cellData.minTemp {
             minTempLabel.text = "\(Int(minTemp))°"
         } else {
@@ -127,6 +160,7 @@ class CollectionViewCell: UICollectionViewCell {
         }
     }
 
+    
     
     func configFor(_ cellData: HourlyOrDailyForecastCellItem) {
         
@@ -157,11 +191,15 @@ class CollectionViewCell: UICollectionViewCell {
             let bottomSpacerHeight = 1 * 0.25 - topSpacerHeight
 
             bottomSpacer.height(constant: CGFloat(cellHeight * bottomSpacerHeight + cellHeight * (0.2 - precipHeight)))
+
             
         } else { // SETUP DAILY CELL
 
-            let maxTempHeightMultiplier = (cellData.rangeMax - cellData.maxTemp) / (cellData.rangeMax - cellData.rangeMaxLow)
-            let minTempHeightMultiplier = (cellData.rangeMinLow - (cellData.minTemp ?? 0)) / (cellData.rangeMin - cellData.rangeMinLow)
+            let maxTempHeightMultiplier = (cellData.rangeMax - cellData.maxTemp) / (cellData.rangeMax - (cellData.rangeMaxLow ?? 0))
+            
+            let partOne = ((cellData.rangeMinLow ?? 0) - (cellData.minTemp ?? 0))
+            let partTwo = (cellData.rangeMin - (cellData.rangeMinLow ?? 0))
+            let minTempHeightMultiplier = partOne / partTwo
 
             let topSpacerHeight = maxTempHeightMultiplier * 0.4 / 3
             let bottomSpacerHeight = minTempHeightMultiplier * 0.4 / 3 * -1

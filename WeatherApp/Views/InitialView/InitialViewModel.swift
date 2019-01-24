@@ -22,11 +22,11 @@ class InitialViewModel {
     var cityData: [CityDataModel]!
     
     struct DefaultSettings {
-        static let language = "en" //NSLocale.current.languageCode ?? "en"
+        static let language = "en"
         static let units = "us"
         static let currentData = ["temp", "feelsLike", "precipProbability", "humidity", "wind"]
-        static let hourlyData = ["temp", "precipProbability", "humidity", "wind", "pressure", "dewPoint", "cloudCover", "uvIndex"]
-        static let dailyData = ["temp", "precipProbability", "humidity", "wind", "uvIndex", "ozone", "sunriseTime", "sunsetTime"]
+        static let hourlyData = ["feelsLike", "precipProbability", "humidity", "wind", "pressure", "dewPoint", "cloudCover", "uvIndex"]
+        static let dailyData = ["feelsLike", "precipProbability", "humidity", "wind", "uvIndex", "ozone", "sunriseTime", "sunsetTime"]
     }
 
     
@@ -39,8 +39,18 @@ class InitialViewModel {
     
     
     func restoreUserSettingsFromStorage() {
-        let language = UserDefaults.standard.string(forKey: GlobalVariables.sharedInstance.languageKey) ?? DefaultSettings.language
-        GlobalVariables.sharedInstance.update(value: .language, forecastSection: nil, slot: nil, toNewValue: language)
+        
+        let availableLanguages = ["en", "es", "fr", "it", "ja", "tr", "x-pig-latin", "zh", "zh-tw"]
+        let systemLanguage = NSLocale.current.languageCode ?? DefaultSettings.language
+        let appLanguage = UserDefaults.standard.string(forKey: GlobalVariables.sharedInstance.languageKey)
+        
+        if appLanguage != nil {
+            GlobalVariables.sharedInstance.update(value: .language, forecastSection: nil, slot: nil, toNewValue: appLanguage ?? DefaultSettings.language)
+        } else if availableLanguages.contains(systemLanguage) {
+            GlobalVariables.sharedInstance.update(value: .language, forecastSection: nil, slot: nil, toNewValue: systemLanguage)
+        } else {
+            GlobalVariables.sharedInstance.update(value: .language, forecastSection: nil, slot: nil, toNewValue: DefaultSettings.language)
+        }
         
         let units = UserDefaults.standard.string(forKey: GlobalVariables.sharedInstance.unitsKey)
         GlobalVariables.sharedInstance.update(value: .units, forecastSection: nil, slot: nil, toNewValue: units ?? DefaultSettings.units)

@@ -112,7 +112,7 @@ class Translator {
         case "units" : return units[forLanguage, default: "°F, mph"]
         case "celcius" : return celcius[forLanguage, default: "°C"]
         case "farenheit" : return farenheit[forLanguage, default: "°F"]
-        case "kilometersPerHour" : return kilometersPerHour[forLanguage, default: "km.h"]
+        case "kilometersPerHour" : return kilometersPerHour[forLanguage, default: "km/h"]
         case "milesPerHour" : return milesPerHour[forLanguage, default: "mph"]
         case "metersPerSecond" : return metersPerSecond[forLanguage, default: "m/s"]
         case "milimetersPerHour" : return milimetersPerHour[forLanguage, default: "mm/h"]
@@ -127,14 +127,14 @@ class Translator {
         case "temp" : return temp[forLanguage, default: "Temp"]
         case "clouds" : return clouds[forLanguage, default: "Clouds"]
         case "ozone" : return ozone[forLanguage, default: "Ozone"]
-        case "sunrise" : return sunrise[forLanguage, default: "sunrise"]
-        case "sunset" : return sunset[forLanguage, default: "sunset"]
-        case "moon" : return moon[forLanguage, default: "moon"]
-        case "rain" : return rain[forLanguage, default: "rain"]
-        case "snow" : return snow[forLanguage, default: "snow"]
-        case "sleet" : return sleet[forLanguage, default: "sleet"]
-        case "daily" : return daily[forLanguage, default: "daily"]
-        case "hourly" : return hourly[forLanguage, default: "hourly"]
+        case "sunrise" : return sunrise[forLanguage, default: "Sunrise"]
+        case "sunset" : return sunset[forLanguage, default: "Sunset"]
+        case "moon" : return moon[forLanguage, default: "Moon"]
+        case "rain" : return rain[forLanguage, default: "Rain"]
+        case "snow" : return snow[forLanguage, default: "Snow"]
+        case "sleet" : return sleet[forLanguage, default: "Sleet"]
+        case "daily" : return daily[forLanguage, default: "Daily"]
+        case "hourly" : return hourly[forLanguage, default: "Hourly"]
         case "precipProbability" : return precipProbability[forLanguage, default: "Precip Probability"]
         case "precipIntensity" : return precipIntensity[forLanguage, default: "Precip Intensity"]
         case "cloudCover" : return cloudCover[forLanguage, default: "Cloud Cover"]
@@ -144,7 +144,7 @@ class Translator {
         case "nearestStorm": return nearestStorm[forLanguage, default: "Nearest Storm"]
         default :
             print("There was an error getting the translation for \(string) in \(forLanguage)")
-            return "--"
+            return ""
         }
     }
     

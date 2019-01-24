@@ -13,13 +13,11 @@ struct GlobalVariables {
     static var sharedInstance = GlobalVariables()
     
     var language = ""
-    
     var units = ""
     
     var settingsHaveChanged = false
     var fontSizemultiplier = 1.0
     var precipBlue = 0x00abff
-    
     
     var currentlyData = Array(repeating: "", count: 5)
     var hourlyData = Array(repeating: "", count: 8)

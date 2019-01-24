@@ -77,6 +77,8 @@
 		907D81B921F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81B821F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift */; };
 		907D81BB21F5F908000F6B46 /* CustomiseableForecastDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81BA21F5F908000F6B46 /* CustomiseableForecastDataCell.swift */; };
 		907D81BD21F5FD05000F6B46 /* ForecastDataTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D81BC21F5FD05000F6B46 /* ForecastDataTypeModel.swift */; };
+		90EF1D3E21F889B3009F1F3D /* NewDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EF1D3D21F889B3009F1F3D /* NewDayCollectionViewCell.swift */; };
+		90EF1D4021F8A26D009F1F3D /* SunriseSunsetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EF1D3F21F8A26D009F1F3D /* SunriseSunsetCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +175,8 @@
 		907D81B821F5F8F6000F6B46 /* CustomiseableForecastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomiseableForecastDataModel.swift; sourceTree = "<group>"; };
 		907D81BA21F5F908000F6B46 /* CustomiseableForecastDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomiseableForecastDataCell.swift; sourceTree = "<group>"; };
 		907D81BC21F5FD05000F6B46 /* ForecastDataTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDataTypeModel.swift; sourceTree = "<group>"; };
+		90EF1D3D21F889B3009F1F3D /* NewDayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDayCollectionViewCell.swift; sourceTree = "<group>"; };
+		90EF1D3F21F8A26D009F1F3D /* SunriseSunsetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunriseSunsetCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +348,8 @@
 				90797D3F21CEF8700071A845 /* PrecipChartBackgroundView.swift */,
 				90797D6921EF628C0071A845 /* HourlyOrDailyForecastView.swift */,
 				90797CFC21C932FD0071A845 /* HourlyOrDailyForecastCell.swift */,
+				90EF1D3D21F889B3009F1F3D /* NewDayCollectionViewCell.swift */,
+				90EF1D3F21F8A26D009F1F3D /* SunriseSunsetCollectionViewCell.swift */,
 				90797D3D21CEF8500071A845 /* LabelView.swift */,
 			);
 			path = Components;
@@ -609,6 +615,7 @@
 				90797CC021C7F0DA0071A845 /* FlowController.swift in Sources */,
 				90797D4821D7E3190071A845 /* DailyForecastDataModel.swift in Sources */,
 				90797D5C21DE09EA0071A845 /* UnitsModel.swift in Sources */,
+				90EF1D4021F8A26D009F1F3D /* SunriseSunsetCollectionViewCell.swift in Sources */,
 				90797D5621DD32780071A845 /* FontIconModel.swift in Sources */,
 				90797CC221C7F1300071A845 /* NavigationController.swift in Sources */,
 				90797D1B21CAA2F10071A845 /* AddLocationViewController.swift in Sources */,
@@ -623,6 +630,7 @@
 				90797D3E21CEF8500071A845 /* LabelView.swift in Sources */,
 				907D81B521F5F8DC000F6B46 /* CustomiseableForecastDataViewController.swift in Sources */,
 				90797D3A21CC1D750071A845 /* ForecastDataModel.swift in Sources */,
+				90EF1D3E21F889B3009F1F3D /* NewDayCollectionViewCell.swift in Sources */,
 				90797D6021E78AC20071A845 /* Colors.swift in Sources */,
 				90797CF721C9320D0071A845 /* TitleCell.swift in Sources */,
 				90797CDE21C902170071A845 /* SettingsModel.swift in Sources */,

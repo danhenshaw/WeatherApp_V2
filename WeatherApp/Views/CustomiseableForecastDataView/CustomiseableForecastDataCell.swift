@@ -43,9 +43,9 @@ class CustomiseableForecastDataCell: UITableViewCell {
     
     func setupConstraints() {
         
-        valueLabel.anchor(top: contentView.topAnchor, leading: nil, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: .init(top: 4, left: 4, bottom: -4, right: -8), size: .init(width: contentView.frame.width * 0.75, height: 0))
+        valueLabel.anchor(top: contentView.topAnchor, leading: nil, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: .init(top: 4, left: 8, bottom: -4, right: -8), size: .init(width: contentView.frame.width * 0.75, height: 0))
         
-        titleLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, trailing: valueLabel.leadingAnchor, padding: .init(top: 4, left: 8, bottom: -4, right: -4), size: .init(width: 0, height: 0))
+        titleLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, trailing: valueLabel.leadingAnchor, padding: .init(top: 4, left: 8, bottom: -4, right: -8), size: .init(width: 0, height: 0))
         
     }
     

@@ -98,7 +98,22 @@ struct Hourly: Codable {
         return LabelFormat(title: titleLabelText, value: valueLabelText)
     }
     
+    
+    // return the max and min temperature for the next 48 hours
+    func twoDayMaxMin() -> (max: Double, min: Double) {
+        
+        var temperatureArray = [Double]()
+        
+        for index in 0 ..< data.count { temperatureArray.append(data[index].temperature ?? 0) }
+        
+        let max = temperatureArray.max()
+        let min = temperatureArray.min()
+        
+        return (max ?? 0.0, min ?? 0.0)
+    }
+    
 
+    // Determine wind direction
     func getDirection(value: Int) -> String {
         switch value {
         case 0 ... 22 : return "N"

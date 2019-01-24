@@ -62,9 +62,9 @@ class CustomiseableForecastDataHeaderView : UITableViewHeaderFooterView {
     
     func setupConstraints() {
         button.fillSuperview()
-        titleLabel.anchor(top: nil, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: arrowLabel.leadingAnchor, padding: .init(top: 0, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 0))
+        titleLabel.anchor(top: nil, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 0))
         
-        arrowLabel.anchor(top: nil, leading: titleLabel.trailingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 8, bottom: -8, right: -8), size: .init(width: titleLabel.frame.size.height, height: titleLabel.frame.size.height))
+        arrowLabel.anchor(top: nil, leading: nil, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 8, bottom: -8, right: -8), size: .init(width: titleLabel.frame.size.height, height: titleLabel.frame.size.height))
     }
     
     @objc func headerTapGesture() {

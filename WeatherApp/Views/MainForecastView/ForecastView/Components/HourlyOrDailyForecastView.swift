@@ -10,6 +10,7 @@ import UIKit
 
 protocol HourlyOrDailyForecastCellActionDelegate: class {
     func showSelectedForecastDetails(forecastSection: ForecastSection, index: Int)
+    func switchForecastSection(forecastSection: ForecastSection)
 }
 
 class HourlyOrDailyForecastCell: UITableViewCell {
@@ -37,8 +38,7 @@ class HourlyOrDailyForecastCell: UITableViewCell {
     weak var actionDelegate: HourlyOrDailyForecastCellActionDelegate?
     fileprivate var forecastSection : ForecastSection = .daily
     
-    var dailySectionData: [HourlyOrDailyForecastCellItem]?
-    var hourlySectionData: [HourlyOrDailyForecastCellItem]?
+    var sectionData: [HourlyOrDailyForecastCellItem]?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,6 +46,8 @@ class HourlyOrDailyForecastCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView.register(NewDayCollectionViewCell.self, forCellWithReuseIdentifier: "cellId2")
+        collectionView.register(SunriseSunsetCollectionViewCell.self, forCellWithReuseIdentifier: "cellId3")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,7 +78,7 @@ class HourlyOrDailyForecastCell: UITableViewCell {
     
     @objc func buttonTapped() {
         let language = GlobalVariables.sharedInstance.language
-        var buttonTitle = "daily"
+        var buttonTitle = ""
         
         if forecastSection == .daily {
             forecastSection = .hourly
@@ -87,6 +89,7 @@ class HourlyOrDailyForecastCell: UITableViewCell {
         }
         let translatedTitle = Translator().getString(forLanguage: language, string: buttonTitle).uppercased()
         button.setTitle(translatedTitle, for: .normal)
+        actionDelegate?.switchForecastSection(forecastSection: forecastSection)
         collectionView.reloadData()
     }
     
@@ -98,21 +101,16 @@ extension HourlyOrDailyForecastCell: UICollectionViewDelegateFlowLayout, UIColle
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if forecastSection == .daily {
-            return dailySectionData?.count ?? 0
-        } else {
-            return hourlySectionData?.count ?? 0
-        }
+        return sectionData?.count ?? 0
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        actionDelegate?.showSelectedForecastDetails(forecastSection: forecastSection, index: indexPath.row)
-    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -121,9 +119,16 @@ extension HourlyOrDailyForecastCell: UICollectionViewDelegateFlowLayout, UIColle
         if forecastSection == .daily {
             itemSize = CGSize(width: (collectionView.frame.size.width) / 8, height: collectionView.frame.size.height)
         } else {
-            itemSize = CGSize(width: (collectionView.frame.size.width) / 8.5, height: collectionView.frame.size.height)
+            if let sectionData = sectionData {
+                if sectionData[indexPath.row].cellType == .newDay {
+                    itemSize = CGSize(width: (collectionView.frame.size.width) / 15, height: collectionView.frame.size.height)
+                } else if sectionData[indexPath.row].cellType == .daily || sectionData[indexPath.row].cellType == .hourly {
+                    itemSize = CGSize(width: (collectionView.frame.size.width) / 8.5, height: collectionView.frame.size.height)
+                } else {
+                    itemSize = CGSize(width: (collectionView.frame.size.width) / 6, height: collectionView.frame.size.height)
+                }
+            }
         }
-        
         return itemSize
     }
     
@@ -132,25 +137,60 @@ extension HourlyOrDailyForecastCell: UICollectionViewDelegateFlowLayout, UIColle
         
         let cell: UICollectionViewCell!
         
-        let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? CollectionViewCell
+        switch sectionData?[indexPath.row].cellType {
+        case .newDay? :
+            
+            let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId2", for: indexPath) as? NewDayCollectionViewCell
+            collectionViewCell?.bindWith((sectionData?[indexPath.row])!)
+            cell = collectionViewCell
+            cell.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+            return cell
         
-        if forecastSection == .daily && dailySectionData != nil {
-            button.isHidden = false
-            let cellData = dailySectionData![indexPath.row]
-            collectionViewCell?.bindWith(cellData)
-            collectionViewCell?.configFor(cellData)
-        } else if forecastSection == .hourly && hourlySectionData != nil {
-            button.isHidden = false
-            let cellData = hourlySectionData![indexPath.row]
-            collectionViewCell?.bindWith(cellData)
-            collectionViewCell?.configFor(cellData)
+        case .sunrise? :
+            
+            let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId3", for: indexPath) as? SunriseSunsetCollectionViewCell
+            collectionViewCell?.bindWith((sectionData?[indexPath.row])!)
+            collectionViewCell?.configFor((sectionData?[indexPath.row])!)
+            cell = collectionViewCell
+            cell.backgroundColor = .clear
+            return cell
+            
+        case .sunset? :
+            
+            let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId3", for: indexPath) as? SunriseSunsetCollectionViewCell
+            collectionViewCell?.bindWith((sectionData?[indexPath.row])!)
+            collectionViewCell?.configFor((sectionData?[indexPath.row])!)
+            cell = collectionViewCell
+            cell.backgroundColor = .clear
+            return cell
+            
+        default :
+            
+            let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? CollectionViewCell
+            collectionViewCell?.actionDelegate = self
+            if sectionData != nil {
+                let cellData = sectionData![indexPath.row]
+                button.isHidden = false
+                collectionViewCell?.bindWith(cellData)
+                collectionViewCell?.configFor(cellData)
+            }
+            
+            cell = collectionViewCell
+            cell.backgroundColor = .clear
+            return cell
+            
         }
-        
-        cell = collectionViewCell
-        cell.backgroundColor = .clear
-        
-        return cell
+
     }
     
     
+  
+}
+
+
+extension HourlyOrDailyForecastCell: CollectionViewCellActionDelegate {
+    
+    func showSelectedForecastDetails(forecastSection: ForecastSection, index: Int) {
+        actionDelegate?.showSelectedForecastDetails(forecastSection: forecastSection, index: index)
+    }
 }

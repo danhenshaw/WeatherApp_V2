@@ -9,7 +9,7 @@
 import UIKit
 
 enum DateFormat {
-    case medium, mediumWithTime, day, timeShort, timeLong
+    case medium, mediumWithTime, day, timeShort, timeLong, dayLong
 }
 
 class FormatDate {
@@ -18,7 +18,7 @@ class FormatDate {
         let date = Date(timeIntervalSince1970: Double(unixtimeInterval))
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(identifier: timeZone)
-        dateFormatter.locale = Locale(identifier: "en_GB")
+        dateFormatter.locale = NSLocale(localeIdentifier: GlobalVariables.sharedInstance.language) as Locale
         
         switch format {
         case .medium :
@@ -33,6 +33,8 @@ class FormatDate {
             dateFormatter.dateFormat = "HH"
         case .timeLong :
             dateFormatter.dateFormat = "HH:mm"
+        case .dayLong :
+            dateFormatter.dateFormat = "EEEE"
         }
         
         let strDate = dateFormatter.string(from: date)

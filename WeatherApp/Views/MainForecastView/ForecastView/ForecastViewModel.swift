@@ -95,7 +95,7 @@ final class ForecastViewModel {
         locationListData.latitude = model.cityData.latitude
         locationListData.temp = forecast?.currently?.getValueString(dataType: "temp", timeZone: timeZone).value
         locationListData.summary = forecast?.currently?.summary
-        locationListData.time = forecast?.currently?.getValueString(dataType: "time", timeZone: timeZone).value
+        locationListData.time = FormatDate().date(unixtimeInterval: (Int(Date().timeIntervalSince1970)), timeZone: timeZone, format: .mediumWithTime)
         locationListData.isCurrentLocation = model.cityData.isCurrentLocation
         
         let currentTime = forecast?.currently?.time ?? 0
@@ -129,8 +129,9 @@ final class ForecastViewModel {
             if timeString != "Forecast currently unavailable." { time = "Forecast for " + timeString }
             
         default :
-            let timeString = forecast?.currently?.getValueString(dataType: "time", timeZone: timeZone).value ?? "Forecast currently unavailable."
-            if timeString != "Forecast currently unavailable." { time = "Last updated: " + timeString }
+            time = FormatDate().date(unixtimeInterval: (Int(Date().timeIntervalSince1970)), timeZone: timeZone, format: .mediumWithTime)
+//            let timeString = forecast?.currently?.getValueString(dataType: "time", timeZone: timeZone).value ?? "Forecast currently unavailable."
+//            if timeString != "Forecast currently unavailable." { time = "Last updated: " + timeString }
         }
         
         return TitleCellItem(cityName: model.cityData.cityName, time: time)
@@ -220,117 +221,101 @@ final class ForecastViewModel {
         
     }
     
-    
-    
-    // Format the forecast data required for the selectable hourly or daily cell
-    func prepareHourlyOrDailyCellData(forecastSection: ForecastSection) -> [HourlyOrDailyForecastCellItem] {
+    // Format the forecast data required for the hourly collection view
+    func prepareHourlyCellData() -> [HourlyOrDailyForecastCellItem] {
         var cellData = [HourlyOrDailyForecastCellItem]()
-        var itemCount = 0
+
+        let twoDayMax = forecast?.hourly?.twoDayMaxMin().max
+        let twoDayMin = forecast?.hourly?.twoDayMaxMin().min
         
-        let weeklyMax = weeklyTemperatureExtremes().temperatureHighMax
-        let weeklyMaxLow = weeklyTemperatureExtremes().temperatureHighMin
-        let weeklyMin = weeklyTemperatureExtremes().temperatureLowMax
-        let weeklyMinLow = weeklyTemperatureExtremes().temperatureLowMin
-        let twoDayMax = twoDayMaxMin().max
-        let twoDayMin = twoDayMaxMin().min
+        let  itemCount = forecast?.hourly?.data.count ?? 0
         
-        if forecastSection == .daily {
-            itemCount = forecast?.daily?.data.count ?? 0
-            for index in 0 ..< itemCount {
-                let dayData = HourlyOrDailyForecastCellItem(precip: forecast?.daily?.data[index].precipProbability ?? 0,
-                                                            maxTemp: forecast?.daily?.data[index].temperatureHigh ?? 0,
-                                                            minTemp: forecast?.daily?.data[index].temperatureLow ?? 0,
-                                                            icon: FontIconModel().updateWeatherIcon(condition: forecast?.daily?.data[index].icon ?? "",
-                                                                                             moonValue: forecast?.daily?.data[index].moonPhase ?? 0.0),
-                                                            day: FormatDate().date(unixtimeInterval: forecast?.daily?.data[index].time ?? 0,
-                                                                                 timeZone: forecast?.timezone ?? "",
-                                                                                 format: .day),
-                                                            rangeMax: weeklyMax,
-                                                            rangeMaxLow: weeklyMaxLow,
-                                                            rangeMin: weeklyMin,
-                                                            rangeMinLow: weeklyMinLow)
-                
-                cellData.append(dayData)
-            }
+        for index in 0 ..< itemCount {
             
-        } else {
-            itemCount = forecast?.hourly?.data.count ?? 0
-            for index in 0 ..< itemCount {
-                var dayForMoon = 0
-                if index <= 24 { dayForMoon = 0 } else { dayForMoon = 1 }
-                let hourData = HourlyOrDailyForecastCellItem(precip: forecast?.hourly?.data[index].precipProbability ?? 0,
-                                                             maxTemp: forecast?.hourly?.data[index].temperature ?? 0,
-                                                             minTemp: nil,
-                                                             icon: FontIconModel().updateWeatherIcon(condition: forecast?.hourly?.data[index].icon ?? "",
-                                                                                              moonValue: forecast?.daily?.data[dayForMoon].moonPhase ?? 0.0),
-                                                             day: FormatDate().date(unixtimeInterval: forecast?.hourly?.data[index].time ?? 0,
-                                                                                  timeZone: forecast?.timezone ?? "",
-                                                                                  format: .timeShort),
-                                                             rangeMax: twoDayMax,
-                                                             rangeMaxLow: weeklyMaxLow,
-                                                             rangeMin: twoDayMin,
-                                                             rangeMinLow: weeklyMinLow)
-                
+            // We check to see if the moon phase icon should be for today (>24 hours) or tomorrow (24-48 hours)
+            var dayForMoon = 0
+            if index <= 24 { dayForMoon = 0 } else { dayForMoon = 1 }
+            
+            let icon = FontIconModel().updateWeatherIcon(condition: forecast?.hourly?.data[index].icon ?? "", moonValue: forecast?.daily?.data[dayForMoon].moonPhase ?? 0.0)
+            let time = FormatDate().date(unixtimeInterval: forecast?.hourly?.data[index].time ?? 0, timeZone: forecast?.timezone ?? "", format: .timeShort)
+            let dayLong = FormatDate().date(unixtimeInterval: forecast?.hourly?.data[index].time ?? 0, timeZone: forecast?.timezone ?? "", format: .dayLong)
+            let precip = forecast?.hourly?.data[index].precipProbability ?? 0
+            let maxTemp = forecast?.hourly?.data[index].temperature ?? 0
+            
+            // time is "00" it indicates a new day so we should append additional data so this can be shown in the collection view
+            if time == "00" {
+                let hourData = HourlyOrDailyForecastCellItem(precip: 0, maxTemp: 0, minTemp: nil, icon: "", day: dayLong, rangeMax: 0, rangeMaxLow: nil, rangeMin: 0, rangeMinLow: nil, cellType: .newDay, index: nil)
                 cellData.append(hourData)
             }
             
+            // time interval is larger than day sunset value, append the sunrise sunset cell
+            
+            var sunriseTimes = forecast?.daily?.sunriseTimes() ?? [0]
+            var sunsetTimes = forecast?.daily?.sunsetTimes() ?? [0]
+            
+            for time in 0 ..< sunriseTimes.count {
+                if index != 0 {
+                    if forecast?.hourly?.data[index].time ?? 0 >= sunriseTimes[time] && forecast?.hourly?.data[index - 1].time ?? 0 <= sunriseTimes[time] {
+                        let sunriseTime = FormatDate().date(unixtimeInterval: sunriseTimes[time], timeZone: forecast?.timezone ?? "", format: .timeLong)
+                        let hourData = HourlyOrDailyForecastCellItem(precip: precip, maxTemp: maxTemp, minTemp: nil, icon: "K", day: sunriseTime, rangeMax: twoDayMax ?? 0, rangeMaxLow: nil, rangeMin: twoDayMin ?? 0, rangeMinLow: nil, cellType: .sunrise, index: nil)
+                        cellData.append(hourData)
+                    }
+                }
+            }
+            
+            
+            for time in 0 ..< sunsetTimes.count {
+                if index != 0 {
+                    if forecast?.hourly?.data[index].time ?? 0 >= sunsetTimes[time] && forecast?.hourly?.data[index - 1].time ?? 0 <= sunsetTimes[time] {
+                        let sunsetTime = FormatDate().date(unixtimeInterval: sunsetTimes[time], timeZone: forecast?.timezone ?? "", format: .timeLong)
+                        let hourData = HourlyOrDailyForecastCellItem(precip: precip, maxTemp: maxTemp, minTemp: nil, icon: "J", day: sunsetTime, rangeMax: twoDayMax ?? 0, rangeMaxLow: nil, rangeMin: twoDayMin ?? 0, rangeMinLow: nil, cellType: .sunset, index: nil)
+                        cellData.append(hourData)
+                    }
+                }
+            }
+            
+            
+            
+            let hourData = HourlyOrDailyForecastCellItem(precip: precip, maxTemp: maxTemp, minTemp: nil, icon: icon, day: time, rangeMax: twoDayMax ?? 0, rangeMaxLow: nil, rangeMin: twoDayMin ?? 0, rangeMinLow: nil, cellType: .hourly, index: index)
+            
+            cellData.append(hourData)
         }
-        
+
         return cellData
         
     }
     
     
-    
-    // Return the max/min high temperature and max/min low temperature for the week
-    func weeklyTemperatureExtremes() -> (temperatureHighMax: Double, temperatureHighMin: Double, temperatureLowMax: Double, temperatureLowMin: Double) {
+    // Format the forecast data required for the daily collection view
+    func prepareDailyCellData() -> [HourlyOrDailyForecastCellItem] {
+        var cellData = [HourlyOrDailyForecastCellItem]()
+        
+        let weeklyMax = forecast?.daily?.weeklyTemperatureExtremes().temperatureHighMax
+        let weeklyMaxLow = forecast?.daily?.weeklyTemperatureExtremes().temperatureHighMin
+        let weeklyMin = forecast?.daily?.weeklyTemperatureExtremes().temperatureLowMax
+        let weeklyMinLow = forecast?.daily?.weeklyTemperatureExtremes().temperatureLowMin
         
         let itemCount = forecast?.daily?.data.count ?? 0
-        
-        var temperatureHighArray = [Double]()
-        var temperatureLowArray = [Double]()
-        
         for index in 0 ..< itemCount {
-            temperatureHighArray.append(forecast?.daily?.data[index].temperatureHigh ?? 0.0)
-            temperatureLowArray.append(forecast?.daily?.data[index].temperatureLow ?? 0.0)
+            let dayData = HourlyOrDailyForecastCellItem(precip: forecast?.daily?.data[index].precipProbability ?? 0,
+                                                        maxTemp: forecast?.daily?.data[index].temperatureHigh ?? 0,
+                                                        minTemp: forecast?.daily?.data[index].temperatureLow ?? 0,
+                                                        icon: FontIconModel().updateWeatherIcon(condition: forecast?.daily?.data[index].icon ?? "",
+                                                                                         moonValue: forecast?.daily?.data[index].moonPhase ?? 0.0),
+                                                        day: FormatDate().date(unixtimeInterval: forecast?.daily?.data[index].time ?? 0,
+                                                                             timeZone: forecast?.timezone ?? "",
+                                                                             format: .day),
+                                                        rangeMax: weeklyMax ?? 0,
+                                                        rangeMaxLow: weeklyMaxLow,
+                                                        rangeMin: weeklyMin ?? 0,
+                                                        rangeMinLow: weeklyMinLow,
+                                                        cellType: .daily,
+                                                        index: index)
+            
+            cellData.append(dayData)
         }
-        
-        let temperatureHighMax = temperatureHighArray.max()
-        let temperatureHighMin = temperatureHighArray.min()
-        let temperatureLowMax = temperatureLowArray.max()
-        let temperatureLowMin = temperatureLowArray.min()
-        
-        return (temperatureHighMax ?? 0, temperatureHighMin ?? 0, temperatureLowMax ?? 0, temperatureLowMin ?? 0)
-
+        return cellData
     }
-    
-    
-    
-    // return the max and min temperature for the next 48 hours
-    func twoDayMaxMin() -> (max: Double, min: Double) {
-        
-        var temperatureArray = [Double]()
-        let itemCount = forecast?.hourly?.data.count ?? 0
-        
-        for index in 0 ..< itemCount {
-            temperatureArray.append(forecast?.hourly?.data[index].temperature ?? 0)
-
-        }
-        
-        let max = temperatureArray.max()
-        let min = temperatureArray.min()
-        
-        return (max ?? 0.0, min ?? 0.0)
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 
     

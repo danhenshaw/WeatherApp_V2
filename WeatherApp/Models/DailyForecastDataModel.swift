@@ -127,6 +127,40 @@ struct Daily: Codable {
     
     
     
+    // Return the max/min high temperature and max/min low temperature for the week
+    func weeklyTemperatureExtremes() -> (temperatureHighMax: Double, temperatureHighMin: Double, temperatureLowMax: Double, temperatureLowMin: Double) {
+        
+        var temperatureHighArray = [Double]()
+        var temperatureLowArray = [Double]()
+        
+        for index in 0 ..< data.count {
+            temperatureHighArray.append(data[index].temperatureHigh ?? 0.0)
+            temperatureLowArray.append(data[index].temperatureLow ?? 0.0)
+        }
+        
+        let temperatureHighMax = temperatureHighArray.max()
+        let temperatureHighMin = temperatureHighArray.min()
+        let temperatureLowMax = temperatureLowArray.max()
+        let temperatureLowMin = temperatureLowArray.min()
+        
+        return (temperatureHighMax ?? 0, temperatureHighMin ?? 0, temperatureLowMax ?? 0, temperatureLowMin ?? 0)
+        
+    }
+    
+    func sunsetTimes() -> [Int] {
+        var array = [Int]()
+        for index in 0 ..< data.count { array.append(data[index].sunsetTime ?? 0) }
+        return array
+    }
+    
+    func sunriseTimes() -> [Int] {
+        var array = [Int]()
+        for index in 0 ..< data.count { array.append(data[index].sunriseTime ?? 0) }
+        return array
+    }
+    
+    
+    
     
     func getDirection(value: Int) -> String {
         switch value {

@@ -20,7 +20,9 @@ class ForecastViewController : UITableViewController {
     weak var actionDelegate: ForecastViewControllerActionDelegate?
     
     var forecastOverviewSection : ForecastSection = .currently
-    var forecastOverviewIndex = -1
+    var forecastOverviewIndex = 0
+    
+    var forecastChartSection : ForecastSection = .daily
     
     struct Constants {
         static let titleCellReuseIdentifier = "TitleCellReuseIdentifier"
@@ -33,6 +35,7 @@ class ForecastViewController : UITableViewController {
     init(withViewModel viewModel: ForecastViewModel) {
         self.viewModel = viewModel
         refresher = UIRefreshControl()
+        
         super.init(style: .grouped)
     }
     
@@ -43,8 +46,8 @@ class ForecastViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.addSubview(refresher)
-        tableView.backgroundColor = .clear
         refresher.addTarget(self, action: #selector(pulledToRefresh(_:)), for: .valueChanged)
+        tableView.backgroundColor = .clear
         tableView.register(TitleCell.self, forCellReuseIdentifier: Constants.titleCellReuseIdentifier)
         tableView.register(ForecastOverviewCell.self, forCellReuseIdentifier: Constants.forecastOverviewCellReuseIdentifier)
         tableView.register(MinutelyForecastCell.self, forCellReuseIdentifier: Constants.minutelyForecastCellReuseIdentifier)
@@ -64,7 +67,7 @@ class ForecastViewController : UITableViewController {
     @objc private func pulledToRefresh(_ sender: Any) {
         if viewModel.shouldUpdateForecast() {
             fetchForecast()
-        } else {
+        } else if refresher.isRefreshing {
             endRefreshing()
         }
     }
@@ -88,6 +91,7 @@ class ForecastViewController : UITableViewController {
         DarkSkyAPI().fetchWeather(latitude: latitude, longitude: longitude) { (retrievedForecast, error) in
             
             if let error = error {
+                print("There was an error retrieving the forecast:", error)
                 self.viewModel.isDownloadingForecast = false
                 self.viewModel.failedToDownloadForecast = true
                 self.endRefreshing()
@@ -163,8 +167,13 @@ class ForecastViewController : UITableViewController {
         case 3 :
             
             let hourlyOrDailyForecastCell = tableView.dequeueReusableCell(withIdentifier: Constants.hourlyOrDailyForecastCellReuseIdentifier, for: indexPath) as! HourlyOrDailyForecastCell
-            hourlyOrDailyForecastCell.dailySectionData = viewModel.prepareHourlyOrDailyCellData(forecastSection: .daily)
-            hourlyOrDailyForecastCell.hourlySectionData = viewModel.prepareHourlyOrDailyCellData(forecastSection: .hourly)
+            
+            if forecastChartSection == .daily {
+                 hourlyOrDailyForecastCell.sectionData = viewModel.prepareDailyCellData()
+            } else {
+                hourlyOrDailyForecastCell.sectionData = viewModel.prepareHourlyCellData()
+            }
+
             hourlyOrDailyForecastCell.actionDelegate = self
             hourlyOrDailyForecastCell.collectionView.reloadData()
             cell = hourlyOrDailyForecastCell
@@ -212,17 +221,24 @@ class ForecastViewController : UITableViewController {
 extension ForecastViewController: HourlyOrDailyForecastCellActionDelegate {
     
     func showSelectedForecastDetails(forecastSection: ForecastSection, index: Int) {
-        
         if forecastOverviewSection != forecastSection || forecastOverviewIndex != index {
             forecastOverviewSection = forecastSection
             forecastOverviewIndex = index
-        } else if forecastOverviewSection == forecastSection && forecastOverviewIndex == index {
+        } else {
             forecastOverviewSection = .currently
-            forecastOverviewIndex = -1
+            forecastOverviewIndex = 0
         }
         
         self.actionDelegate?.updateBackgroundGradient(gradient: self.viewModel.generateBackgroundGradient(forecastSection: forecastSection, index: index))
-
+        
+        tableView.reloadData()
+    }
+    
+    func switchForecastSection(forecastSection: ForecastSection) {
+        forecastChartSection = forecastSection
+        forecastOverviewSection = .currently
+        forecastOverviewIndex = 0
+        self.actionDelegate?.updateBackgroundGradient(gradient: self.viewModel.generateBackgroundGradient(forecastSection: forecastSection, index: 0))
         tableView.reloadData()
     }
     
