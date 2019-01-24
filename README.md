@@ -33,21 +33,24 @@ Sign up to Dark Sky at https://darksky.net/dev/register to obtain an API Key.
 ## Further Improvements
 
 Current improvements being worked on:
-  - internationalise and localise App 
   - error alerts
   - code documentation
   - customise refresher
-  - add sunrise/sunset/new day in collectionview cell (currently only displaying index weather conditions)
   - more complex background colour algorithm for displaying weather conditions
   - general debugging
 
 Future improvemts to be implemented:
+  - correctly implenet internationalis- and localisation. Currents using a dictionar called Translator()
   - create widget and watchOS
   - weather radar view
   - user choosable color pallete
   - dark mode option
   - create app icons
   - add unit testing
+
+
+## Resources
+Using [Climacons](http://adamwhitcroft.com/climacons/) by Adam Whitcroft
 
 
 ## Author

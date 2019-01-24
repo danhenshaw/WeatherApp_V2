@@ -64,7 +64,6 @@
 		90797D5621DD32780071A845 /* FontIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D5521DD32780071A845 /* FontIconModel.swift */; };
 		90797D5921DD35AF0071A845 /* Climacons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90797D5821DD34DD0071A845 /* Climacons.ttf */; };
 		90797D5C21DE09EA0071A845 /* UnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D5B21DE09EA0071A845 /* UnitsModel.swift */; };
-		90797D5E21DEA9AC0071A845 /* Flaticon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90797D5D21DEA8900071A845 /* Flaticon.ttf */; };
 		90797D6021E78AC20071A845 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D5F21E78AC20071A845 /* Colors.swift */; };
 		90797D6221E79E7E0071A845 /* LocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6121E79E7E0071A845 /* LocationListView.swift */; };
 		90797D6421EE01E10071A845 /* LocationListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797D6321EE01E10071A845 /* LocationListHeaderView.swift */; };
@@ -162,7 +161,6 @@
 		90797D5521DD32780071A845 /* FontIconModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontIconModel.swift; sourceTree = "<group>"; };
 		90797D5821DD34DD0071A845 /* Climacons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Climacons.ttf; sourceTree = "<group>"; };
 		90797D5B21DE09EA0071A845 /* UnitsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsModel.swift; sourceTree = "<group>"; };
-		90797D5D21DEA8900071A845 /* Flaticon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Flaticon.ttf; sourceTree = "<group>"; };
 		90797D5F21E78AC20071A845 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		90797D6121E79E7E0071A845 /* LocationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListView.swift; sourceTree = "<group>"; };
 		90797D6321EE01E10071A845 /* LocationListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListHeaderView.swift; sourceTree = "<group>"; };
@@ -242,7 +240,6 @@
 				90797C9221C7EA020071A845 /* LaunchScreen.storyboard */,
 				90797C9521C7EA020071A845 /* Info.plist */,
 				90797D5821DD34DD0071A845 /* Climacons.ttf */,
-				90797D5D21DEA8900071A845 /* Flaticon.ttf */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -564,7 +561,6 @@
 				90797C9121C7EA020071A845 /* Assets.xcassets in Resources */,
 				90797D5921DD35AF0071A845 /* Climacons.ttf in Resources */,
 				90797C8C21C7E9FF0071A845 /* Main.storyboard in Resources */,
-				90797D5E21DEA9AC0071A845 /* Flaticon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

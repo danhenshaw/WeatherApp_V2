@@ -13,7 +13,7 @@ class SunriseSunsetCollectionViewCell: UICollectionViewCell {
     
     lazy var iconLabel: UILabel = {
         let label = UILabel()
-        label.customFont(size: .huge, colour: .white, alignment: .center, weight: .ultraLight, fontName: .weather, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
+        label.customFont(size: .otherIcon, colour: .white, alignment: .center, weight: .ultraLight, fontName: .weather, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
         return label
     }()
     

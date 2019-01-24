@@ -35,42 +35,17 @@ class FontIconModel {
         case "clear-night" :
             
             switch moonValue {
-            case 0...0.041 : return String(UnicodeScalar(UInt32(0xF102))!) // "New Moon"
-            case 0.042 ... 0.082 : return String(UnicodeScalar(UInt32(0xF117))!)
-            case 0.083 ... 0.123 : return String(UnicodeScalar(UInt32(0xF10B))!)
-                
-            case 0.124 ... 0.164 : return String(UnicodeScalar(UInt32(0xF109))!) // "Waxing Crescent"
-            case 0.165 ... 0.205 : return String(UnicodeScalar(UInt32(0xF10C))!)
-            case 0.206 ... 0.246 : return String(UnicodeScalar(UInt32(0xF101))!)
-                
-            case 0.247...0.287 : return String(UnicodeScalar(UInt32(0xF10F))!) // "First Quarter"
-            case 0.288 ... 0.328 : return String(UnicodeScalar(UInt32(0xF108))!)
-            case 0.329 ... 0.369 : return String(UnicodeScalar(UInt32(0xF10A))!)
-                
-            case 0.370 ... 0.410 : return String(UnicodeScalar(UInt32(0xF107))!) // "Waxing Gibbous"
-            case 0.411 ... 0.451 : return String(UnicodeScalar(UInt32(0xF106))!)
-            case 0.452 ... 0.492 : return String(UnicodeScalar(UInt32(0xF112))!)
-                
-            case 0.493 ... 0.533 : return String(UnicodeScalar(UInt32(0xF119))!) // "Full Moon"
-            case 0.534 ... 0.574 : return String(UnicodeScalar(UInt32(0xF10E))!)
-            case 0.575 ... 0.615 : return String(UnicodeScalar(UInt32(0xF103))!)
-                
-            case 0.616 ... 0.656 : return String(UnicodeScalar(UInt32(0xF104))!) // "Waning Gibbous"
-            case 0.657 ... 0.697 : return String(UnicodeScalar(UInt32(0xF111))!)
-            case 0.698 ... 0.738 : return String(UnicodeScalar(UInt32(0xF105))!)
-                
-            case 0.739 ... 0.749 : return String(UnicodeScalar(UInt32(0xF100))!) // "Third Quarter"
-            case 0.750 ... 0.791 : return String(UnicodeScalar(UInt32(0xF113))!)
-            case 0.792 ... 0.832 : return String(UnicodeScalar(UInt32(0xF115))!)
-                
-            case 0.833 ... 0.873 : return String(UnicodeScalar(UInt32(0xF118))!) // "Waning Crescent"
-            case 0.874 ... 0.914 : return String(UnicodeScalar(UInt32(0xF10D))!)
-            case 0.915 ... 0.955 : return String(UnicodeScalar(UInt32(0xF114))!)
-            case 0.956 ... 1 : return String(UnicodeScalar(UInt32(0xF116))!)
-                
+            case 0...0.123 : return "O" // "New Moon"
+            case 0.124 ... 0.246 : return "P" // "Waxing Crescent"
+            case 0.247...0.369 : return "Q" // "First Quarter"
+            case 0.370 ... 0.492 : return "R" // "Waxing Gibbous"
+            case 0.493 ... 0.615 : return "S" // "Full Moon"
+            case 0.616 ... 0.738 : return "T" // "Waning Gibbous"
+            case 0.739 ... 0.832 : return "U" // "Third Quarter"
+            case 0.833 ... 0.955 : return "V" // "Waning Crescent"
+            case 0.956 ... 1 : return "O" // "New Moon"
             default : return "I"
             }
-            
             
         case "partly-cloudy-day" : return  "\""
         case "partly-cloudy-night" : return  "\""
@@ -130,14 +105,14 @@ class FontIconModel {
             //            case "sunLow" : return "L"
             //            case "sunLower" : return "M"
             //            case "moon" : return "N"
-            //            case "moonNew" : return "O"
-            //            case "moonWaxingCrescent" : return "P"
-            //            case "moonWaxingQuarter" : return "Q"
-            //            case "moonWaxingGibbous" : return "R"
-            //            case "moonFull" : return "S"
-            //            case "moonWaningGibbous" : return "T"
-            //            case "moonWaningQuarter" : return "U"
-            //            case "moonWaningCrescent" : return "V"
+//                        case "moonNew" : return "O"
+//                        case "moonWaxingCrescent" : return "P"
+//                        case "moonWaxingQuarter" : return "Q"
+//                        case "moonWaxingGibbous" : return "R"
+//                        case "moonFull" : return "S"
+//                        case "moonWaningGibbous" : return "T"
+//                        case "moonWaningQuarter" : return "U"
+//                        case "moonWaningCrescent" : return "V"
             //            case "snowflake" : return "W"
             //            case "tornado" : return "X"
             //            case "thermometer" : return "Y"

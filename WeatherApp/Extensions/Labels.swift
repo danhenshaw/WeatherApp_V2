@@ -9,7 +9,7 @@
 import UIKit
 
 enum FontSize {
-    case huge, large, medium, small, tiny, weatherIcon, moonIcon
+    case huge, large, medium, small, tiny, weatherIcon, otherIcon
 }
 
 enum FontColour {
@@ -17,7 +17,7 @@ enum FontColour {
 }
 
 enum Font {
-    case moon, weather, system
+    case weather, system
 }
 
 extension UILabel {
@@ -42,11 +42,10 @@ extension UILabel {
         case .small : fontSize = 12
         case .tiny : fontSize = 8
         case .weatherIcon : fontSize = 15
-        case .moonIcon : fontSize = 16
+        case .otherIcon : fontSize = 36
         }
         
         switch fontName {
-        case .moon : fontNameString = "Flaticon"
         case .weather : fontNameString = "Climacons-Font"
         case .system : fontNameString = nil
         }

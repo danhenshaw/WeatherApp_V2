@@ -61,6 +61,7 @@ class CollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 8
+//        label.customFont(size: .weatherIcon, colour: .white, alignment: .center, weight: .regular, fontName: .weather, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
         return label
     }()
     
@@ -165,11 +166,11 @@ class CollectionViewCell: UICollectionViewCell {
     func configFor(_ cellData: HourlyOrDailyForecastCellItem) {
         
         let weatherIconArray = ["I", "\"", "\"", "!", "$", "0", "9", "B", "<"]
-        
+
         if weatherIconArray.contains(cellData.icon) {
             iconLabel.customFont(size: .weatherIcon, colour: .white, alignment: .center, weight: .regular, fontName: .weather, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
         } else {
-            iconLabel.customFont(size: .moonIcon, colour: .white, alignment: .center, weight: .regular, fontName: .moon, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
+            iconLabel.customFont(size: .otherIcon, colour: .white, alignment: .center, weight: .regular, fontName: .weather, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
         }
 
         let cellHeight = Double(self.frame.size.height)
