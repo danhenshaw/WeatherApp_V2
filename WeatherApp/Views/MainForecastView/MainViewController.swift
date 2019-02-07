@@ -6,11 +6,31 @@
 //  Copyright © 2018 Dan Henshaw. All rights reserved.
 //
 
+// This view controller is responsible for creating the page view controller and the individual pages.
+// It also sets the background gradient and handles navigation to settings and location list view controllers.
+// The possibility to include advertisement in the app will also be handled from this view controller.
+
+// MAIN VIEW CONTROLLER FUNCTIONALITY
+
+// 1. Initialise view and set orderedViewControllers to be an array of Forecast View Controllers
+// 2. Create each Forecast View Controller based on city data model passed from Initial View
+//    View Controllers are contained in a Page View Controller with horizontal swiping.
+//    Page Controller is used for visual guide as to which page is currently being displayed.
+// 3. Every time the view appears, check for updates:
+//      3a. Have location services changed? If yes, add or remove first view controller as required
+//      3b. Have settings changed? Retrieve a new forecast as required
+// 4. We contain the navigation items to Location List View Controller and Settings View Controller in the navigation bar
+// 5. When Location List button is pressed, we will try and retrieve the forecast for all locations before segueing to the view controller
+//    A while loop is used to check when the forecast has been retrieved.
+//    If there is an error retrieving any forecast, we will break from the loop and display an alert message
+// 6. Delegate notification is received from Forecast View Controller to update the background gradient
+
 import UIKit
 
 protocol MainViewControllerFlowDelegate: class {
     func showSettingsScreen(_ senderViewController: MainViewController)
     func showLocationList(_ senderViewController: MainViewController, locationListDataArray: [LocationListItem]?)
+    func showAlertController(_ senderViewController: MainViewController)
 }
 
 class MainViewController: UIPageViewController {
@@ -96,8 +116,8 @@ class MainViewController: UIPageViewController {
     
     
     
-    
     @objc func listButtonTapped() {
+        
         var locationListItemArray = [LocationListItem]()
         var shouldBreakFromLoop = false
         
@@ -113,10 +133,14 @@ class MainViewController: UIPageViewController {
                     shouldBreakFromLoop = true
                 }
             }
+            
             if shouldBreakFromLoop { break }
         }
+        
         if locationListItemArray.count != 0 {
             flowDelegate?.showLocationList(self, locationListDataArray: locationListItemArray)
+        } else {
+            flowDelegate?.showAlertController(self)
         }
     }
     
@@ -258,16 +282,20 @@ extension MainViewController: ForecastViewControllerActionDelegate {
 
 
 extension MainViewController: LocationListviewControllerActionDelegate {
+    
+    
     func scrollToPage(atIndex: Int) {
         mainView.pageViewController.setViewControllers([orderedViewControllers[atIndex]], direction: .forward, animated: false, completion: nil)
         mainView.pageControl.currentPage = atIndex
     }
 
+    
     func removePage(atIndex: Int) {
         orderedViewControllers.remove(at: atIndex + 1)
         mainView.pageControl.numberOfPages = orderedViewControllers.count
     }
 
+    
     func addPage(forCity: CityDataModel) {
 
         let model = ForecastDataModel(forCity: forCity)

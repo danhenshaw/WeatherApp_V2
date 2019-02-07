@@ -6,6 +6,23 @@
 //  Copyright © 2018 Dan Henshaw. All rights reserved.
 //
 
+// The inital view controller is the landing page for the app.
+// It checks for User Defaults and requests the current lcoation based on authorisation status.
+
+// INITIAL VIEW CONTROLLER FUNCTIONALITY
+
+// 1. Initialise view with view model and location manager
+// 2. Retrieve any locations which may have been previously saved in core data
+// 3. Check location authorisation status:
+//      3a. Start updating the current location if location authorisation is authorised
+//      3b. Segue to next view if location authorisation is restricted or denied
+//      3c. Ask user for permission if location authorisation is not determined.
+// 4. Update app based on outcome of (3):
+//      4a. Segue to main view once we have retrieved the current location
+//      4b. Show error alert when we are unable to retrieve the users current location. Ask user if they want to proceed anyway.
+//      4c. Segue to main view if user denies location authorisation. Inform user they can change this in phone settings.
+
+
 import UIKit
 
 enum ScreenOptions {
@@ -16,7 +33,7 @@ enum ScreenOptions {
 
 protocol InitialViewControllerFlowDelegate: class {
     func showMainViewController(_ senderViewController: InitialViewController, cityDataArray: [CityDataModel])
-    func showAlertController(_ senderViewController: InitialViewController)
+    func showAlertController(_ senderViewController: InitialViewController, cityDataArray: [CityDataModel])
 }
 
 class InitialViewController: UIViewController {
@@ -30,7 +47,6 @@ class InitialViewController: UIViewController {
         self.viewModel = viewModel
         self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)
-        viewModel.delegate = self as? InitialViewModelDelegate
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,9 +61,9 @@ class InitialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialView.locationServicesButton.addTarget(self, action: #selector(InitialViewController.locationServicesButtonTapped(_:)), for: .touchUpInside)
-        initialView.skipButton.addTarget(self, action: #selector(InitialViewController.skipButtonTapped(_:)), for: .touchUpInside)
         viewModel.getLocationsFromCoreData()
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appBecameActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
 
@@ -56,42 +72,27 @@ class InitialViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        checkLocationAuthorisationStatus()
-    }
-    
     
     @objc func appBecameActive() {
         switch locationManager.locationServicesStatus() {
-        case .authorizedWhenInUse, .authorizedAlways :
-            startUpdatingLocation()
-            updateScreen(type: .fetchingLocation)
-        default :
-            updateScreen(type: .locationUnavailable)
+        case .authorizedWhenInUse, .authorizedAlways : startUpdatingLocation()
+        case .denied, .restricted : locationPermissionsDenied()
+        case .notDetermined : locationManager.locationManager.requestWhenInUseAuthorization()
         }
     }
-    
 
-    func checkLocationAuthorisationStatus() {
-        switch locationManager.locationServicesStatus() {
-        case .authorizedAlways, .authorizedWhenInUse :
-            updateScreen(type: .fetchingLocation)
-            startUpdatingLocation()
-        case .notDetermined :
-            updateScreen(type: .welcome)
-        case .restricted, .denied :
+    func locationPermissionsDenied() {
+        initialView.titleLabelTwo.text = "We don't have authorisation to check your current location. \n \n Don't worry, we'll continue anyway."
+        _ = Timer.scheduledTimer(withTimeInterval: 3.5, repeats: false) { timer in
             self.flowDelegate?.showMainViewController(self, cityDataArray: self.viewModel.cityData)
         }
     }
-    
-    
-    
+
     func startUpdatingLocation() {
-        
+
         locationManager.requestLocation { (currentLocation, error) in
             if let error = error {
-                self.updateScreen(type: .locationUnavailable)
+                self.flowDelegate?.showAlertController(self, cityDataArray: self.viewModel.cityData)
                 print("There was an error fetching the current location: ", error)
             }
 
@@ -103,47 +104,10 @@ class InitialViewController: UIViewController {
                 cityData.isCurrentLocation = true
                 self.viewModel.cityData.insert(cityData, at: 0)
                 self.flowDelegate?.showMainViewController(self, cityDataArray: self.viewModel.cityData)
+                print("Success! We have the current location:, ", cityData.latitude, cityData.longitude)
             }
         }
     }
-
-
-    @objc func locationServicesButtonTapped(_ sender: UIButton) {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appBecameActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-        switch locationManager.locationServicesStatus() {
-        case .notDetermined : locationManager.locationManager.requestWhenInUseAuthorization()
-        default : flowDelegate?.showAlertController(self)
-        }
-    }
-    
-    
-    @objc func skipButtonTapped(_ sender: UIButton) {
-        flowDelegate?.showMainViewController(self, cityDataArray: viewModel.cityData)
-    }
-    
-    
-    func updateScreen(type: ScreenOptions) {
-        
-        initialView.locationServicesButton.isEnabled = false
-        initialView.skipButton.isEnabled = false
-        
-        switch type {
-        case .fetchingLocation :
-            initialView.titleLabelTwo.text = "Hold tight!"
-            initialView.titleLabelTwo.text = "...we're updating your location..."
-        case .locationUnavailable :
-            initialView.titleLabelTwo.text = "Oops! :("
-            initialView.titleLabelTwo.text = "...we couldn't retrieve your location"
-            initialView.locationServicesButton.setTitle("", for: .normal)
-            initialView.skipButton.setTitle("Continue anyway", for: .normal)
-            initialView.skipButton.isEnabled = true
-        case .welcome :
-            initialView.locationServicesButton.isEnabled = true
-            initialView.skipButton.isEnabled = true
-        }
-    }
-    
 }
 
 

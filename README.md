@@ -10,7 +10,7 @@ Create an iOS weather app that uses only Apple frameworks. I wanted to create a 
 
 ## Solution
 
-I chose the Dark Sky weather API due to the accuracy of the weather report as well as the sheer volume of weather data which can be requested. Users can interact with the main view in multiple ways to allow access to various forms of weather data. 
+I chose the Dark Sky weather API due to the accuracy of the weather report as well as the sheer volume of weather data which can be requested. Users can interact with the main view in multiple ways to allow access to various forms of weather data. This always the app to remain visually simple and provide one touch access to very detailed weather conditions not attainable with most apps on the market. 
 
 ### Features
 
@@ -27,23 +27,17 @@ I chose the Dark Sky weather API due to the accuracy of the weather report as we
 
 ## Requirements
 
-Sign up to Dark Sky at https://darksky.net/dev/register to obtain an API Key.
+Sign up to Dark Sky at https://darksky.net/dev/register to obtain an API Key. Add the API Key to the Dark Sky API Manager. 
 
 
 ## Further Improvements
 
-Current improvements being worked on:
-  - error alerts
-  - code documentation
   - customise refresher
-  - more complex background colour algorithm for displaying weather conditions
-  - general debugging
-
-Future improvemts to be implemented:
-  - correctly implenet internationalis- and localisation. Currents using a dictionar called Translator()
+  - correctly implenet internationalisation and localisation. Currently using a dictionary called Translator()
   - create widget and watchOS
   - weather radar view
-  - user choosable color pallete
+  - more complex background colour algorithm for displaying weather conditions
+  - user choos-able color pallete
   - dark mode option
   - create app icons
   - add unit testing

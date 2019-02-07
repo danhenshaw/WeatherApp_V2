@@ -6,7 +6,38 @@
 //  Copyright © 2018 Dan Henshaw. All rights reserved.
 //
 
+// This view controller is the heart of the app and is responsible for retrieving the forecast for each city.
+// It also handle the user interaction with the table view to display the requested forecast section
+
+// FORECAST VIEW CONTROLLER FUNCTIONALITY
+
+// 1. Initial view with view model and set refresher view controller
+// 2. Request the city name base on latitude and longitude. WE request the city name at this point so that we can use the users preffered language.
+// 3. Check to see if the forecast should be updated.
+//      3a. If forecast is nil, we will downlaod the forecast
+//      3b. If we are currently downloading the forecast, we will not download again
+//      3c. If previous download attempt failed, we will waity 10 seconds before trying again
+//      3d. If the forecast is not nil and it has been more than 2 hours since last download, we will download the forecast again.
+// 4. Once the forecast is retrieved, we add it to the model and then update the view.
+// 5. Table view contins:
+//      5a. Title cell containing city name and time. Time value changes based on user interaction with the rest of the table
+//      5b. Forecast overview cell contains an overview of the forecast for current time, selected hour or selected day.
+//          Background gradient is updated based on the icon which is selected for the forecast time and section being displayed here
+//      5c. Minutely forecast cell. When minutely forecast is available and forecast is expected within 60 minutes, a bar graph will appear here.
+//      5d. Collection View cell shows either hourly or daily forecast
+//          Hourly forecast data has current actual temperature, preceipitation probability and current weather icon.
+//          Daily forecast data show actual max temperature, actual min temperature, preceipitation probability and current weather icon.
+//          Precipitation probability is also represented with a bar chart
+//          Temperature max/min or current is placed vertically in the cell based on its relationship with the other temperatures being displayed.
+//          This gives users the ability to quickly determine temperature and preceipitation changes visually
+//          Also added to the collection view are sunrise and sunset times as well as when the data changes.
+
 import UIKit
+
+
+protocol ForecastViewControllerFlowDelegate: class {
+    func showAlertController(_ senderViewController: ForecastViewController)
+}
 
 protocol ForecastViewControllerActionDelegate: class {
     func updateBackgroundGradient(gradient: [CGColor])
@@ -17,6 +48,7 @@ class ForecastViewController : UITableViewController {
     let viewModel: ForecastViewModel
     internal let refresher: UIRefreshControl!
     
+    weak var flowDelegate: ForecastViewControllerFlowDelegate?
     weak var actionDelegate: ForecastViewControllerActionDelegate?
     
     var forecastOverviewSection : ForecastSection = .currently
@@ -75,8 +107,13 @@ class ForecastViewController : UITableViewController {
     
     func getCityName() {
         LocationManager().requestCityName(latitude: viewModel.getCityData().latitude, longitude: viewModel.getCityData().longitude) { (cityName, error) in
-            if let error = error { print("Error getting city name:", error) }
-            if let cityName = cityName { self.viewModel.updateCityName(cityName: cityName) }
+            if let error = error {
+                self.viewModel.updateCityName(cityName: "City name unavailable.")
+                print("Error getting city name:", error)
+            }
+            if let cityName = cityName {
+                self.viewModel.updateCityName(cityName: cityName)
+            }
             self.tableView.reloadData()
         }
     }
@@ -91,6 +128,7 @@ class ForecastViewController : UITableViewController {
         DarkSkyAPI().fetchWeather(latitude: latitude, longitude: longitude) { (retrievedForecast, error) in
             
             if let error = error {
+                self.flowDelegate?.showAlertController(self)
                 print("There was an error retrieving the forecast:", error)
                 self.viewModel.isDownloadingForecast = false
                 self.viewModel.failedToDownloadForecast = true
@@ -98,6 +136,7 @@ class ForecastViewController : UITableViewController {
             }
             
             if retrievedForecast != nil {
+                print("Success! We retrieved the forecast.")
                 self.viewModel.updateForecast(with: retrievedForecast!)
                 self.viewModel.isDownloadingForecast = false
                 self.viewModel.failedToDownloadForecast = false

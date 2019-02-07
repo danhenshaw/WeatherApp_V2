@@ -9,15 +9,9 @@
 import Foundation
 import CoreLocation
 
-protocol InitialViewModelDelegate: class {
-    func viewModel(_ viewModel: InitialViewModel, didEnableLocationServices currentLocation: CLLocation)
-    func viewModel(_ viewModel: InitialViewModel, didSetDefaultLocation defaultLocation: CLLocation)
-}
-
 
 class InitialViewModel {
     
-    weak var delegate: InitialViewModelDelegate?
     fileprivate var coreDataManager: CoreDataManager
     var cityData: [CityDataModel]!
     
@@ -36,6 +30,7 @@ class InitialViewModel {
         restoreUserSettingsFromStorage()
         getLocationsFromCoreData()
     }
+    
     
     
     func restoreUserSettingsFromStorage() {

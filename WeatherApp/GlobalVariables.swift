@@ -12,18 +12,27 @@ struct GlobalVariables {
     
     static var sharedInstance = GlobalVariables()
     
+    
+    // Variables below are used to save the user modifiable settings throughout the app
     var language = ""
     var units = ""
-    
-    var settingsHaveChanged = false
-    var fontSizemultiplier = 1.0
-    var precipBlue = 0x00abff
-    
     var currentlyData = Array(repeating: "", count: 5)
     var hourlyData = Array(repeating: "", count: 8)
     var dailyData = Array(repeating: "", count: 8)
     
     
+    // When the settings have changed, we should update the retrieved forecast to reflect lastest settings
+    var settingsHaveChanged = false
+    
+    // Used to determine what magnification to apply to font sizes to ensure the app functions of all screen sizes.
+    // This is calculated in the "setFontSizeMultipler" func below which is called from the Flow Conotroller when presenting the Initial Screen
+    var fontSizemultiplier = 1.0
+    
+    // A shade of blue used throughout the app to indicate precipitation
+    var precipBlue = 0x00abff
+    
+    
+    // Keys required to save User Defaults.
     let languageKey = "LanguageKey"
     let unitsKey = "UnitsKey"
     let currentDataKeys = ["CurrentDataKey0", "CurrentDataKey1", "CurrentDataKey2", "CurrentDataKey3", "CurrentDataKey4"]
@@ -36,10 +45,10 @@ struct GlobalVariables {
     }
     
     
+    // Update User Defaults and user modifiable settings stored as variables above
     mutating func update(value: PickerType, forecastSection: ForecastSection?, slot: Int?, toNewValue: String) {
         switch value {
         case .forecast :
-            
             if let forecastSection = forecastSection {
                 if let slot = slot {
                     switch forecastSection {

@@ -109,7 +109,6 @@ class SettingsViewController : UITableViewController {
         case .changeForecastData : flowDelegate?.showForecastDataTableView()
         case .openPhoneSettings : UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         case .rateApp : UIApplication.shared.open(URL(string: "https://www.apple.com/lae/ios/app-store/")! as URL, options: [:], completionHandler: nil)
-            
         case .feedbackAndSupport : openEmail()
         case .share : share()
         case .privacyPolicy : print("OPEN PRIVACY POLICY")

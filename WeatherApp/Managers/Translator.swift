@@ -99,6 +99,7 @@ class Translator {
 
     func getString(forLanguage: String, string: String) -> String {
         switch string {
+        case "" : return ""
         case "wind" : return wind[forLanguage, default: "Wind"]
         case "humidity" : return humidity[forLanguage, default: "Humidity"]
         case "dewPoint" : return dewPoint[forLanguage, default: "Dew point"]

@@ -12,7 +12,6 @@ import UIKit
 final class ForecastViewModel {
     
     fileprivate let model: ForecastDataModel
-    fileprivate var forecast: ForecastModel?
     
     var isDownloadingForecast = false
     var failedToDownloadForecast = false
@@ -23,21 +22,21 @@ final class ForecastViewModel {
     }
     
     func getCityData() -> (cityName: String, latitude: Double, longitude: Double) {
-        let city = model.cityData
+        let city = model.returnCityData()
         return (city.cityName, city.latitude, city.longitude)
     }
     
     func updateCityName(cityName: String) {
-        model.cityData.cityName = cityName
+        model.updateCityName(cityName)
     }
     
     func updateForecast(with newForecast: ForecastModel) {
-        forecast = newForecast
+        model.updateForecast(newForecast)
         forecastLastUpdatedAt = Date().timeIntervalSince1970
     }
     
     func hasDownloadedForecast() -> Bool {
-        if forecast == nil { return false } else { return true }
+        if model.isForecastNil() { return false } else {return true }
     }
 
     
@@ -50,8 +49,7 @@ final class ForecastViewModel {
         // At least 2 hours should pass before users try and download the weather again after we last successfully downloaded the weather
         let sufficientTimeSinceLastSuccessfullDownload = NSDate().timeIntervalSince1970 >= forecastLastUpdatedAt + 2 * 60 * 60
         
-        if GlobalVariables.sharedInstance.settingsHaveChanged { return true }
-        else if isDownloadingForecast { return false }
+        if isDownloadingForecast { return false }
         else if failedToDownloadForecast && !sufficientTimeSinceLastFailedDownload { return false }
         else if hasDownloadedForecast() && !sufficientTimeSinceLastSuccessfullDownload { return false }
         else { return true }
@@ -63,6 +61,7 @@ final class ForecastViewModel {
     func generateBackgroundGradient(forecastSection: ForecastSection, index: Int) -> [CGColor] {
         
         var condition = ""
+        let forecast : ForecastModel? = model.returnForecast()
         
         switch forecastSection {
         case .hourly : condition = forecast?.hourly?.data[index].icon ?? ""
@@ -88,15 +87,16 @@ final class ForecastViewModel {
     
     // Format forecast data for city to be used in the Location List view
     func prepareLocationListData() -> LocationListItem {
+        let forecast : ForecastModel? = model.returnForecast()
         let timeZone = forecast?.timezone ?? ""
         let locationListData = LocationListItem()
-        locationListData.cityName = model.cityData.cityName
-        locationListData.longitude = model.cityData.longitude
-        locationListData.latitude = model.cityData.latitude
+        locationListData.cityName = model.returnCityData().cityName
+        locationListData.longitude = model.returnCityData().longitude
+        locationListData.latitude = model.returnCityData().latitude
         locationListData.temp = forecast?.currently?.getValueString(dataType: "temp", timeZone: timeZone).value
         locationListData.summary = forecast?.currently?.summary
         locationListData.time = FormatDate().date(unixtimeInterval: (Int(Date().timeIntervalSince1970)), timeZone: timeZone, format: .mediumWithTime)
-        locationListData.isCurrentLocation = model.cityData.isCurrentLocation
+        locationListData.isCurrentLocation = model.returnCityData().isCurrentLocation
         
         let currentTime = forecast?.currently?.time ?? 0
         let sunriseTime = forecast?.daily?.data[0].sunriseTime ?? 0
@@ -117,24 +117,19 @@ final class ForecastViewModel {
     func prepareTitleCellData(forecastSection: ForecastSection, index: Int) -> TitleCellItem {
         
         var time = ""
-        let timeZone = forecast?.timezone ?? ""
+        let forecast : ForecastModel? = model.returnForecast()
+        if let timeZone = forecast?.timezone {
         
-        switch forecastSection {
-        case .hourly :
-            let timeString = forecast?.hourly?.getValueString(dataType: "time", index: index, timeZone: timeZone).value ?? "Forecast currently unavailable."
-            if timeString != "Forecast currently unavailable." { time = "Forecast for " + timeString }
+            switch forecastSection {
+            case .hourly : time = forecast?.hourly?.getValueString(dataType: "time", index: index, timeZone: timeZone).value ?? ""
+            case .daily : time = forecast?.daily?.getValueString(dataType: "time", index: index, timeZone: timeZone).value ?? ""
+            default : time = FormatDate().date(unixtimeInterval: (Int(Date().timeIntervalSince1970)), timeZone: timeZone, format: .mediumWithTime)
+            }
+            return TitleCellItem(cityName: model.returnCityData().cityName, time: "Forecast for " + time)
             
-        case .daily :
-            let timeString = forecast?.daily?.getValueString(dataType: "time", index: index, timeZone: timeZone).value ?? "Forecast currently unavailable."
-            if timeString != "Forecast currently unavailable." { time = "Forecast for " + timeString }
-            
-        default :
-            time = FormatDate().date(unixtimeInterval: (Int(Date().timeIntervalSince1970)), timeZone: timeZone, format: .mediumWithTime)
-//            let timeString = forecast?.currently?.getValueString(dataType: "time", timeZone: timeZone).value ?? "Forecast currently unavailable."
-//            if timeString != "Forecast currently unavailable." { time = "Last updated: " + timeString }
+        } else {
+            return TitleCellItem(cityName: model.returnCityData().cityName, time: "")
         }
-        
-        return TitleCellItem(cityName: model.cityData.cityName, time: time)
     }
     
     
@@ -143,6 +138,7 @@ final class ForecastViewModel {
     func prepareForecastOverviewCellData(forecastSection: ForecastSection, index: Int) -> ForecastOverviewCellItem {
         
         var cellData: ForecastOverviewCellItem
+        let forecast : ForecastModel? = model.returnForecast()
         let timeZone = forecast?.timezone ?? ""
         let defaultCell = LabelFormat(title: "", value: "")
         let data = GlobalVariables.sharedInstance
@@ -187,9 +183,9 @@ final class ForecastViewModel {
     
     
     // Format the forecast data required for the minutely cell which display either the selected summary or minutely forecast information for the next 60 mins when available
-    
     func prepareMinutelyForecastCellData(forecastSection: ForecastSection, index: Int) -> MinutelyForecastCellItem {
         
+        let forecast : ForecastModel? = model.returnForecast()
         var summary = ""
         var minutelyForecastAvailable = true
         var barHeightArray = [Double]()
@@ -216,13 +212,15 @@ final class ForecastViewModel {
             
         }
         
-        let cellData = MinutelyForecastCellItem(summary: summary, cityName: model.cityData.cityName, barHeight: barHeightArray, minutelyForecastAvailable: minutelyForecastAvailable, section: forecastSection)
+        let cellData = MinutelyForecastCellItem(summary: summary, cityName: model.returnCityData().cityName, barHeight: barHeightArray, minutelyForecastAvailable: minutelyForecastAvailable, section: forecastSection)
         return cellData
         
     }
     
     // Format the forecast data required for the hourly collection view
     func prepareHourlyCellData() -> [HourlyOrDailyForecastCellItem] {
+        
+        let forecast : ForecastModel? = model.returnForecast()
         var cellData = [HourlyOrDailyForecastCellItem]()
 
         let twoDayMax = forecast?.hourly?.twoDayMaxMin().max
@@ -288,6 +286,7 @@ final class ForecastViewModel {
     
     // Format the forecast data required for the daily collection view
     func prepareDailyCellData() -> [HourlyOrDailyForecastCellItem] {
+        let forecast : ForecastModel? = model.returnForecast()
         var cellData = [HourlyOrDailyForecastCellItem]()
         
         let weeklyMax = forecast?.daily?.weeklyTemperatureExtremes().temperatureHighMax
