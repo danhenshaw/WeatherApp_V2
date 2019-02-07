@@ -1,6 +1,6 @@
 # WeatherApp (version 2)
 
-WeatherApp is a weather app for iOS powered by [Dark Sky] (https://darksky.net)
+WeatherApp is a weather app for iOS powered by [Dark Sky](https://darksky.net)
 
 
 ## Objective
@@ -27,7 +27,7 @@ I chose the Dark Sky weather API due to the accuracy of the weather report as we
 
 ## Requirements
 
-Sign up to Dark Sky at https://darksky.net/dev/register to obtain an API Key. Add the API Key to the Dark Sky API Manager. 
+Sign up to [Dark Sky](https://darksky.net/dev/register) to obtain an API Key. Add the API Key to the Dark Sky API Manager. 
 
 
 ## Further Improvements
