@@ -107,9 +107,11 @@ class ForecastOverviewCell: UITableViewCell {
         tempLabel.text = cellData.currentTemp
         for index in 0 ..< cellData.values.count {
             let titleString = cellData.values[index].title
-            let translatedTitle = Translator().getString(forLanguage: language, string: titleString)
-            labelArray[index].titleLabel.text = "\(translatedTitle.uppercased())" + ": "
-            labelArray[index].valueLabel.text = cellData.values[index].value
+            if titleString != "" {
+                let translatedTitle = Translator().getString(forLanguage: language, string: titleString)
+                labelArray[index].titleLabel.text = "\(translatedTitle.uppercased())" + ": "
+                labelArray[index].valueLabel.text = cellData.values[index].value
+            }
         }
     }
     

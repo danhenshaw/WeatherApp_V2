@@ -37,7 +37,7 @@ class CoreDataManager {
                 
                 for index in 0 ..< results.count {
                     let cityData = CityDataModel()
-                    cityData.cityName = results[index].cityName ?? "City name unavailable"
+                    cityData.cityName = results[index].cityName ?? ""
                     cityData.latitude = results[index].latitude
                     cityData.longitude = results[index].longitude
                     cityDataArray.append(cityData)

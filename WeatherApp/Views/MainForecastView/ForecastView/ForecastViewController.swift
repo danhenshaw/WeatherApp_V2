@@ -34,21 +34,19 @@
 
 import UIKit
 
-
-protocol ForecastViewControllerFlowDelegate: class {
-    func showAlertController(_ senderViewController: ForecastViewController)
-}
-
 protocol ForecastViewControllerActionDelegate: class {
     func updateBackgroundGradient(gradient: [CGColor])
+    func forecastUnavailable()
+    func requestLocationPermissions()
+    func locationUnavailable()
 }
 
 class ForecastViewController : UITableViewController {
     
     let viewModel: ForecastViewModel
     internal let refresher: UIRefreshControl!
+    fileprivate let locationManager: LocationManager
     
-    weak var flowDelegate: ForecastViewControllerFlowDelegate?
     weak var actionDelegate: ForecastViewControllerActionDelegate?
     
     var forecastOverviewSection : ForecastSection = .currently
@@ -64,10 +62,10 @@ class ForecastViewController : UITableViewController {
         static let buttonCellReuseIdentifier = "ButtonCellReuseIdentifier"
     }
     
-    init(withViewModel viewModel: ForecastViewModel) {
+    init(withViewModel viewModel: ForecastViewModel, locationManager: LocationManager) {
         self.viewModel = viewModel
+        self.locationManager = locationManager
         refresher = UIRefreshControl()
-        
         super.init(style: .grouped)
     }
     
@@ -84,6 +82,7 @@ class ForecastViewController : UITableViewController {
         tableView.register(ForecastOverviewCell.self, forCellReuseIdentifier: Constants.forecastOverviewCellReuseIdentifier)
         tableView.register(MinutelyForecastCell.self, forCellReuseIdentifier: Constants.minutelyForecastCellReuseIdentifier)
         tableView.register(HourlyOrDailyForecastCell.self, forCellReuseIdentifier: Constants.hourlyOrDailyForecastCellReuseIdentifier)
+        
         getCityName()
     }
     
@@ -91,8 +90,10 @@ class ForecastViewController : UITableViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
+    
+        if viewModel.pageIndex == 0 { checkLocationAuthorisationStatus() }
+        if viewModel.shouldUpdateForecast() && viewModel.getCityData() != nil { fetchForecast() }
         
-        if viewModel.shouldUpdateForecast() { fetchForecast() }
     }
     
     
@@ -102,19 +103,71 @@ class ForecastViewController : UITableViewController {
         } else if refresher.isRefreshing {
             endRefreshing()
         }
+        
+        if viewModel.getCityData()?.cityName == "" || viewModel.getCityData()?.cityName == "City name unavailable" { getCityName() }
+        
+    }
+    
+    
+    func checkLocationAuthorisationStatus() {
+        switch locationManager.locationServicesStatus() {
+            
+        case .authorizedWhenInUse, .authorizedAlways :
+            if viewModel.getCityData() == nil { startUpdatingLocation() }
+            
+        case .denied, .restricted :
+            if viewModel.getCityData() != nil {
+                self.viewModel.removeCityData()
+                self.viewModel.removeForecast()
+                self.tableView.reloadData()
+                print("Removing city data")
+            }
+            
+        case .notDetermined : locationManager.locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    
+    func startUpdatingLocation() {
+        locationManager.requestLocation { (currentLocation, error) in
+            if let error = error {
+                print("There was an error fetching the current location: ", error)
+                self.actionDelegate?.locationUnavailable()
+            }
+            
+            if let currentLocation = currentLocation {
+                let cityData = CityDataModel()
+                cityData.latitude = currentLocation.latitude
+                cityData.longitude = currentLocation.longitude
+                cityData.cityName = currentLocation.cityName
+                cityData.isCurrentLocation = true
+                self.viewModel.updateCurrentLocation(cityData)
+                self.getCityName()
+                self.fetchForecast()
+                print("Success! We have the current location")
+            }
+        }
     }
     
     
     func getCityName() {
-        LocationManager().requestCityName(latitude: viewModel.getCityData().latitude, longitude: viewModel.getCityData().longitude) { (cityName, error) in
-            if let error = error {
-                self.viewModel.updateCityName(cityName: "City name unavailable.")
-                print("Error getting city name:", error)
+        
+        if let cityData = viewModel.getCityData() {
+            
+            locationManager.requestCityName(latitude: cityData.latitude, longitude: cityData.longitude) { (cityName, error) in
+                
+                if let error = error {
+                    self.viewModel.updateCityName(cityName: "City name unavailable")
+                    print("Error getting city name:", error)
+                }
+                
+                if let cityName = cityName {
+                    print("Success! We retrieved the city name: ", cityName)
+                    self.viewModel.updateCityName(cityName: cityName)
+                }
+                
+                self.tableView.reloadData()
             }
-            if let cityName = cityName {
-                self.viewModel.updateCityName(cityName: cityName)
-            }
-            self.tableView.reloadData()
         }
     }
     
@@ -122,26 +175,29 @@ class ForecastViewController : UITableViewController {
     func fetchForecast() {
         startRefreshing()
         self.viewModel.isDownloadingForecast = true
-        let latitude = viewModel.getCityData().latitude
-        let longitude = viewModel.getCityData().longitude
         
-        DarkSkyAPI().fetchWeather(latitude: latitude, longitude: longitude) { (retrievedForecast, error) in
+        if let cityData = viewModel.getCityData() {
             
-            if let error = error {
-                self.flowDelegate?.showAlertController(self)
-                print("There was an error retrieving the forecast:", error)
-                self.viewModel.isDownloadingForecast = false
-                self.viewModel.failedToDownloadForecast = true
-                self.endRefreshing()
-            }
-            
-            if retrievedForecast != nil {
-                print("Success! We retrieved the forecast.")
-                self.viewModel.updateForecast(with: retrievedForecast!)
-                self.viewModel.isDownloadingForecast = false
-                self.viewModel.failedToDownloadForecast = false
-                self.actionDelegate?.updateBackgroundGradient(gradient: self.viewModel.generateBackgroundGradient(forecastSection: self.forecastOverviewSection, index: self.forecastOverviewIndex))
-                self.endRefreshing()
+            print("Fetching forecast for: ", cityData.cityName, cityData.latitude)
+
+            DarkSkyAPI().fetchWeather(latitude: cityData.latitude, longitude: cityData.longitude) { (retrievedForecast, error) in
+                
+                if let error = error {
+                    self.actionDelegate?.forecastUnavailable()
+                    print("There was an error retrieving the forecast:", error)
+                    self.viewModel.isDownloadingForecast = false
+                    self.viewModel.failedToDownloadForecast = true
+                    self.endRefreshing()
+                }
+                
+                if retrievedForecast != nil {
+                    print("Success! We retrieved the forecast.")
+                    self.viewModel.updateForecast(with: retrievedForecast!)
+                    self.viewModel.isDownloadingForecast = false
+                    self.viewModel.failedToDownloadForecast = false
+                    self.actionDelegate?.updateBackgroundGradient(gradient: self.viewModel.generateBackgroundGradient(forecastSection: self.forecastOverviewSection, index: self.forecastOverviewIndex))
+                    self.endRefreshing()
+                }
             }
         }
     }
@@ -186,6 +242,7 @@ class ForecastViewController : UITableViewController {
             let titleCell = tableView.dequeueReusableCell(withIdentifier: Constants.titleCellReuseIdentifier, for: indexPath) as! TitleCell
             let cellData = viewModel.prepareTitleCellData(forecastSection: forecastOverviewSection, index: forecastOverviewIndex)
             titleCell.bindWith(cellData)
+            titleCell.actionDelegate = self
             cell = titleCell
             
         case 1 :
@@ -255,6 +312,14 @@ class ForecastViewController : UITableViewController {
     }
     
     
+}
+
+extension ForecastViewController: TitleCellActionDelegate {
+    
+    func requestLocationAuthorisation() {
+        print("requestLocationAuthorisation")
+        actionDelegate?.requestLocationPermissions()
+    }
 }
 
 extension ForecastViewController: HourlyOrDailyForecastCellActionDelegate {

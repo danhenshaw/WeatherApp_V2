@@ -60,7 +60,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
             if let error = error { return completion(nil, error) }
-            if let placemark = placemarks?[0] { return completion(placemark.locality ?? "City name unavailable", nil) }
+            if let placemark = placemarks?[0] { return completion(placemark.locality ?? "", nil) }
         })
     }
 }

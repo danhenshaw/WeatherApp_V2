@@ -18,11 +18,7 @@ final class LocationListViewModel {
     
     func numberOfItemsInSection(_ section: Int) -> Int {
         let dataCount = model.locationListData?.count ?? 0
-        if isUsingCurrentLocation() {
-            return dataCount - 1
-        } else {
-            return dataCount
-        }
+        return dataCount - 1
     }
     
     func locationItemForIndexPath(_ indexPath: Int) -> LocationListItem? {

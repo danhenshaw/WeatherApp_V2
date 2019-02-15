@@ -13,11 +13,19 @@ struct TitleCellItem {
     var time: String
 }
 
+protocol TitleCellActionDelegate: class {
+    func requestLocationAuthorisation()
+}
+
 class TitleCell: UITableViewCell {
+    
+    var cityNameAvailable = false
+    weak var actionDelegate: TitleCellActionDelegate?
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.customFont(size: .large, colour: .white, alignment: .center, weight: .light, fontName: .system, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -46,19 +54,36 @@ class TitleCell: UITableViewCell {
     func setupView() {
         addSubview(titleLabel)
         addSubview(dateLabel)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        self.addGestureRecognizer(tapGesture)
     }
     
     func setupConstraints() {
-        titleLabel.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: dateLabel.topAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
+        titleLabel.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: dateLabel.topAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: -16), size: .init(width: 0, height: 0))
         
         dateLabel.anchor(top: titleLabel.bottomAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
         
     }
     
     func bindWith(_ cellData: TitleCellItem) {
-        titleLabel.text = cellData.cityName
-        dateLabel.text = cellData.time
+        if cellData.cityName != "" {
+            titleLabel.text = cellData.cityName
+            dateLabel.text = cellData.time
+            cityNameAvailable = true
+        } else {
+            titleLabel.text = "Unable to retrieve your location"
+            dateLabel.text = "Click here to update settings"
+            cityNameAvailable = false
+        }
     }
+    
+    @objc func viewTapped() {
+        if !cityNameAvailable {
+            actionDelegate?.requestLocationAuthorisation()
+        }
+    }
+    
 }
 
 

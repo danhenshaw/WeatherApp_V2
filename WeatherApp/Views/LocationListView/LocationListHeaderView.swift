@@ -18,6 +18,7 @@ class LocationListHeaderView : UITableViewHeaderFooterView {
     lazy var cityNameLabel: UILabel = {
         let label = UILabel()
         label.customFont(size: .large, colour: .white, alignment: .left, weight: .light, fontName: .system, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     

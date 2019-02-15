@@ -8,15 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		90797C8721C7E9FF0071A845 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797C8621C7E9FF0071A845 /* AppDelegate.swift */; };
-		90797C8921C7E9FF0071A845 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797C8821C7E9FF0071A845 /* InitialViewController.swift */; };
 		90797C8C21C7E9FF0071A845 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90797C8A21C7E9FF0071A845 /* Main.storyboard */; };
 		90797C8F21C7E9FF0071A845 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90797C8D21C7E9FF0071A845 /* Model.xcdatamodeld */; };
 		90797C9121C7EA020071A845 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90797C9021C7EA020071A845 /* Assets.xcassets */; };
 		90797C9421C7EA020071A845 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90797C9221C7EA020071A845 /* LaunchScreen.storyboard */; };
 		90797C9F21C7EA020071A845 /* WeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797C9E21C7EA020071A845 /* WeatherAppTests.swift */; };
 		90797CAA21C7EA020071A845 /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797CA921C7EA020071A845 /* WeatherAppUITests.swift */; };
-		90797CB821C7EA120071A845 /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797CB721C7EA120071A845 /* InitialView.swift */; };
-		90797CBA21C7EA1E0071A845 /* InitialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797CB921C7EA1E0071A845 /* InitialViewModel.swift */; };
 		90797CBE21C7EAE80071A845 /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797CBD21C7EAE80071A845 /* Constraints.swift */; };
 		90797CC021C7F0DA0071A845 /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797CBF21C7F0DA0071A845 /* FlowController.swift */; };
 		90797CC221C7F1300071A845 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90797CC121C7F1300071A845 /* NavigationController.swift */; };
@@ -100,7 +97,6 @@
 /* Begin PBXFileReference section */
 		90797C8321C7E9FF0071A845 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90797C8621C7E9FF0071A845 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		90797C8821C7E9FF0071A845 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		90797C8B21C7E9FF0071A845 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		90797C8E21C7E9FF0071A845 /* PageViewTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PageViewTest.xcdatamodel; sourceTree = "<group>"; };
 		90797C9021C7EA020071A845 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,8 +108,6 @@
 		90797CA521C7EA020071A845 /* WeatherAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90797CA921C7EA020071A845 /* WeatherAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppUITests.swift; sourceTree = "<group>"; };
 		90797CAB21C7EA020071A845 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		90797CB721C7EA120071A845 /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
-		90797CB921C7EA1E0071A845 /* InitialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewModel.swift; sourceTree = "<group>"; };
 		90797CBD21C7EAE80071A845 /* Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
 		90797CBF21C7F0DA0071A845 /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
 		90797CC121C7F1300071A845 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -260,16 +254,6 @@
 				90797CAB21C7EA020071A845 /* Info.plist */,
 			);
 			path = WeatherAppUITests;
-			sourceTree = "<group>";
-		};
-		90797CC321C800210071A845 /* InitialView */ = {
-			isa = PBXGroup;
-			children = (
-				90797C8821C7E9FF0071A845 /* InitialViewController.swift */,
-				90797CB921C7EA1E0071A845 /* InitialViewModel.swift */,
-				90797CB721C7EA120071A845 /* InitialView.swift */,
-			);
-			path = InitialView;
 			sourceTree = "<group>";
 		};
 		90797CCD21C80F560071A845 /* MainForecastView */ = {
@@ -420,7 +404,6 @@
 		907D81B221F26EEE000F6B46 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				90797CC321C800210071A845 /* InitialView */,
 				90797CCD21C80F560071A845 /* MainForecastView */,
 				90797CD621C901F50071A845 /* SettingsView */,
 				907D81B321F5F8A2000F6B46 /* CustomiseableForecastDataView */,
@@ -601,12 +584,10 @@
 				90797D5421DD2EA00071A845 /* Date.swift in Sources */,
 				90797CFD21C932FD0071A845 /* HourlyOrDailyForecastCell.swift in Sources */,
 				90797CDB21C902170071A845 /* SettingsCell.swift in Sources */,
-				90797CBA21C7EA1E0071A845 /* InitialViewModel.swift in Sources */,
 				90797D2921CBB54F0071A845 /* CityDataModel.swift in Sources */,
 				90797CDD21C902170071A845 /* SettingsViewModel.swift in Sources */,
 				90797CBE21C7EAE80071A845 /* Constraints.swift in Sources */,
 				90797D2621CBB28A0071A845 /* CoreDataStack.swift in Sources */,
-				90797CB821C7EA120071A845 /* InitialView.swift in Sources */,
 				90797D2B21CBC03A0071A845 /* GlobalVariables.swift in Sources */,
 				90797CC021C7F0DA0071A845 /* FlowController.swift in Sources */,
 				90797D4821D7E3190071A845 /* DailyForecastDataModel.swift in Sources */,
@@ -616,7 +597,6 @@
 				90797CC221C7F1300071A845 /* NavigationController.swift in Sources */,
 				90797D1B21CAA2F10071A845 /* AddLocationViewController.swift in Sources */,
 				90797D3C21CEDF720071A845 /* CustomiseableForecastDataHeaderView.swift in Sources */,
-				90797C8921C7E9FF0071A845 /* InitialViewController.swift in Sources */,
 				90797CE721C904970071A845 /* LocationListViewController.swift in Sources */,
 				90797D4421D7E2DA0071A845 /* MinutelyForecastDataModel.swift in Sources */,
 				90797C8F21C7E9FF0071A845 /* Model.xcdatamodeld in Sources */,
@@ -824,7 +804,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQFTH9N6BG;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -832,8 +814,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = MEGA.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -841,7 +824,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQFTH9N6BG;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -849,8 +834,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = MEGA.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -15,24 +15,41 @@ final class ForecastViewModel {
     
     var isDownloadingForecast = false
     var failedToDownloadForecast = false
+    var pageIndex: Int
     fileprivate var forecastLastUpdatedAt = Double()
     
-    init(withModel model: ForecastDataModel) {
+    init(withModel model: ForecastDataModel, pageIndex: Int) {
         self.model = model
+        self.pageIndex = pageIndex
     }
     
-    func getCityData() -> (cityName: String, latitude: Double, longitude: Double) {
-        let city = model.returnCityData()
-        return (city.cityName, city.latitude, city.longitude)
+    func getCityData() -> CityDataModel? {
+        if model.returnCityData().longitude == 0 && model.returnCityData().latitude == 0 {
+            return nil
+        } else {
+            return model.returnCityData()
+        }
     }
     
     func updateCityName(cityName: String) {
         model.updateCityName(cityName)
     }
     
+    func updateCurrentLocation(_ location: CityDataModel) {
+        model.updateCityData(location)
+    }
+    
+    func removeCityData() {
+        model.removeCityData()
+    }
+    
     func updateForecast(with newForecast: ForecastModel) {
         model.updateForecast(newForecast)
         forecastLastUpdatedAt = Date().timeIntervalSince1970
+    }
+    
+    func removeForecast() {
+        model.removeForecast()
     }
     
     func hasDownloadedForecast() -> Bool {
@@ -52,6 +69,7 @@ final class ForecastViewModel {
         if isDownloadingForecast { return false }
         else if failedToDownloadForecast && !sufficientTimeSinceLastFailedDownload { return false }
         else if hasDownloadedForecast() && !sufficientTimeSinceLastSuccessfullDownload { return false }
+        else if getCityData() == nil { return false }
         else { return true }
     }
     

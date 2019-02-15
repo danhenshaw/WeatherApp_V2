@@ -29,4 +29,16 @@ final class MainForecastViewModel {
         return city
     }
     
+    func updateCurrentLocation(_ currentLocation: CityDataModel) {
+        model.cityData[0] = currentLocation
+    }
+    
+    func currentLocationUnavailable(_ withData: CityDataModel) {
+        model.cityData[0] = withData
+    }
+    
+    func currentLocationReceived() -> Bool {
+        return model.cityData[0].isCurrentLocation ?? false
+    }
+    
 }

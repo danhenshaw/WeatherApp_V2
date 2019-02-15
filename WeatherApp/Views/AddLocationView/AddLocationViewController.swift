@@ -83,7 +83,7 @@ extension AddLocationViewController: UITableViewDataSource, UITableViewDelegate 
                 let newCityData = CityDataModel()
                 newCityData.latitude = response?.mapItems[0].placemark.coordinate.latitude ?? 0
                 newCityData.longitude = response?.mapItems[0].placemark.coordinate.longitude ?? 0
-                newCityData.cityName = response?.mapItems[0].placemark.locality ?? "City name unavailable"
+                newCityData.cityName = response?.mapItems[0].placemark.locality ?? ""
 
                 CoreDataStack.shared.add(cityData: newCityData)
                 self.actionDelegate?.userAdded(newCity: newCityData)

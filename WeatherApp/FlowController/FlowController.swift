@@ -8,6 +8,7 @@
 
 import UIKit
 
+enum ErrorAlert { case locationUnavailable, requestLocation, forecastUnavailable, forecastsUnavailable }
 
 // The Flow Controller is responsible for presenting all new views and is accomplished by using the delegate pattern
 
@@ -21,17 +22,18 @@ class FlowController {
     }
     
     func showMainScren() {
-        
+
         GlobalVariables.sharedInstance.setFontSizeMultipler(screenHeight: Double(window.screen.bounds.height))
         
         let coreDataManager = CoreDataManager()
-        let viewModel = InitialViewModel(coreDataManager: coreDataManager)
         let locationManager = LocationManager()
-        let viewController = InitialViewController(viewModel: viewModel, locationManager: locationManager)
+
+        let model = MainForecastModel(coreDataManager: coreDataManager)
+        let viewModel = MainForecastViewModel(withModel: model)
+        let mainViewController = MainViewController(withViewModel: viewModel, locationManager: locationManager)
+        mainViewController.flowDelegate = self
         
-        viewController.flowDelegate = self
-        
-        let navigationController = MainNavigationController(rootViewController: viewController)
+        let navigationController = MainNavigationController(rootViewController: mainViewController)
         self.navigationController = navigationController
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
@@ -39,40 +41,9 @@ class FlowController {
     
 }
 
-extension FlowController: InitialViewControllerFlowDelegate {
-
-    func showMainViewController(_ senderViewController: InitialViewController, cityDataArray: [CityDataModel]) {
-        let model = MainForecastModel(withCities: cityDataArray)
-        let viewModel = MainForecastViewModel(withModel: model)
-        let mainViewController = MainViewController(withViewModel: viewModel)
-        mainViewController.flowDelegate = self
-        navigationController!.pushViewController(mainViewController, animated: true)
-    }
-    
-    func showAlertController(_ senderViewController: InitialViewController, cityDataArray: [CityDataModel]) {
-        let alertController = UIAlertController(title: "Failed to get your current location.", message: "Would you like to continue anyway?", preferredStyle: UIAlertController.Style.alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: {(cAlertAction) in
-            let model = MainForecastModel(withCities: cityDataArray)
-            let viewModel = MainForecastViewModel(withModel: model)
-            let mainViewController = MainViewController(withViewModel: viewModel)
-            mainViewController.flowDelegate = self
-            self.navigationController!.pushViewController(mainViewController, animated: true)
-        })
-        
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        
-        navigationController?.present(alertController, animated: true, completion: nil)
-    }
-
-}
 
 
-
-extension FlowController: MainViewControllerFlowDelegate {
+extension FlowController: MainViewControllerFlowDelegate {    
     
     func showSettingsScreen(_ senderViewController: MainViewController) {
         let model = SettingsModel()
@@ -90,31 +61,51 @@ extension FlowController: MainViewControllerFlowDelegate {
         locationListViewController.actionDelegate = senderViewController
         navigationController!.pushViewController(locationListViewController, animated: true)
     }
-    
-    func showAlertController(_ senderViewController: MainViewController) {
-        let alertController = UIAlertController(title: "Oops...something went wrong.", message: "We were unable to retrieve all forecasts. Please try again later.", preferredStyle: UIAlertController.Style.alert)
+
+    func showAlertController(_ senderViewController: MainViewController, error: ErrorAlert) {
+        
+        var title = ""
+        var message = ""
+        var showOKAction = false
+        
+        switch error {
+        case .locationUnavailable :
+            title = "Oops...something went wrong."
+            message = "We were unable to retrieve your location. Please try again later."
+            showOKAction = false
+        case .requestLocation :
+            title = "Location Permission Required."
+            message = "Please enable location permissions in settings."
+            showOKAction = true
+        case .forecastUnavailable :
+            title = "Oops...something went wrong."
+            message = "We were unable to retrieve the forecast. Please try again later."
+            showOKAction = false
+        case .forecastsUnavailable :
+            title = "Oops...something went wrong."
+            message = "We were unable to retrieve all forecasts. Please try again later."
+            showOKAction = false
+        }
+        
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
 
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
         alertController.addAction(cancelAction)
         
-        navigationController?.present(alertController, animated: true, completion: nil)
-    }
-    
-}
-
-extension FlowController: ForecastViewControllerFlowDelegate {
-    
-    func showAlertController(_ senderViewController: ForecastViewController) {
-        let alertController = UIAlertController(title: "Oops...something went wrong.", message: "We were unable to retrieve the forecasts. Please try again later.", preferredStyle: UIAlertController.Style.alert)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
-        alertController.addAction(cancelAction)
+        if showOKAction {
+            let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+                //Redirect to Settings app
+                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+            })
+            alertController.addAction(okAction)
+        }
         
         navigationController?.present(alertController, animated: true, completion: nil)
     }
     
+    
 }
-
 
 
 extension FlowController: SettingsViewControllerFlowDelegate {

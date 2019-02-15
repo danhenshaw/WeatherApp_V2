@@ -76,7 +76,7 @@ class LocationListViewController : UIViewController {
                 viewModel.removeItem(0)
                 actionDelegate?.removePage(atIndex: 0)
                 locationListView.tableView.reloadData()
-            } 
+            }
         default :
             if !(viewModel.locationItemForIndexPath(0)?.isCurrentLocation ?? false) {
                 LocationManager().requestLocation { (currentLocation, error) in
@@ -84,7 +84,7 @@ class LocationListViewController : UIViewController {
                         print("There was an error retrieiving your location: ", error)
                     }
                     if let currentLocation = currentLocation {
-                        print("SUCCESS! We have your current location as ", currentLocation.cityName)
+                        print("Success! We have the current location.")
                         let cityData = CityDataModel()
                         cityData.latitude = currentLocation.latitude
                         cityData.longitude = currentLocation.longitude
@@ -138,15 +138,8 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.headerViewReuseIdentifier) as! LocationListHeaderView
         view.button.addTarget(self, action: #selector(headerTapped(_:)), for: .touchUpInside)
-
-        if viewModel.isUsingCurrentLocation() {
-            let locationListItem = viewModel.locationItemForIndexPath(0)
-            view.bindWithLocationListItem(locationListItem!)
-        } else {
-            view.timeLabel.text = "Current Location is unavailable"
-            view.cityNameLabel.text = "Click here to update settings"
-        }
-        
+        let locationListItem = viewModel.locationItemForIndexPath(0)
+        view.bindWithLocationListItem(locationListItem!)
         return view
     }
     
@@ -181,10 +174,7 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var index = indexPath.row
-        if viewModel.isUsingCurrentLocation() { index = indexPath.row + 1 }
-        
-        let locationListItem = viewModel.locationItemForIndexPath(index)
+        let locationListItem = viewModel.locationItemForIndexPath(indexPath.row + 1)
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.locationListCellReuseIdentifier, for: indexPath) as! LocationListCell
         cell.bindWithLocationListItem(locationListItem!)
         cell.selectionStyle = .none
@@ -197,9 +187,7 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.popViewController(animated: true)
-        var index = indexPath.row
-        if viewModel.isUsingCurrentLocation() { index = indexPath.row + 1 }
-        actionDelegate?.scrollToPage(atIndex: index)
+        actionDelegate?.scrollToPage(atIndex: indexPath.row + 1)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

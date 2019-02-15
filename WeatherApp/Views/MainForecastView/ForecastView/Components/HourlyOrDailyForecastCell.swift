@@ -61,7 +61,6 @@ class CollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 8
-//        label.customFont(size: .weatherIcon, colour: .white, alignment: .center, weight: .regular, fontName: .weather, multiplier: GlobalVariables.sharedInstance.fontSizemultiplier)
         return label
     }()
     

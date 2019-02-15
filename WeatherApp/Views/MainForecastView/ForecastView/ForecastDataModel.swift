@@ -23,6 +23,10 @@ class ForecastDataModel {
         if let forecast = forecast { return forecast } else { return nil }
     }
     
+    func removeForecast() {
+        forecast = nil
+    }
+    
     func updateForecast(_ retrievedForecast: ForecastModel) {
         forecast = retrievedForecast
     }
@@ -33,5 +37,18 @@ class ForecastDataModel {
     
     func isForecastNil() -> Bool {
         if forecast == nil { return true } else { return false }
+    }
+    
+    func updateCityData(_ location: CityDataModel) {
+        cityData = location
+    }
+    
+    func removeCityData() {
+        let clearCityData = CityDataModel()
+        clearCityData.cityName = ""
+        clearCityData.latitude = 0
+        clearCityData.longitude = 0
+        clearCityData.isCurrentLocation = false
+        cityData = clearCityData
     }
 }
