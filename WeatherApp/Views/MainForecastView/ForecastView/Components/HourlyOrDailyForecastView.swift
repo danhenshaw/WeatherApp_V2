@@ -63,9 +63,8 @@ class HourlyOrDailyForecastCell: UITableViewCell {
         addSubview(collectionView)
         addSubview(button)
         button.isHidden = true
-        let language = GlobalVariables.sharedInstance.language
-        let translatedTitle = Translator().getString(forLanguage: language, string: "hourly").uppercased()
-        button.setTitle(translatedTitle, for: .normal)
+        let buttonTitle = NSLocalizedString("Hourly", comment: "")
+        button.setTitle(buttonTitle.uppercased(), for: .normal)
     }
     
     func setupConstraints() {
@@ -77,18 +76,16 @@ class HourlyOrDailyForecastCell: UITableViewCell {
     }
     
     @objc func buttonTapped() {
-        let language = GlobalVariables.sharedInstance.language
         var buttonTitle = ""
         
         if forecastSection == .daily {
             forecastSection = .hourly
-            buttonTitle = "daily"
+            buttonTitle = NSLocalizedString("Daily", comment: "")
         } else {
             forecastSection = .daily
-            buttonTitle = "hourly"
+            buttonTitle = NSLocalizedString("Hourly", comment: "")
         }
-        let translatedTitle = Translator().getString(forLanguage: language, string: buttonTitle).uppercased()
-        button.setTitle(translatedTitle, for: .normal)
+        button.setTitle(buttonTitle.uppercased(), for: .normal)
         actionDelegate?.switchForecastSection(forecastSection: forecastSection)
         collectionView.reloadData()
     }

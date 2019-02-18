@@ -112,19 +112,18 @@ struct Hourly: Codable {
         return (max ?? 0.0, min ?? 0.0)
     }
     
-
     // Determine wind direction
     func getDirection(value: Int) -> String {
         switch value {
-        case 0 ... 22 : return "N"
-        case 23 ... 67 : return "NE"
-        case 68 ... 112 : return "E"
-        case 113 ... 157 : return "SE"
-        case 158 ... 202 : return "S"
-        case 203 ... 247 : return "SW"
-        case 248 ... 292 : return "W"
-        case 293 ... 337 : return "NW"
-        case 338 ... 360 : return "N"
+        case 0 ... 22 : return NSLocalizedString("North", comment: "")
+        case 23 ... 67 : return NSLocalizedString("North-East", comment: "") //"NE"
+        case 68 ... 112 : return NSLocalizedString("East", comment: "") //"E"
+        case 113 ... 157 : return NSLocalizedString("South-East", comment: "") //"SE"
+        case 158 ... 202 : return NSLocalizedString("South", comment: "") //"S"
+        case 203 ... 247 : return NSLocalizedString("South-West", comment: "") //"SW"
+        case 248 ... 292 : return NSLocalizedString("West", comment: "") //"W"
+        case 293 ... 337 : return NSLocalizedString("North-West", comment: "") //"NW"
+        case 338 ... 360 : return NSLocalizedString("North", comment: "") //"N"
         default : return ""
         }
     }

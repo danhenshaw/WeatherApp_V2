@@ -44,7 +44,30 @@ final class PickerViewModel {
     func valueItemForIndexPath(_ pickerType: PickerType, forecastSection: ForecastSection?, slot: Int?, index: Int) -> String {
         switch pickerType {
         case .units : return model.units[index]
-        case .language : return model.language[index]
+        case .language : return model.language[index].longName
+        case .forecast :
+            if let forecastSection = forecastSection {
+                switch forecastSection {
+                case .daily : return model.forecastDaily[index]
+                case .hourly : return model.forecastHourly[index]
+                case .currently :
+                    if let slot = slot {
+                        switch slot {
+                        case 0 : return model.forecastCurrentTemp[index]
+                        default : return model.forecastCurrently[index]
+                        }
+                    }
+                default : return "--"
+                }
+            }
+        }
+        return "--"
+    }
+    
+    func valueToSave(_ pickerType: PickerType, forecastSection: ForecastSection?, slot: Int?, index: Int) -> String {
+        switch pickerType {
+        case .units : return model.units[index]
+        case .language : return model.language[index].shortName
         case .forecast :
             if let forecastSection = forecastSection {
                 switch forecastSection {
@@ -85,7 +108,7 @@ final class PickerViewModel {
         
         let savedLanguage = GlobalVariables.sharedInstance.language
             for index in 0 ..< model.language.count {
-                if model.language[index] == savedLanguage {
+                if model.language[index].shortName == savedLanguage {
                     scrollPosition = index
                     break
                 }

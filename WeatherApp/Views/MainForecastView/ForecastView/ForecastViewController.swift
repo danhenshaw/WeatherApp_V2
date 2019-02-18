@@ -177,8 +177,6 @@ class ForecastViewController : UITableViewController {
         self.viewModel.isDownloadingForecast = true
         
         if let cityData = viewModel.getCityData() {
-            
-            print("Fetching forecast for: ", cityData.cityName, cityData.latitude)
 
             DarkSkyAPI().fetchWeather(latitude: cityData.latitude, longitude: cityData.longitude) { (retrievedForecast, error) in
                 
@@ -277,7 +275,7 @@ class ForecastViewController : UITableViewController {
         default :
             
             let defaultCell = tableView.dequeueReusableCell(withIdentifier: Constants.titleCellReuseIdentifier, for: indexPath) as! TitleCell
-            defaultCell.titleLabel.text = "DEFAULT"
+            defaultCell.titleLabel.text = "--"
             cell = defaultCell
             
         }

@@ -29,7 +29,7 @@ struct GlobalVariables {
     var fontSizemultiplier = 1.0
     
     // A shade of blue used throughout the app to indicate precipitation
-    var precipBlue = 0x5AC8FA //0x00abff
+    var precipBlue = 0x5AC8FA
     
     
     // Keys required to save User Defaults.
@@ -69,6 +69,7 @@ struct GlobalVariables {
         case .language :
             UserDefaults.standard.set(toNewValue, forKey: languageKey)
             language = toNewValue
+            print("WE JUST SAVED THE LANGUAGE:", language)
         case .units :
             UserDefaults.standard.set(toNewValue, forKey: unitsKey)
             units = toNewValue

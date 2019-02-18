@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class MainView: UIView {
     
@@ -20,21 +21,13 @@ class MainView: UIView {
         return page
     }()
     
-    lazy var advertisementView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        return view
-    }()
     
-    lazy var advertisementLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.textAlignment = .center
-        label.text = "ADVERTISEMENT"
-        label.font = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.bold)
-        label.adjustsFontSizeToFitWidth = true
-        return label
+    lazy var advertisementView: GADBannerView = {
+        let adBannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        adBannerView.adUnitID = "ca-app-pub-3997370956285481/2531369156"
+        return adBannerView
     }()
+
     
     lazy var gradientLayer: CAGradientLayer = {
         let gradient = CAGradientLayer()
@@ -62,7 +55,7 @@ class MainView: UIView {
         addSubview(pageViewController.view)
         addSubview(advertisementView)
         addSubview(pageControl)
-        advertisementView.addSubview(advertisementLabel)
+//        advertisementView.addSubview(advertisementLabel)
     }
     
     func setupConstraints() {
@@ -74,7 +67,7 @@ class MainView: UIView {
         advertisementView.anchor(top: pageControl.bottomAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
         
         gradientLayer.frame = self.bounds
-        advertisementLabel.fillSuperview()
+//        advertisementLabel.fillSuperview()
         
     }
  

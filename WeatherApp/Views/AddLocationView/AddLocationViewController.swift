@@ -38,7 +38,7 @@ class AddLocationViewController: UIViewController {
         addLocationView.searchBar.delegate = self
         addLocationView.tableView.delegate = self
         addLocationView.tableView.dataSource = self
-        title = "Add a new location"
+        title = NSLocalizedString("Add a new location", comment: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -81,7 +81,7 @@ class LocationListCell: UITableViewCell {
         cityNameLabel.text = locationListItem.cityName
         
         if locationListItem.time == nil {
-            timeLabel.text = "Forecast currently unavailable"
+            timeLabel.text = NSLocalizedString("Forecast currently unavailable", comment: "")
         } else {
             timeLabel.text = locationListItem.time
             tempLabel.text = locationListItem.temp

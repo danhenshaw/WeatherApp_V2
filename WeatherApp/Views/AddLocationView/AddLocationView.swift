@@ -15,7 +15,7 @@ class AddLocationView: UIView {
         search.showsCancelButton = true
         search.sizeToFit()
         search.isUserInteractionEnabled = true
-        search.placeholder = "Search for places"
+        search.placeholder = NSLocalizedString("Search for places", comment: "")
         return search
     }()
     

@@ -58,7 +58,7 @@ class LocationListViewController : UIViewController {
         locationListView.tableView.register(LocationListCell.self, forCellReuseIdentifier: Constants.locationListCellReuseIdentifier)
         locationListView.tableView.register(LocationListHeaderView.self, forHeaderFooterViewReuseIdentifier: Constants.headerViewReuseIdentifier)
         locationListView.tableView.register(LocationListFooterView.self, forHeaderFooterViewReuseIdentifier: Constants.footerViewReuseIdentifier)
-        title = "Locations"
+        title = NSLocalizedString("Locations", comment: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {

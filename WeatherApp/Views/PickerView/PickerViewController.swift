@@ -40,9 +40,9 @@ class PickerViewController : UIViewController {
         pickerView.pickerView.delegate = self
         
         switch pickerType {
-        case .forecast : title = "Forecast Data"
-        case .language : title = "Choose your language"
-        case .units : title = "Choose your units"
+        case .forecast : title = NSLocalizedString("Forecast Data", comment: "")
+        case .language : title = NSLocalizedString("Choose your language", comment: "")
+        case .units : title = NSLocalizedString("Choose your units", comment: "")
         }
     }
     
@@ -59,7 +59,7 @@ class PickerViewController : UIViewController {
     }
     
     func addNavigationItems() {
-        let rightButton = UIBarButtonItem(title: "SAVE", style: .plain, target: self, action: #selector(saveButtonTapped))
+        let rightButton = UIBarButtonItem(title: NSLocalizedString("Save", comment: ""), style: .plain, target: self, action: #selector(saveButtonTapped))
         self.navigationItem.rightBarButtonItem = rightButton
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -85,18 +85,10 @@ extension PickerViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         return viewModel.numberOfItemsInSection(pickerType, forecastSection: forecastSection, slot: slot)
     }
     
+    
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let pickerItem = viewModel.valueItemForIndexPath(pickerType, forecastSection: forecastSection, slot: slot, index: row)
-        var titleText = ""
-        
-        if pickerType == .language {
-            titleText = Translator.sharedInstance.getString(forLanguage: pickerItem, string: "language")
-        } else if pickerType == .units {
-            titleText = Translator.sharedInstance.getString(forLanguage: pickerItem, string: "units")
-        } else {
-            titleText = Translator.sharedInstance.getString(forLanguage: GlobalVariables.sharedInstance.language, string: pickerItem)
-        }
-        
+        let titleText = NSLocalizedString(pickerItem, comment: "")
         let myTitle = NSAttributedString(string: titleText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         return myTitle
     }
@@ -105,7 +97,7 @@ extension PickerViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let pickerItem = viewModel.valueItemForIndexPath(pickerType, forecastSection: forecastSection, slot: slot, index: row)
+        let pickerItem = viewModel.valueToSave(pickerType, forecastSection: forecastSection, slot: slot, index: row)
         pendingValueToSave = pickerItem
         
         if row != scrollPosition {

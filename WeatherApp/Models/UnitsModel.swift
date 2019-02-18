@@ -17,42 +17,41 @@ class UnitsModel {
     static let sharedInstance = UnitsModel()
     
     func getUnits(requestedUnits: UnitTypes) -> String {
-        
-        let language = "en" //GlobalVariables.sharedInstance.language
+
         let units = GlobalVariables.sharedInstance.units
         
         switch units {
         case "si" :
             switch requestedUnits {
-            case .distance : return Translator.sharedInstance.getString(forLanguage: language, string: "kilometers") //km
-            case .wind : return Translator.sharedInstance.getString(forLanguage: language, string: "metersPerSecond") //"m/s"
-            case .rainfall : return Translator.sharedInstance.getString(forLanguage: language, string: "milimetersPerHour") //"mm/h"
-            case .temperature : return Translator.sharedInstance.getString(forLanguage: language, string: "celcius") //"°C"
-            case .pressure : return Translator.sharedInstance.getString(forLanguage: language, string: "pascals") //"hPa"
+            case .distance : return NSLocalizedString("kilometers", comment: "")
+            case .wind : return NSLocalizedString("metersPerSecond", comment: "")
+            case .rainfall : return NSLocalizedString("milimetersPerHour", comment: "")
+            case .temperature : return NSLocalizedString("celcius", comment: "")
+            case .pressure : return NSLocalizedString("pascals", comment: "")
             }
         case "ca" :
             switch requestedUnits {
-            case .distance : return Translator.sharedInstance.getString(forLanguage: language, string: "kilometers") //"km"
-            case .wind : return Translator.sharedInstance.getString(forLanguage: language, string: "kilometersPerHour") //"km/h"
-            case .rainfall : return Translator.sharedInstance.getString(forLanguage: language, string: "milimetersPerHour") //"mm/h"
-            case .temperature : return Translator.sharedInstance.getString(forLanguage: language, string: "celcius") //"°C"
-            case .pressure : return Translator.sharedInstance.getString(forLanguage: language, string: "mb") //"mb"
+            case .distance : return NSLocalizedString("kilometers", comment: "")
+            case .wind : return NSLocalizedString("kilometersPerHour", comment: "")
+            case .rainfall : return NSLocalizedString("milimetersPerHour", comment: "")
+            case .temperature : return NSLocalizedString("celcius", comment: "")
+            case .pressure : return NSLocalizedString("mb", comment: "")
             }
         case "uk2" :
             switch requestedUnits {
-            case .distance : return Translator.sharedInstance.getString(forLanguage: language, string: "miles") //"mi"
-            case .wind : return Translator.sharedInstance.getString(forLanguage: language, string: "milesPerHour") //"mph"
-            case .rainfall : return Translator.sharedInstance.getString(forLanguage: language, string: "milimetersPerHour") //"mm/h"
-            case .temperature : return Translator.sharedInstance.getString(forLanguage: language, string: "celcius") //"°C"
-            case .pressure : return Translator.sharedInstance.getString(forLanguage: language, string: "pascals") //"hPa"
+            case .distance : return NSLocalizedString("miles", comment: "")
+            case .wind : return NSLocalizedString("milesPerHour", comment: "")
+            case .rainfall : return NSLocalizedString("milimetersPerHour", comment: "")
+            case .temperature : return NSLocalizedString("celcius", comment: "")
+            case .pressure : return NSLocalizedString("pascals", comment: "")
             }
         default : //case "us" :
             switch requestedUnits {
-            case .distance : return Translator.sharedInstance.getString(forLanguage: language, string: "miles") //"mi"
-            case .wind : return Translator.sharedInstance.getString(forLanguage: language, string: "milesPerHour") //"mph"
-            case .rainfall : return Translator.sharedInstance.getString(forLanguage: language, string: "inchesPerHour") //"in/h"
-            case .temperature : return Translator.sharedInstance.getString(forLanguage: language, string: "farenheit") //"°F"
-            case .pressure : return Translator.sharedInstance.getString(forLanguage: language, string: "pascals") //"hPa"
+            case .distance : return NSLocalizedString("miles", comment: "")
+            case .wind : return NSLocalizedString("milesPerHour", comment: "")
+            case .rainfall : return NSLocalizedString("inchesPerHour", comment: "")
+            case .temperature : return NSLocalizedString("farenheit", comment: "")
+            case .pressure : return NSLocalizedString("pascals", comment: "")
             }
         }
     }

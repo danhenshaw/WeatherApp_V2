@@ -95,21 +95,19 @@ class ForecastOverviewCell: UITableViewCell {
     func setupConstraints() {
 
         let multiplier = ((superview?.frame.size.height ?? 568) / 568 * 2.5)
-        stackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 12 * multiplier, left: 8, bottom: -12 * multiplier, right: 8), size: .init(width: 0, height: 0))
+        
+        stackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 12 * multiplier, left: 8, bottom: -12 * multiplier, right: -8), size: .init(width: 0, height: 0))
         
     }
     
     
     func bindWith(_ cellData: ForecastOverviewCellItem) {
         
-        let language = GlobalVariables.sharedInstance.language
-        
         tempLabel.text = cellData.currentTemp
         for index in 0 ..< cellData.values.count {
             let titleString = cellData.values[index].title
             if titleString != "" {
-                let translatedTitle = Translator().getString(forLanguage: language, string: titleString)
-                labelArray[index].titleLabel.text = "\(translatedTitle.uppercased())" + ": "
+                labelArray[index].titleLabel.text = "\(NSLocalizedString(titleString, comment: "").uppercased())" + ": "
                 labelArray[index].valueLabel.text = cellData.values[index].value
             }
         }

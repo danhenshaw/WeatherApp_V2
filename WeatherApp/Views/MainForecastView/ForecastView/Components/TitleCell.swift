@@ -72,8 +72,8 @@ class TitleCell: UITableViewCell {
             dateLabel.text = cellData.time
             cityNameAvailable = true
         } else {
-            titleLabel.text = "Unable to retrieve your location"
-            dateLabel.text = "Click here to update settings"
+            titleLabel.text = NSLocalizedString("Unable to retrieve your location", comment: "")
+            dateLabel.text = NSLocalizedString("Click here to update settings", comment: "")
             cityNameAvailable = false
         }
     }

@@ -6,8 +6,6 @@
 //  Copyright © 2019 Dan Henshaw. All rights reserved.
 //
 
-//import UIKit
-
 class FontIconModel {
     
     func updateMoonIcon(condition: Double) -> String {

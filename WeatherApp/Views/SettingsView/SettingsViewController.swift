@@ -48,7 +48,7 @@ class SettingsViewController : UITableViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(SettingsCell.self, forCellReuseIdentifier: Constants.settingsCellReuseIdentifier)
-        title = "Settings"
+        title = NSLocalizedString("Settings", comment: "")
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
     
@@ -73,11 +73,9 @@ class SettingsViewController : UITableViewController {
         cell.configureCellForSettingItem(settingsItem)
         
         if settingsItem.value == "language" {
-            let savedLanguage = GlobalVariables.sharedInstance.language
-            cell.valueLabel.text = Translator().getString(forLanguage: savedLanguage, string: "language")
+            cell.valueLabel.text = NSLocalizedString("language", comment: "")
         } else if settingsItem.value == "units" {
-            let savedUnits = GlobalVariables.sharedInstance.units
-            cell.valueLabel.text = Translator().getString(forLanguage: savedUnits, string: "units")
+            cell.valueLabel.text = NSLocalizedString(GlobalVariables.sharedInstance.units, comment: "")
         }
         
         cell.accessoryType = .disclosureIndicator

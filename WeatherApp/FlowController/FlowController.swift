@@ -70,31 +70,37 @@ extension FlowController: MainViewControllerFlowDelegate {
         
         switch error {
         case .locationUnavailable :
-            title = "Oops...something went wrong."
-            message = "We were unable to retrieve your location. Please try again later."
+            title = NSLocalizedString("Oops...something went wrong.", comment: "")
+            message = NSLocalizedString("We were unable to retrieve your location. Please try again later.", comment: "")
             showOKAction = false
         case .requestLocation :
-            title = "Location Permission Required."
-            message = "Please enable location permissions in settings."
+            title = NSLocalizedString("Location Permission Required.", comment: "")
+            message = NSLocalizedString("Please enable location permissions in settings.", comment: "")
             showOKAction = true
         case .forecastUnavailable :
-            title = "Oops...something went wrong."
-            message = "We were unable to retrieve the forecast. Please try again later."
+            title = NSLocalizedString("Oops...something went wrong.", comment: "")
+            message = NSLocalizedString("We were unable to retrieve the forecast. Please try again later.", comment: "")
             showOKAction = false
         case .forecastsUnavailable :
-            title = "Oops...something went wrong."
-            message = "We were unable to retrieve all forecasts. Please try again later."
+            title = NSLocalizedString("Oops...something went wrong.", comment: "")
+            message = NSLocalizedString("We were unable to retrieve all forecasts. Please try again later.", comment: "")
             showOKAction = false
         }
         
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+                                         style: UIAlertAction.Style.cancel)
+        
         alertController.addAction(cancelAction)
         
         if showOKAction {
-            let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+            
+            let okAction = UIAlertAction(title: NSLocalizedString("Settings", comment: ""),
+                                         style: .default,
+                                         handler: {(cAlertAction) in
+                                            
                 //Redirect to Settings app
                 UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
             })
@@ -141,14 +147,21 @@ extension FlowController: LocationListViewControllerFlowDelegate {
     }
     
     func showAlertController(_ senderViewController: LocationListViewController) {
-        let alertController = UIAlertController(title: "Location Permission Required", message: "Please enable location permissions in settings.", preferredStyle: UIAlertController.Style.alert)
-        
-        let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+        let alertController = UIAlertController(title: NSLocalizedString("Location Permission Required", comment: ""),
+                                                message: NSLocalizedString("Please enable location permissions in settings.", comment: ""),
+                                                preferredStyle: UIAlertController.Style.alert)
+ 
+        let okAction = UIAlertAction(title: NSLocalizedString("Settings", comment: ""),
+                                     style: .default,
+                                     handler: {(cAlertAction) in
+                                        
             //Redirect to Settings app
             UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+                                         style: UIAlertAction.Style.cancel)
+        
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         navigationController?.present(alertController, animated: true, completion: nil)

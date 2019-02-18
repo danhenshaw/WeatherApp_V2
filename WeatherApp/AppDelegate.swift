@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         flowController = FlowController(withWindow: window!)
         flowController?.showMainScren()
+        
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-3997370956285481~8549982591")
+        
         return true
         
     }

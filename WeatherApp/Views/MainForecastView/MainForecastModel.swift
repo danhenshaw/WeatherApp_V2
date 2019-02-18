@@ -31,7 +31,7 @@ class MainForecastModel {
     
     func restoreUserSettingsFromStorage() {
         
-        let availableLanguages = ["en", "es", "fr", "it", "ja", "tr", "x-pig-latin", "zh", "zh-tw"]
+        let availableLanguages = ["en"] //, "es", "fr", "it", "ja", "tr", "x-pig-latin", "zh", "zh-tw"]
         let systemLanguage = NSLocale.current.languageCode ?? DefaultSettings.language
         let appLanguage = UserDefaults.standard.string(forKey: GlobalVariables.sharedInstance.languageKey)
         

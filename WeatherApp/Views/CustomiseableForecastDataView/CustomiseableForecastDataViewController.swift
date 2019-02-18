@@ -41,7 +41,7 @@ class CustomiseableForecastDataViewController : UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(CustomiseableForecastDataCell.self, forCellReuseIdentifier: Constants.customiseableForecastDataCellReuseIdentifier)
         tableView.register(CustomiseableForecastDataHeaderView.self, forHeaderFooterViewReuseIdentifier: Constants.customiseableForecastDataHeaderViewReuseIdentifier)
-        title = "Forecast Data"
+        title = NSLocalizedString("Forecast Data", comment: "")
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
     
@@ -64,7 +64,7 @@ class CustomiseableForecastDataViewController : UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.customiseableForecastDataHeaderViewReuseIdentifier) as! CustomiseableForecastDataHeaderView
         let isCollapsed = viewModel.sectionIsCollapsed(section: section)
-        view.titleLabel.text = viewModel.headerTitle(section)
+        view.titleLabel.text = NSLocalizedString(viewModel.headerTitle(section), comment: "")
         view.setCollapsed(isCollapsed: isCollapsed)
         view.section = section
         view.actionDelegate = self

@@ -102,9 +102,9 @@ class MinutelyForecastCell: UITableViewCell {
         showSummaryLabel = true
         
         if cellData.minutelyForecastAvailable {
-            minutelyForecastUnavailable = "No precipatation forecasted for the next 60 mins"
+            minutelyForecastUnavailable = NSLocalizedString("No precipatation forecasted for the next 60 mins", comment: "")
         } else {
-            minutelyForecastUnavailable = "Minutely forecast unavailable for \(cellData.cityName)"
+            minutelyForecastUnavailable = NSLocalizedString("Minutely forecast unavailable for", comment: "") + " \(cellData.cityName)"
         }
         
         let itemCount = cellData.barHeight?.count ?? 0

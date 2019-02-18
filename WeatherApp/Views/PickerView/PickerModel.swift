@@ -28,14 +28,10 @@ struct PickerItemForForecastDataType {
 struct PickerModel {
     
     let units = ["us", "uk2", "ca", "si"]
-//        PickerItem(shortName: "us", longName: "°F, mph"),
-//                 PickerItem(shortName: "uk2", longName: "°C, mph"),
-//                 PickerItem(shortName: "ca", longName: "°C, km/h"),
-//                 PickerItem(shortName: "si", longName: "°C, m/s")]
+
     
-    
-    let language = ["en", "es", "fr", "it", "ja", "tr", "x-pig-latin", "zh", "zh-tw"]
-//                    PickerItem(shortName: "ar", longName: "Arabic"),
+    let language = [
+//        PickerItem(shortName: "ar", longName: "Arabic"),
 //                    PickerItem(shortName: "az", longName: "Azerbaijani"),
 //                    PickerItem(shortName: "be", longName: "Belarusian"),
 //                    PickerItem(shortName: "bg", longName: "Bulgarian"),
@@ -45,7 +41,7 @@ struct PickerModel {
 //                    PickerItem(shortName: "da", longName: "Danish"),
 //                    PickerItem(shortName: "de", longName: "Deutsch"),
 //                    PickerItem(shortName: "el", longName: "Greek"),
-//                    PickerItem(shortName: "en", longName: "English"),
+                    PickerItem(shortName: "en", longName: "English"),
 //                    PickerItem(shortName: "es", longName: "Español"),
 //                    PickerItem(shortName: "et", longName: "Estonian"),
 //                    PickerItem(shortName: "fi", longName: "Finnish"),
@@ -76,16 +72,55 @@ struct PickerModel {
 //                    PickerItem(shortName: "uk", longName: "Ukrainian"),
 //                    PickerItem(shortName: "x-pig-latin", longName: "Igpay Atinlay"),
 //                    PickerItem(shortName: "zh", longName: "汉字简化方案"),
-//                    PickerItem(shortName: "zh-tw", longName: "漢字傳統方案")]
+//                    PickerItem(shortName: "zh-tw", longName: "漢字傳統方案")
+    ]
     
     
-    let forecastDaily = ["precipIntensity", "precipProbability", "temp", "feelsLike", "dewPoint", "humidity", "pressure", "wind", "cloudCover", "uvIndex", "visibility", "ozone", "sunriseTime", "sunsetTime", "moonPhase"]
+    let forecastDaily = ["precipIntensity",
+                         "precipProbability",
+                         "temp",
+                         "feelsLike",
+                         "dewPoint",
+                         "humidity",
+                         "pressure",
+                         "wind",
+                         "cloudCover",
+                         "uvIndex",
+                         "visibility",
+                         "ozone",
+                         "sunriseTime",
+                         "sunsetTime",
+                         "moonPhase",]
     
-    let forecastHourly = ["precipIntensity", "precipProbability", "temp", "feelsLike", "dewPoint", "humidity", "pressure", "wind", "cloudCover", "uvIndex", "visibility", "ozone"]
+    let forecastHourly = ["precipIntensity",
+                          "precipProbability",
+                          "temp",
+                          "feelsLike",
+                          "dewPoint",
+                          "humidity",
+                          "pressure",
+                          "wind",
+                          "cloudCover",
+                          "uvIndex",
+                          "visibility",
+                          "ozone"]
     
-    let forecastCurrently = [ "nearestStorm", "precipIntensity", "precipProbability", "temp", "feelsLike", "dewPoint", "humidity", "pressure", "wind", "cloudCover", "uvIndex", "visibility", "ozone"]
+    let forecastCurrently = ["nearestStorm",
+                             "precipIntensity",
+                             "precipProbability",
+                             "temp",
+                             "feelsLike",
+                             "dewPoint",
+                             "humidity",
+                             "pressure",
+                             "wind",
+                             "cloudCover",
+                             "uvIndex",
+                             "visibility",
+                             "ozone", ]
     
-    let forecastCurrentTemp = ["temp", "feelsLike"]
+    let forecastCurrentTemp = ["temp",
+                               "feelsLike"]
 
     
 }

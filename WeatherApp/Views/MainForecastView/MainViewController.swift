@@ -29,6 +29,7 @@
 
 
 import UIKit
+import GoogleMobileAds
 
 protocol MainViewControllerFlowDelegate: class {
     func showSettingsScreen(_ senderViewController: MainViewController)
@@ -69,6 +70,14 @@ class MainViewController: UIPageViewController {
         
         mainView.pageViewController.delegate = self
         mainView.pageViewController.dataSource = self
+        
+        mainView.advertisementView.delegate = self
+        mainView.advertisementView.rootViewController = self
+        
+        let adRequest = GADRequest()
+        adRequest.testDevices = [ kGADSimulatorID ]
+        mainView.advertisementView.load(GADRequest())
+        
     }
     
     
@@ -313,6 +322,20 @@ extension MainViewController: LocationListviewControllerActionDelegate {
             mainView.pageControl.numberOfPages = orderedViewControllers.count
             mainView.pageControl.currentPage = orderedViewControllers.count - 1
         }
+    }
+}
+
+
+extension MainViewController: GADBannerViewDelegate {
+    
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("Success! Did receive banner ad.")
+        mainView.frame = bannerView.frame
+        mainView.advertisementView = bannerView
+    }
+    
+    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+        print("Failed to receive ads:", error)
     }
 }
 

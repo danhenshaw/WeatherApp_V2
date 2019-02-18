@@ -143,7 +143,7 @@ final class ForecastViewModel {
             case .daily : time = forecast?.daily?.getValueString(dataType: "time", index: index, timeZone: timeZone).value ?? ""
             default : time = FormatDate().date(unixtimeInterval: (Int(Date().timeIntervalSince1970)), timeZone: timeZone, format: .mediumWithTime)
             }
-            return TitleCellItem(cityName: model.returnCityData().cityName, time: "Forecast for " + time)
+            return TitleCellItem(cityName: model.returnCityData().cityName, time: time)
             
         } else {
             return TitleCellItem(cityName: model.returnCityData().cityName, time: "")

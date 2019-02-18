@@ -1,0 +1,107 @@
+/* 
+  Localizable.strings
+  WeatherApp
+
+  Created by Daniel Henshaw on 18/2/19.
+  Copyright © 2019 Dan Henshaw. All rights reserved.
+*/
+
+"language" = "English";
+
+"wind" = "Wind";
+"humidity" = "Humidity";
+"dewPoint" = "Dew Point";
+"uvIndex" = "UV Index";
+"visibility" = "Visibility";
+"pressure" = "Pressure";
+"feelsLike" = "Feels Like";
+"low" = "Low";
+"high" = "High";
+"us" = "°F, mph";
+"uk2" = "°C, mph";
+"ca" = "°C, km/h";
+"si" = "°C, m/s";
+"celcius" = "°C";
+"farenheit" = "°F";
+"kilometersPerHour" = "km/h";
+"milesPerHour" = "mph";
+"metersPerSecond" = "m/s";
+"milimetersPerHour" = "mm/h";
+"inchesPerHour" = "in/h";
+"kilometers" = "km";
+"miles" = "mi";
+"pascals" = "hPa";
+"mb" = "mb";
+"time" = "Time";
+"precip" = "Precip";
+"storms" = "Storm";
+"temp" = "Temp";
+"clouds" = "Clouds";
+"ozone" = "Ozone";
+"sunrise" = "Sunrise";
+"sunset" = "Sunset";
+"moon" = "Moon";
+"rain" = "Rain";
+"snow" = "Snow";
+"sleet" = "Sleet";
+"daily" = "Daily";
+"hourly" = "Hourly";
+"precipProbability" = "Precip Probability";
+"precipIntensity" = "Precip Intensity";
+"cloudCover" = "Cloud Cover";
+"sunriseTime" = "Sunrise Time";
+"sunsetTime" = "Sunset Time";
+"moonPhase" = "Moon Phase";
+"nearestStorm" = "Nearest Storm";
+
+"North" = "N";
+"North-East" = "NE";
+"East" = "E";
+"South-East" = "SE";
+"South" = "S";
+"South-West" = "SW";
+"West" = "W";
+"North-West" = "NW";
+
+"New Moon" = "New Moon";
+"Waxing Crescent" = "Waxing Crescent";
+"First Quarter" = "First Quarter";
+"Waxing Gibbous" = "Waxing Gibbous";
+"Full Moon" = "Full Moon";
+"Waning Gibbous" = "Waning Gibbous";
+"Third Quarter" = "Third Quarter";
+"Waning Crescent" = "Waning Crescent";
+
+"Unable to retrieve your location" = "Unable to retrieve your location";
+"Click here to update settings" = "Click here to update settings";
+"Forecast currently unavailable" = "Forecast currently unavailable";
+"No precipatation forecasted for the next 60 mins" = "No precipatation forecasted for the next 60 mins";
+"Minutely forecast unavailable for" = "Minutely forecast unavailable for";
+
+"Oops...something went wrong." = "Oops...something went wrong.";
+"Location Permission Required." = "Location Permission Required.";
+"Please enable location permissions in settings." = "Please enable location permissions in settings.";
+"We were unable to retrieve your location. Please try again later." = "We were unable to retrieve your location. Please try again later.";
+"We were unable to retrieve the forecast. Please try again later." = "We were unable to retrieve the forecast. Please try again later.";
+"We were unable to retrieve all forecasts. Please try again later." = "We were unable to retrieve all forecasts. Please try again later.";
+
+
+"Settings" = "Settings";
+"Cancel" = "Cancel";
+"Daily" = "Daily";
+"Hourly" = "Hourly";
+"Language" = "Language";
+"Units" = "Units";
+
+"Forecast Data" = "Forecast Data";
+"Choose your language" = "Choose your language";
+"Choose your units" = "Choose your units";
+"Save" = "Save";
+"Forecast Data" = "Forecast Data";
+"Locations" = "Locations";
+"Add a new location" = "Add a new location";
+"Search for places" = "Search for places";
+
+"Daily Data" = "Daily Data";
+"Current Data" = "Current Data";
+"Hourly Data" = "Hourly Data";
