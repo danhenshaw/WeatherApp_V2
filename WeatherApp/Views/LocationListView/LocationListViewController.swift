@@ -217,3 +217,21 @@ extension LocationListViewController: AddLocationViewControllerActionDelegate {
         self.navigationController?.popViewController(animated: true)
     }
 }
+
+extension LocationListViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        for cell in locationListView.tableView.visibleCells {
+            
+            let hiddenFrameHeight = locationListView.tableView.contentOffset.y + view.frame.size.height * 0.25 - cell.frame.origin.y
+            
+            if (hiddenFrameHeight >= 0 || hiddenFrameHeight <= cell.frame.size.height) {
+                
+                if let cell = cell as? LocationListCell {
+                    cell.maskCell(fromTop: hiddenFrameHeight)
+                }
+            }
+        }
+    }
+}

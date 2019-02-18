@@ -73,7 +73,7 @@ class CollectionViewCell: UICollectionViewCell {
     lazy var precipBar: UIView = {
         let view = UIView()
         let rgb = 0x00abff
-        view.backgroundColor = UIColor(rgb: GlobalVariables.sharedInstance.precipBlue, a: 0.3)
+        view.backgroundColor = UIColor(rgb: GlobalVariables.sharedInstance.precipBlue, a: 0.6)
         return view
     }()
     

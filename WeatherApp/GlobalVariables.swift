@@ -29,7 +29,7 @@ struct GlobalVariables {
     var fontSizemultiplier = 1.0
     
     // A shade of blue used throughout the app to indicate precipitation
-    var precipBlue = 0x00abff
+    var precipBlue = 0x5AC8FA //0x00abff
     
     
     // Keys required to save User Defaults.

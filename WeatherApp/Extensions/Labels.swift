@@ -30,7 +30,7 @@ extension UILabel {
         switch colour {
         case .white : textColor = .white
         case .black : textColor = .black
-        case .blue : textColor =  UIColor(rgb: GlobalVariables.sharedInstance.precipBlue, a: 0.5)
+        case .blue : textColor =  UIColor(rgb: GlobalVariables.sharedInstance.precipBlue, a: 1)
         case .lightGray : textColor = .lightGray
         case .darkGray : textColor = .darkGray
         }

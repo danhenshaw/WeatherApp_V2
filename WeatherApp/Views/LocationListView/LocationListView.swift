@@ -59,4 +59,6 @@ class LocationListView: UIView {
         tableView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
         gradientLayer.frame = self.bounds
     }
+
+    
 }
