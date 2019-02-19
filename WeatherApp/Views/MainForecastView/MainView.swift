@@ -55,7 +55,6 @@ class MainView: UIView {
         addSubview(pageViewController.view)
         addSubview(advertisementView)
         addSubview(pageControl)
-//        advertisementView.addSubview(advertisementLabel)
     }
     
     func setupConstraints() {
@@ -67,7 +66,6 @@ class MainView: UIView {
         advertisementView.anchor(top: pageControl.bottomAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
         
         gradientLayer.frame = self.bounds
-//        advertisementLabel.fillSuperview()
         
     }
  

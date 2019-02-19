@@ -21,7 +21,7 @@ struct PickerItem {
 
 struct PickerItemForForecastDataType {
     let forecastSection: [ForecastSection]
-    let forecastDataType: ForecastDataType
+//    let forecastDataType: ForecastDataType
 }
 
 
