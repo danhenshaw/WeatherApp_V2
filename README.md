@@ -5,12 +5,12 @@ WeatherApp is a weather app for iOS powered by [Dark Sky](https://darksky.net)
 
 ## Objective
 
-Create an iOS weather app that uses only Apple frameworks. I wanted to create a visually stunning weather app that was intuitive to use, allowed users access to detailed weather data while maintaining a simply user interface.
+Create an iOS weather app that uses only Apple frameworks. I wanted to create a visually stunning weather app that  allowed users access to detailed weather data while maintaining a simply user interface and beign intuitive to use.
 
 
 ## Solution
 
-I chose the Dark Sky weather API due to the accuracy of the weather report as well as the sheer volume of weather data which can be requested. Users can interact with the main view in multiple ways to allow access to various forms of weather data. This always the app to remain visually simple and provide one touch access to very detailed weather conditions not attainable with most apps on the market. 
+I chose the Dark Sky weather API due to the accuracy of the weather report as well as the sheer volume of weather data which can be requested. Users can interact with the main view in multiple ways to allow access to various forms of weather data. This allows the app to remain visually simple and provide one touch access to very detailed weather conditions which is not attainable with most apps on the market. The data which is displayed is also largely customiseable resulting in a better user experience.
 
 ### Features
 
